@@ -14,14 +14,19 @@ import {
 } from "@/components/ui/select";
 import { vehiclesQuery } from "@/lib/queries";
 
-type Search = { make?: string; q?: string; sort?: string; page?: number };
+type Search = {
+  make?: string | undefined;
+  q?: string | undefined;
+  sort?: string | undefined;
+  page?: number | undefined;
+};
 
 export const Route = createFileRoute("/boutique")({
   validateSearch: (search: Record<string, unknown>): Search => ({
-    make: typeof search.make === "string" ? search.make : undefined,
-    q: typeof search.q === "string" ? search.q : undefined,
-    sort: typeof search.sort === "string" ? search.sort : undefined,
-    page: typeof search.page === "number" ? search.page : undefined,
+    make: typeof search["make"] === "string" ? (search["make"] as string) : undefined,
+    q: typeof search["q"] === "string" ? (search["q"] as string) : undefined,
+    sort: typeof search["sort"] === "string" ? (search["sort"] as string) : undefined,
+    page: Number(search["page"]) > 0 ? Number(search["page"]) : undefined,
   }),
   loader: ({ context }) => context.queryClient.ensureQueryData(vehiclesQuery),
   head: () => ({
@@ -83,7 +88,7 @@ function Boutique() {
   const visible = filtered.slice((page - 1) * PER_PAGE, page * PER_PAGE);
 
   const setSearch = (next: Partial<Search>) =>
-    navigate({ search: (prev) => ({ ...prev, page: 1, ...next }) });
+    navigate({ search: (prev: Search) => ({ ...prev, page: 1, ...next }) });
 
   return (
     <SiteLayout>
@@ -171,7 +176,7 @@ function Boutique() {
                 key={n}
                 variant={n === page ? "hero" : "outline"}
                 size="sm"
-                onClick={() => navigate({ search: (prev) => ({ ...prev, page: n }) })}
+                onClick={() => navigate({ search: (prev: Search) => ({ ...prev, page: n }) })}
               >
                 {n}
               </Button>
