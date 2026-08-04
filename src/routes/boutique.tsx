@@ -43,7 +43,7 @@ export const Route = createFileRoute("/boutique")({
     ],
     links: [{ rel: "canonical", href: "/boutique" }],
   }),
-  component: Boutique;
+  component: Boutique,
 });
 
 const PER_PAGE = 12;
