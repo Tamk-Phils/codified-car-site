@@ -14,6 +14,7 @@ import { Route as AvisClientRouteImport } from './routes/avis-client'
 import { Route as BoutiqueRouteImport } from './routes/boutique'
 import { Route as CommanderRouteImport } from './routes/commander'
 import { Route as PanierRouteImport } from './routes/panier'
+import { Route as ProcessusDachatRouteImport } from './routes/processus-dachat'
 import { Route as BlogIndexRouteImport } from './routes/blog/index'
 import { Route as BlogSlugRouteImport } from './routes/blog/$slug'
 import { Route as ProduitSlugRouteImport } from './routes/produit.$slug'
@@ -43,6 +44,11 @@ const PanierRoute = PanierRouteImport.update({
   path: '/panier',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ProcessusDachatRoute = ProcessusDachatRouteImport.update({
+  id: '/processus-dachat',
+  path: '/processus-dachat',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const BlogIndexRoute = BlogIndexRouteImport.update({
   id: '/blog/',
   path: '/blog/',
@@ -65,6 +71,7 @@ export interface FileRoutesByFullPath {
   '/boutique': typeof BoutiqueRoute
   '/commander': typeof CommanderRoute
   '/panier': typeof PanierRoute
+  '/processus-dachat': typeof ProcessusDachatRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/produit/$slug': typeof ProduitSlugRoute
   '/blog/': typeof BlogIndexRoute
@@ -75,6 +82,7 @@ export interface FileRoutesByTo {
   '/boutique': typeof BoutiqueRoute
   '/commander': typeof CommanderRoute
   '/panier': typeof PanierRoute
+  '/processus-dachat': typeof ProcessusDachatRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/produit/$slug': typeof ProduitSlugRoute
   '/blog': typeof BlogIndexRoute
@@ -86,6 +94,7 @@ export interface FileRoutesById {
   '/boutique': typeof BoutiqueRoute
   '/commander': typeof CommanderRoute
   '/panier': typeof PanierRoute
+  '/processus-dachat': typeof ProcessusDachatRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/produit/$slug': typeof ProduitSlugRoute
   '/blog/': typeof BlogIndexRoute
@@ -98,6 +107,7 @@ export interface FileRouteTypes {
     | '/boutique'
     | '/commander'
     | '/panier'
+    | '/processus-dachat'
     | '/blog/$slug'
     | '/produit/$slug'
     | '/blog/'
@@ -108,6 +118,7 @@ export interface FileRouteTypes {
     | '/boutique'
     | '/commander'
     | '/panier'
+    | '/processus-dachat'
     | '/blog/$slug'
     | '/produit/$slug'
     | '/blog'
@@ -118,6 +129,7 @@ export interface FileRouteTypes {
     | '/boutique'
     | '/commander'
     | '/panier'
+    | '/processus-dachat'
     | '/blog/$slug'
     | '/produit/$slug'
     | '/blog/'
@@ -129,6 +141,7 @@ export interface RootRouteChildren {
   BoutiqueRoute: typeof BoutiqueRoute
   CommanderRoute: typeof CommanderRoute
   PanierRoute: typeof PanierRoute
+  ProcessusDachatRoute: typeof ProcessusDachatRoute
   BlogSlugRoute: typeof BlogSlugRoute
   ProduitSlugRoute: typeof ProduitSlugRoute
   BlogIndexRoute: typeof BlogIndexRoute
@@ -171,6 +184,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PanierRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/processus-dachat': {
+      id: '/processus-dachat'
+      path: '/processus-dachat'
+      fullPath: '/processus-dachat'
+      preLoaderRoute: typeof ProcessusDachatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/blog/': {
       id: '/blog/'
       path: '/blog'
@@ -201,6 +221,7 @@ const rootRouteChildren: RootRouteChildren = {
   BoutiqueRoute: BoutiqueRoute,
   CommanderRoute: CommanderRoute,
   PanierRoute: PanierRoute,
+  ProcessusDachatRoute: ProcessusDachatRoute,
   BlogSlugRoute: BlogSlugRoute,
   ProduitSlugRoute: ProduitSlugRoute,
   BlogIndexRoute: BlogIndexRoute,
