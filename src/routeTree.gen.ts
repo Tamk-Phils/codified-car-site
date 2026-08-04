@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as BoutiqueRouteImport } from './routes/boutique'
+import { Route as CommanderRouteImport } from './routes/commander'
 import { Route as PanierRouteImport } from './routes/panier'
 import { Route as ProduitSlugRouteImport } from './routes/produit.$slug'
 
@@ -22,6 +23,11 @@ const IndexRoute = IndexRouteImport.update({
 const BoutiqueRoute = BoutiqueRouteImport.update({
   id: '/boutique',
   path: '/boutique',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CommanderRoute = CommanderRouteImport.update({
+  id: '/commander',
+  path: '/commander',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PanierRoute = PanierRouteImport.update({
@@ -38,12 +44,14 @@ const ProduitSlugRoute = ProduitSlugRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/boutique': typeof BoutiqueRoute
+  '/commander': typeof CommanderRoute
   '/panier': typeof PanierRoute
   '/produit/$slug': typeof ProduitSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/boutique': typeof BoutiqueRoute
+  '/commander': typeof CommanderRoute
   '/panier': typeof PanierRoute
   '/produit/$slug': typeof ProduitSlugRoute
 }
@@ -51,20 +59,23 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/boutique': typeof BoutiqueRoute
+  '/commander': typeof CommanderRoute
   '/panier': typeof PanierRoute
   '/produit/$slug': typeof ProduitSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/boutique' | '/panier' | '/produit/$slug'
+  fullPaths: '/' | '/boutique' | '/commander' | '/panier' | '/produit/$slug'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/boutique' | '/panier' | '/produit/$slug'
-  id: '__root__' | '/' | '/boutique' | '/panier' | '/produit/$slug'
+  to: '/' | '/boutique' | '/commander' | '/panier' | '/produit/$slug'
+  id:
+    '__root__' | '/' | '/boutique' | '/commander' | '/panier' | '/produit/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   BoutiqueRoute: typeof BoutiqueRoute
+  CommanderRoute: typeof CommanderRoute
   PanierRoute: typeof PanierRoute
   ProduitSlugRoute: typeof ProduitSlugRoute
 }
@@ -83,6 +94,13 @@ declare module '@tanstack/react-router' {
       path: '/boutique'
       fullPath: '/boutique'
       preLoaderRoute: typeof BoutiqueRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/commander': {
+      id: '/commander'
+      path: '/commander'
+      fullPath: '/commander'
+      preLoaderRoute: typeof CommanderRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/panier': {
@@ -105,6 +123,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   BoutiqueRoute: BoutiqueRoute,
+  CommanderRoute: CommanderRoute,
   PanierRoute: PanierRoute,
   ProduitSlugRoute: ProduitSlugRoute,
 }
