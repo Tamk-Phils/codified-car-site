@@ -80,14 +80,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { title: "Bank Seized Cars | Repossessed Vehicles For Sale" },
+      { name: "description", content: "Bank repossessed cars, trucks and SUVs for sale below market value with nationwide US delivery." },
+      { name: "author", content: "Bank Seized Cars" },
+      { property: "og:title", content: "Bank Seized Cars" },
+      { property: "og:description", content: "Bank repossessed vehicles for sale below market value." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:site", content: "@Lovable" },
+      
     ],
     links: [
       {
