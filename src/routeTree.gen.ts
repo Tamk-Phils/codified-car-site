@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AvisClientRouteImport } from './routes/avis-client'
 import { Route as BoutiqueRouteImport } from './routes/boutique'
 import { Route as CommanderRouteImport } from './routes/commander'
+import { Route as NousContacterRouteImport } from './routes/nous-contacter'
 import { Route as PanierRouteImport } from './routes/panier'
 import { Route as ProcessusDachatRouteImport } from './routes/processus-dachat'
 import { Route as BlogIndexRouteImport } from './routes/blog/index'
@@ -37,6 +38,11 @@ const BoutiqueRoute = BoutiqueRouteImport.update({
 const CommanderRoute = CommanderRouteImport.update({
   id: '/commander',
   path: '/commander',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NousContacterRoute = NousContacterRouteImport.update({
+  id: '/nous-contacter',
+  path: '/nous-contacter',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PanierRoute = PanierRouteImport.update({
@@ -70,6 +76,7 @@ export interface FileRoutesByFullPath {
   '/avis-client': typeof AvisClientRoute
   '/boutique': typeof BoutiqueRoute
   '/commander': typeof CommanderRoute
+  '/nous-contacter': typeof NousContacterRoute
   '/panier': typeof PanierRoute
   '/processus-dachat': typeof ProcessusDachatRoute
   '/blog/$slug': typeof BlogSlugRoute
@@ -81,6 +88,7 @@ export interface FileRoutesByTo {
   '/avis-client': typeof AvisClientRoute
   '/boutique': typeof BoutiqueRoute
   '/commander': typeof CommanderRoute
+  '/nous-contacter': typeof NousContacterRoute
   '/panier': typeof PanierRoute
   '/processus-dachat': typeof ProcessusDachatRoute
   '/blog/$slug': typeof BlogSlugRoute
@@ -93,6 +101,7 @@ export interface FileRoutesById {
   '/avis-client': typeof AvisClientRoute
   '/boutique': typeof BoutiqueRoute
   '/commander': typeof CommanderRoute
+  '/nous-contacter': typeof NousContacterRoute
   '/panier': typeof PanierRoute
   '/processus-dachat': typeof ProcessusDachatRoute
   '/blog/$slug': typeof BlogSlugRoute
@@ -106,6 +115,7 @@ export interface FileRouteTypes {
     | '/avis-client'
     | '/boutique'
     | '/commander'
+    | '/nous-contacter'
     | '/panier'
     | '/processus-dachat'
     | '/blog/$slug'
@@ -117,6 +127,7 @@ export interface FileRouteTypes {
     | '/avis-client'
     | '/boutique'
     | '/commander'
+    | '/nous-contacter'
     | '/panier'
     | '/processus-dachat'
     | '/blog/$slug'
@@ -128,6 +139,7 @@ export interface FileRouteTypes {
     | '/avis-client'
     | '/boutique'
     | '/commander'
+    | '/nous-contacter'
     | '/panier'
     | '/processus-dachat'
     | '/blog/$slug'
@@ -140,6 +152,7 @@ export interface RootRouteChildren {
   AvisClientRoute: typeof AvisClientRoute
   BoutiqueRoute: typeof BoutiqueRoute
   CommanderRoute: typeof CommanderRoute
+  NousContacterRoute: typeof NousContacterRoute
   PanierRoute: typeof PanierRoute
   ProcessusDachatRoute: typeof ProcessusDachatRoute
   BlogSlugRoute: typeof BlogSlugRoute
@@ -175,6 +188,13 @@ declare module '@tanstack/react-router' {
       path: '/commander'
       fullPath: '/commander'
       preLoaderRoute: typeof CommanderRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/nous-contacter': {
+      id: '/nous-contacter'
+      path: '/nous-contacter'
+      fullPath: '/nous-contacter'
+      preLoaderRoute: typeof NousContacterRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/panier': {
@@ -220,6 +240,7 @@ const rootRouteChildren: RootRouteChildren = {
   AvisClientRoute: AvisClientRoute,
   BoutiqueRoute: BoutiqueRoute,
   CommanderRoute: CommanderRoute,
+  NousContacterRoute: NousContacterRoute,
   PanierRoute: PanierRoute,
   ProcessusDachatRoute: ProcessusDachatRoute,
   BlogSlugRoute: BlogSlugRoute,
