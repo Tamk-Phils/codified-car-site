@@ -14,6 +14,7 @@ import { Route as BoutiqueRouteImport } from './routes/boutique'
 import { Route as CommanderRouteImport } from './routes/commander'
 import { Route as PanierRouteImport } from './routes/panier'
 import { Route as BlogIndexRouteImport } from './routes/blog/index'
+import { Route as BlogSlugRouteImport } from './routes/blog/$slug'
 import { Route as ProduitSlugRouteImport } from './routes/produit.$slug'
 
 const IndexRoute = IndexRouteImport.update({
@@ -41,6 +42,11 @@ const BlogIndexRoute = BlogIndexRouteImport.update({
   path: '/blog/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BlogSlugRoute = BlogSlugRouteImport.update({
+  id: '/blog/$slug',
+  path: '/blog/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ProduitSlugRoute = ProduitSlugRouteImport.update({
   id: '/produit/$slug',
   path: '/produit/$slug',
@@ -52,6 +58,7 @@ export interface FileRoutesByFullPath {
   '/boutique': typeof BoutiqueRoute
   '/commander': typeof CommanderRoute
   '/panier': typeof PanierRoute
+  '/blog/$slug': typeof BlogSlugRoute
   '/produit/$slug': typeof ProduitSlugRoute
   '/blog/': typeof BlogIndexRoute
 }
@@ -60,6 +67,7 @@ export interface FileRoutesByTo {
   '/boutique': typeof BoutiqueRoute
   '/commander': typeof CommanderRoute
   '/panier': typeof PanierRoute
+  '/blog/$slug': typeof BlogSlugRoute
   '/produit/$slug': typeof ProduitSlugRoute
   '/blog': typeof BlogIndexRoute
 }
@@ -69,21 +77,36 @@ export interface FileRoutesById {
   '/boutique': typeof BoutiqueRoute
   '/commander': typeof CommanderRoute
   '/panier': typeof PanierRoute
+  '/blog/$slug': typeof BlogSlugRoute
   '/produit/$slug': typeof ProduitSlugRoute
   '/blog/': typeof BlogIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    '/' | '/boutique' | '/commander' | '/panier' | '/produit/$slug' | '/blog/'
+    | '/'
+    | '/boutique'
+    | '/commander'
+    | '/panier'
+    | '/blog/$slug'
+    | '/produit/$slug'
+    | '/blog/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/boutique' | '/commander' | '/panier' | '/produit/$slug' | '/blog'
+  to:
+    | '/'
+    | '/boutique'
+    | '/commander'
+    | '/panier'
+    | '/blog/$slug'
+    | '/produit/$slug'
+    | '/blog'
   id:
     | '__root__'
     | '/'
     | '/boutique'
     | '/commander'
     | '/panier'
+    | '/blog/$slug'
     | '/produit/$slug'
     | '/blog/'
   fileRoutesById: FileRoutesById
@@ -93,6 +116,7 @@ export interface RootRouteChildren {
   BoutiqueRoute: typeof BoutiqueRoute
   CommanderRoute: typeof CommanderRoute
   PanierRoute: typeof PanierRoute
+  BlogSlugRoute: typeof BlogSlugRoute
   ProduitSlugRoute: typeof ProduitSlugRoute
   BlogIndexRoute: typeof BlogIndexRoute
 }
@@ -134,6 +158,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BlogIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/blog/$slug': {
+      id: '/blog/$slug'
+      path: '/blog/$slug'
+      fullPath: '/blog/$slug'
+      preLoaderRoute: typeof BlogSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/produit/$slug': {
       id: '/produit/$slug'
       path: '/produit/$slug'
@@ -149,19 +180,10 @@ const rootRouteChildren: RootRouteChildren = {
   BoutiqueRoute: BoutiqueRoute,
   CommanderRoute: CommanderRoute,
   PanierRoute: PanierRoute,
+  BlogSlugRoute: BlogSlugRoute,
   ProduitSlugRoute: ProduitSlugRoute,
   BlogIndexRoute: BlogIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
