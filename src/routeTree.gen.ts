@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AvisClientRouteImport } from './routes/avis-client'
 import { Route as BoutiqueRouteImport } from './routes/boutique'
 import { Route as CommanderRouteImport } from './routes/commander'
 import { Route as PanierRouteImport } from './routes/panier'
@@ -20,6 +21,11 @@ import { Route as ProduitSlugRouteImport } from './routes/produit.$slug'
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AvisClientRoute = AvisClientRouteImport.update({
+  id: '/avis-client',
+  path: '/avis-client',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BoutiqueRoute = BoutiqueRouteImport.update({
@@ -55,6 +61,7 @@ const ProduitSlugRoute = ProduitSlugRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/avis-client': typeof AvisClientRoute
   '/boutique': typeof BoutiqueRoute
   '/commander': typeof CommanderRoute
   '/panier': typeof PanierRoute
@@ -64,6 +71,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/avis-client': typeof AvisClientRoute
   '/boutique': typeof BoutiqueRoute
   '/commander': typeof CommanderRoute
   '/panier': typeof PanierRoute
@@ -74,6 +82,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/avis-client': typeof AvisClientRoute
   '/boutique': typeof BoutiqueRoute
   '/commander': typeof CommanderRoute
   '/panier': typeof PanierRoute
@@ -85,6 +94,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/avis-client'
     | '/boutique'
     | '/commander'
     | '/panier'
@@ -94,6 +104,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/avis-client'
     | '/boutique'
     | '/commander'
     | '/panier'
@@ -103,6 +114,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/avis-client'
     | '/boutique'
     | '/commander'
     | '/panier'
@@ -113,6 +125,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AvisClientRoute: typeof AvisClientRoute
   BoutiqueRoute: typeof BoutiqueRoute
   CommanderRoute: typeof CommanderRoute
   PanierRoute: typeof PanierRoute
@@ -128,6 +141,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/avis-client': {
+      id: '/avis-client'
+      path: '/avis-client'
+      fullPath: '/avis-client'
+      preLoaderRoute: typeof AvisClientRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/boutique': {
@@ -177,6 +197,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AvisClientRoute: AvisClientRoute,
   BoutiqueRoute: BoutiqueRoute,
   CommanderRoute: CommanderRoute,
   PanierRoute: PanierRoute,
