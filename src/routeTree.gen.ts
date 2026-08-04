@@ -10,33 +10,167 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AProposRouteImport } from './routes/a-propos'
+import { Route as AvisClientRouteImport } from './routes/avis-client'
+import { Route as BoutiqueRouteImport } from './routes/boutique'
+import { Route as CommanderRouteImport } from './routes/commander'
+import { Route as NousContacterRouteImport } from './routes/nous-contacter'
+import { Route as PanierRouteImport } from './routes/panier'
+import { Route as ProcessusDachatRouteImport } from './routes/processus-dachat'
+import { Route as BlogIndexRouteImport } from './routes/blog/index'
+import { Route as BlogSlugRouteImport } from './routes/blog/$slug'
+import { Route as ProduitSlugRouteImport } from './routes/produit.$slug'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AProposRoute = AProposRouteImport.update({
+  id: '/a-propos',
+  path: '/a-propos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AvisClientRoute = AvisClientRouteImport.update({
+  id: '/avis-client',
+  path: '/avis-client',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BoutiqueRoute = BoutiqueRouteImport.update({
+  id: '/boutique',
+  path: '/boutique',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CommanderRoute = CommanderRouteImport.update({
+  id: '/commander',
+  path: '/commander',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NousContacterRoute = NousContacterRouteImport.update({
+  id: '/nous-contacter',
+  path: '/nous-contacter',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PanierRoute = PanierRouteImport.update({
+  id: '/panier',
+  path: '/panier',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProcessusDachatRoute = ProcessusDachatRouteImport.update({
+  id: '/processus-dachat',
+  path: '/processus-dachat',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BlogIndexRoute = BlogIndexRouteImport.update({
+  id: '/blog/',
+  path: '/blog/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BlogSlugRoute = BlogSlugRouteImport.update({
+  id: '/blog/$slug',
+  path: '/blog/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProduitSlugRoute = ProduitSlugRouteImport.update({
+  id: '/produit/$slug',
+  path: '/produit/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/a-propos': typeof AProposRoute
+  '/avis-client': typeof AvisClientRoute
+  '/boutique': typeof BoutiqueRoute
+  '/commander': typeof CommanderRoute
+  '/nous-contacter': typeof NousContacterRoute
+  '/panier': typeof PanierRoute
+  '/processus-dachat': typeof ProcessusDachatRoute
+  '/blog/$slug': typeof BlogSlugRoute
+  '/produit/$slug': typeof ProduitSlugRoute
+  '/blog/': typeof BlogIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/a-propos': typeof AProposRoute
+  '/avis-client': typeof AvisClientRoute
+  '/boutique': typeof BoutiqueRoute
+  '/commander': typeof CommanderRoute
+  '/nous-contacter': typeof NousContacterRoute
+  '/panier': typeof PanierRoute
+  '/processus-dachat': typeof ProcessusDachatRoute
+  '/blog/$slug': typeof BlogSlugRoute
+  '/produit/$slug': typeof ProduitSlugRoute
+  '/blog': typeof BlogIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/a-propos': typeof AProposRoute
+  '/avis-client': typeof AvisClientRoute
+  '/boutique': typeof BoutiqueRoute
+  '/commander': typeof CommanderRoute
+  '/nous-contacter': typeof NousContacterRoute
+  '/panier': typeof PanierRoute
+  '/processus-dachat': typeof ProcessusDachatRoute
+  '/blog/$slug': typeof BlogSlugRoute
+  '/produit/$slug': typeof ProduitSlugRoute
+  '/blog/': typeof BlogIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/a-propos'
+    | '/avis-client'
+    | '/boutique'
+    | '/commander'
+    | '/nous-contacter'
+    | '/panier'
+    | '/processus-dachat'
+    | '/blog/$slug'
+    | '/produit/$slug'
+    | '/blog/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/a-propos'
+    | '/avis-client'
+    | '/boutique'
+    | '/commander'
+    | '/nous-contacter'
+    | '/panier'
+    | '/processus-dachat'
+    | '/blog/$slug'
+    | '/produit/$slug'
+    | '/blog'
+  id:
+    | '__root__'
+    | '/'
+    | '/a-propos'
+    | '/avis-client'
+    | '/boutique'
+    | '/commander'
+    | '/nous-contacter'
+    | '/panier'
+    | '/processus-dachat'
+    | '/blog/$slug'
+    | '/produit/$slug'
+    | '/blog/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AProposRoute: typeof AProposRoute
+  AvisClientRoute: typeof AvisClientRoute
+  BoutiqueRoute: typeof BoutiqueRoute
+  CommanderRoute: typeof CommanderRoute
+  NousContacterRoute: typeof NousContacterRoute
+  PanierRoute: typeof PanierRoute
+  ProcessusDachatRoute: typeof ProcessusDachatRoute
+  BlogSlugRoute: typeof BlogSlugRoute
+  ProduitSlugRoute: typeof ProduitSlugRoute
+  BlogIndexRoute: typeof BlogIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,22 +182,92 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/a-propos': {
+      id: '/a-propos'
+      path: '/a-propos'
+      fullPath: '/a-propos'
+      preLoaderRoute: typeof AProposRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/avis-client': {
+      id: '/avis-client'
+      path: '/avis-client'
+      fullPath: '/avis-client'
+      preLoaderRoute: typeof AvisClientRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/boutique': {
+      id: '/boutique'
+      path: '/boutique'
+      fullPath: '/boutique'
+      preLoaderRoute: typeof BoutiqueRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/commander': {
+      id: '/commander'
+      path: '/commander'
+      fullPath: '/commander'
+      preLoaderRoute: typeof CommanderRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/nous-contacter': {
+      id: '/nous-contacter'
+      path: '/nous-contacter'
+      fullPath: '/nous-contacter'
+      preLoaderRoute: typeof NousContacterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/panier': {
+      id: '/panier'
+      path: '/panier'
+      fullPath: '/panier'
+      preLoaderRoute: typeof PanierRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/processus-dachat': {
+      id: '/processus-dachat'
+      path: '/processus-dachat'
+      fullPath: '/processus-dachat'
+      preLoaderRoute: typeof ProcessusDachatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/blog/': {
+      id: '/blog/'
+      path: '/blog'
+      fullPath: '/blog/'
+      preLoaderRoute: typeof BlogIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/blog/$slug': {
+      id: '/blog/$slug'
+      path: '/blog/$slug'
+      fullPath: '/blog/$slug'
+      preLoaderRoute: typeof BlogSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/produit/$slug': {
+      id: '/produit/$slug'
+      path: '/produit/$slug'
+      fullPath: '/produit/$slug'
+      preLoaderRoute: typeof ProduitSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AProposRoute: AProposRoute,
+  AvisClientRoute: AvisClientRoute,
+  BoutiqueRoute: BoutiqueRoute,
+  CommanderRoute: CommanderRoute,
+  NousContacterRoute: NousContacterRoute,
+  PanierRoute: PanierRoute,
+  ProcessusDachatRoute: ProcessusDachatRoute,
+  BlogSlugRoute: BlogSlugRoute,
+  ProduitSlugRoute: ProduitSlugRoute,
+  BlogIndexRoute: BlogIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
