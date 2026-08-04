@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AProposRouteImport } from './routes/a-propos'
 import { Route as AvisClientRouteImport } from './routes/avis-client'
 import { Route as BoutiqueRouteImport } from './routes/boutique'
 import { Route as CommanderRouteImport } from './routes/commander'
@@ -23,6 +24,11 @@ import { Route as ProduitSlugRouteImport } from './routes/produit.$slug'
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AProposRoute = AProposRouteImport.update({
+  id: '/a-propos',
+  path: '/a-propos',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AvisClientRoute = AvisClientRouteImport.update({
@@ -73,6 +79,7 @@ const ProduitSlugRoute = ProduitSlugRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/a-propos': typeof AProposRoute
   '/avis-client': typeof AvisClientRoute
   '/boutique': typeof BoutiqueRoute
   '/commander': typeof CommanderRoute
@@ -85,6 +92,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/a-propos': typeof AProposRoute
   '/avis-client': typeof AvisClientRoute
   '/boutique': typeof BoutiqueRoute
   '/commander': typeof CommanderRoute
@@ -98,6 +106,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/a-propos': typeof AProposRoute
   '/avis-client': typeof AvisClientRoute
   '/boutique': typeof BoutiqueRoute
   '/commander': typeof CommanderRoute
@@ -112,6 +121,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/a-propos'
     | '/avis-client'
     | '/boutique'
     | '/commander'
@@ -124,6 +134,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/a-propos'
     | '/avis-client'
     | '/boutique'
     | '/commander'
@@ -136,6 +147,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/a-propos'
     | '/avis-client'
     | '/boutique'
     | '/commander'
@@ -149,6 +161,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AProposRoute: typeof AProposRoute
   AvisClientRoute: typeof AvisClientRoute
   BoutiqueRoute: typeof BoutiqueRoute
   CommanderRoute: typeof CommanderRoute
@@ -167,6 +180,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/a-propos': {
+      id: '/a-propos'
+      path: '/a-propos'
+      fullPath: '/a-propos'
+      preLoaderRoute: typeof AProposRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/avis-client': {
@@ -237,6 +257,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AProposRoute: AProposRoute,
   AvisClientRoute: AvisClientRoute,
   BoutiqueRoute: BoutiqueRoute,
   CommanderRoute: CommanderRoute,
