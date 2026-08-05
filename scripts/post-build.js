@@ -4,19 +4,14 @@ import path from "path";
 const clientDir = path.join(process.cwd(), "dist", "client");
 const assetsDir = path.join(clientDir, "assets");
 
-// 1. Generate custom index.html with hashed bundles
+// 1. Generate index.html with hashed bundles
 if (fs.existsSync(assetsDir)) {
   const files = fs.readdirSync(assetsDir);
-  const jsFile =
-    files.find((f) => f.startsWith("index-") && f.endsWith(".js")) ||
-    files.find((f) => f.endsWith(".js"));
-  const cssFile =
-    files.find((f) => f.startsWith("styles-") && f.endsWith(".css")) ||
-    files.find((f) => f.endsWith(".css"));
-
+  const jsFile = files.find((f) => f.startsWith("index-") && f.endsWith(".js"));
+  const cssFile = files.find((f) => f.startsWith("styles-") && f.endsWith(".css"));
   console.log("Found client bundles:", { jsFile, cssFile });
 
-  const htmlContent = `<!DOCTYPE html>
+  const html = `<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -32,45 +27,46 @@ if (fs.existsSync(assetsDir)) {
     <div id="root"></div>
     ${jsFile ? `<script type="module" src="/assets/${jsFile}"></script>` : ""}
   </body>
-</html>
-`;
+</html>`;
 
-  fs.writeFileSync(path.join(clientDir, "index.html"), htmlContent);
-  console.log(
-    "Generated dist/client/index.html with JS and CSS bundles!"
-  );
+  fs.writeFileSync(path.join(clientDir, "index.html"), html);
+  console.log("Generated dist/client/index.html");
+
+  // 2. Patch the JS bundle: make xn() safe when window.$_TSR is undefined
+  if (jsFile) {
+    const jsBundlePath = path.join(assetsDir, jsFile);
+    let js = fs.readFileSync(jsBundlePath, "utf8");
+
+    // The exact pattern from the bundle - replace with a safe fallback
+    const original = "async function xn(e){let t=window.$_TSR,";
+    const patched =
+      "async function xn(e){" +
+      "if(!window.$_TSR){window.$_TSR={h(){},e(){},c(){},p(cb){cb()},initialized:false,buffer:[],router:{manifest:{routes:{__root__:{preloads:[],scripts:[]}},version:'1'},matches:[{i:'__root__\\0',s:'success',ssr:false}]}}}" +
+      "let t=window.$_TSR,";
+
+    if (js.includes(original)) {
+      js = js.replace(original, patched);
+      fs.writeFileSync(jsBundlePath, js);
+      console.log(`Patched ${jsFile}: added $_TSR safe fallback in xn()`);
+    } else {
+      console.warn("WARNING: Could not find xn() pattern to patch in JS bundle!");
+    }
+  }
 }
 
-// 2. Patch _shell.html to prevent window.$_TSR from self-deleting before JS hydration runs
+// 3. Also patch _shell.html to not self-delete $_TSR
 const shellPath = path.join(clientDir, "_shell.html");
 if (fs.existsSync(shellPath)) {
   let shell = fs.readFileSync(shellPath, "utf8");
-
-  // Replace the self-deletion logic in the stream barrier:
-  // Original: c(){this.hydrated&&this.streamEnded&&(delete self.$_TSR,delete self.$R.tsr)}
-  // Patched:  c(){} -- never self-delete, JS hydration will handle cleanup
-  const originalCleanup =
-    "c(){this.hydrated&&this.streamEnded&&(delete self.$_TSR,delete self.$R.tsr)}";
-  const patchedCleanup = "c(){}";
-
-  if (shell.includes(originalCleanup)) {
-    shell = shell.replace(originalCleanup, patchedCleanup);
+  const before = shell.length;
+  shell = shell.replace(
+    /c\(\)\{this\.hydrated&&this\.streamEnded&&\(delete self\.\$_TSR,delete self\.\$R\.tsr\)\}/g,
+    "c(){}"
+  );
+  if (shell.length !== before || shell.includes("c(){}")) {
     fs.writeFileSync(shellPath, shell);
-    console.log(
-      "Patched _shell.html: disabled $_TSR self-deletion to fix hydration crash."
-    );
+    console.log("Patched _shell.html: removed $_TSR self-deletion");
   } else {
-    console.warn(
-      "WARNING: Could not find cleanup pattern in _shell.html. The bundle format may have changed."
-    );
-    // Try a regex approach as fallback
-    const patched = shell.replace(
-      /c\(\)\{this\.hydrated&&this\.streamEnded&&\(delete self\.\$_TSR,delete self\.\$R\.tsr\)\}/,
-      "c(){}"
-    );
-    if (patched !== shell) {
-      fs.writeFileSync(shellPath, patched);
-      console.log("Patched _shell.html via regex fallback.");
-    }
+    console.warn("WARNING: _shell.html patch pattern not found");
   }
 }
