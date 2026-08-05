@@ -5,36 +5,47 @@ import { NAV, SITE, formatPrice } from "@/lib/site";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { subscribeToNewsletter } from "@/lib/storefront.functions";
+import { ShieldCheck, PhoneCall, Mail, MapPin, Clock } from "lucide-react";
 
 export function Footer() {
   const [email, setEmail] = useState("");
   const [busy, setBusy] = useState(false);
 
   return (
-    <footer className="ink-panel mt-20">
-      <div className="container-page grid gap-10 py-14 md:grid-cols-2 lg:grid-cols-4">
+    <footer className="bg-[#0b1e36] text-white mt-20 border-t border-blue-900">
+      <div className="container-page grid gap-10 py-16 md:grid-cols-2 lg:grid-cols-4">
+        {/* Company Info */}
         <div>
-          <p className="font-display text-lg uppercase tracking-[0.2em] text-primary">
-            Bank Seized Cars
+          <div className="flex items-center gap-3 mb-4">
+            <img
+              src="/logo.png"
+              alt="Bank Seized Cars Logo"
+              className="size-10 rounded-lg object-contain bg-slate-900 border border-amber-500/30 p-1 shadow-md"
+            />
+            <p className="font-display text-lg font-black uppercase tracking-wider text-white">
+              Bank Seized Cars
+            </p>
+          </div>
+          <p className="text-sm text-white/75 leading-relaxed">
+            We source bank and lender repossessed vehicles across the United States. Buy verified luxury cars, trucks, and SUVs at up to 60% below retail value with nationwide door-to-door delivery.
           </p>
-          <p className="mt-4 text-sm text-white/70">
-            We list bank and lender repossessed vehicles across the United States and deliver them
-            straight to your door at well below retail prices.
-          </p>
-          <a
-            href={SITE.whatsappLink}
-            className="mt-4 inline-block text-sm font-semibold text-primary"
-          >
-            WhatsApp: {SITE.whatsapp}
-          </a>
+          <div className="mt-4 flex items-center gap-2">
+            <ShieldCheck className="size-4 text-emerald-400 shrink-0" />
+            <span className="text-xs font-semibold text-emerald-400 uppercase tracking-wide">
+              100% Lien-Free Verified Titles
+            </span>
+          </div>
         </div>
 
+        {/* Quick Links */}
         <div>
-          <p className="font-display text-sm uppercase tracking-[0.2em]">Navigation</p>
-          <ul className="mt-4 space-y-2 text-sm text-white/70">
+          <p className="font-display text-sm font-bold uppercase tracking-widest text-blue-400">
+            Quick Navigation
+          </p>
+          <ul className="mt-4 space-y-2.5 text-sm text-white/75">
             {NAV.map((item) => (
               <li key={item.to}>
-                <Link to={item.to} className="hover:text-primary">
+                <Link to={item.to} className="hover:text-blue-400 transition-colors">
                   {item.label}
                 </Link>
               </li>
@@ -42,36 +53,67 @@ export function Footer() {
           </ul>
         </div>
 
+        {/* Location & Hours */}
         <div>
-          <p className="font-display text-sm uppercase tracking-[0.2em]">Visit us</p>
-          <ul className="mt-4 space-y-1 text-sm text-white/70">
-            {SITE.address.map((line) => (
-              <li key={line}>{line}</li>
-            ))}
-          </ul>
-          <ul className="mt-4 space-y-1 text-sm text-white/70">
-            {SITE.hours.map((line) => (
-              <li key={line}>{line}</li>
-            ))}
-          </ul>
+          <p className="font-display text-sm font-bold uppercase tracking-widest text-blue-400">
+            Contact & Location
+          </p>
+          <div className="mt-4 space-y-3 text-sm text-white/75">
+            <div className="flex items-start gap-2.5">
+              <MapPin className="size-4 text-blue-400 shrink-0 mt-0.5" />
+              <div>
+                {SITE.address.map((line) => (
+                  <p key={line}>{line}</p>
+                ))}
+              </div>
+            </div>
+            <div className="flex items-center gap-2.5">
+              <Mail className="size-4 text-blue-400 shrink-0" />
+              <a href={`mailto:${SITE.email}`} className="hover:text-blue-400 transition-colors">
+                {SITE.email}
+              </a>
+            </div>
+            <div className="flex items-center gap-2.5">
+              <PhoneCall className="size-4 text-emerald-400 shrink-0" />
+              <a
+                href={SITE.whatsappLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-bold text-emerald-400 hover:text-emerald-300 transition-colors"
+              >
+                WhatsApp: {SITE.whatsapp}
+              </a>
+            </div>
+            <div className="flex items-start gap-2.5 pt-1">
+              <Clock className="size-4 text-blue-400 shrink-0 mt-0.5" />
+              <div>
+                {SITE.hours.map((line) => (
+                  <p key={line} className="text-xs">{line}</p>
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
 
+        {/* Newsletter Signup */}
         <div>
-          <p className="font-display text-sm uppercase tracking-[0.2em]">Newsletter</p>
-          <p className="mt-4 text-sm text-white/70">
-            Get new repossessed arrivals and price drops in your inbox.
+          <p className="font-display text-sm font-bold uppercase tracking-widest text-blue-400">
+            Inventory Alerts
+          </p>
+          <p className="mt-4 text-sm text-white/75">
+            Subscribe to get immediate notification on fresh bank auction arrivals and clearance prices.
           </p>
           <form
-            className="mt-4 flex gap-2"
+            className="mt-4 flex flex-col sm:flex-row gap-2"
             onSubmit={async (event) => {
               event.preventDefault();
               setBusy(true);
               try {
                 await subscribeToNewsletter({ data: { email } });
-                toast.success("You're subscribed");
+                toast.success("You are subscribed for inventory updates!");
                 setEmail("");
               } catch {
-                toast.error("Please enter a valid email address");
+                toast.error("Please enter a valid email address.");
               } finally {
                 setBusy(false);
               }
@@ -82,22 +124,27 @@ export function Footer() {
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="you@email.com"
-              className="border-white/20 bg-white/10 text-ink-foreground placeholder:text-white/40"
+              placeholder="Enter your email"
+              className="border-white/20 bg-white/10 text-white placeholder:text-white/40 focus-visible:ring-blue-400"
             />
-            <Button type="submit" variant="hero" disabled={busy}>
+            <Button type="submit" className="bg-blue-600 hover:bg-blue-700 font-bold uppercase text-xs" disabled={busy}>
               Join
             </Button>
           </form>
         </div>
       </div>
 
-      <div className="border-t border-white/10">
-        <div className="container-page flex flex-wrap items-center justify-between gap-2 py-5 text-xs text-white/50">
+      {/* Bottom Bar */}
+      <div className="border-t border-white/10 bg-[#071322] py-6 text-xs text-white/60">
+        <div className="container-page flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
           <p>
-            © {new Date().getFullYear()} {SITE.name}. All rights reserved.
+            © {new Date().getFullYear()} {SITE.name}. All Rights Reserved. Bank & Lender Repossessions Storefront.
           </p>
-          <p>Prices shown in USD ({formatPrice(0).slice(0, 1)}) — inventory updated daily.</p>
+          <p className="flex items-center gap-2">
+            <span>Prices displayed in USD ({formatPrice(0).slice(0, 1)})</span>
+            <span>•</span>
+            <span className="text-emerald-400 font-semibold">Updated Daily</span>
+          </p>
         </div>
       </div>
     </footer>

@@ -13,6 +13,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { vehiclesQuery } from "@/lib/queries";
+import { SearchIcon, RefreshCcw } from "lucide-react";
 
 type Search = {
   make?: string | undefined;
@@ -31,16 +32,16 @@ export const Route = createFileRoute("/boutique")({
   loader: ({ context }) => context.queryClient.ensureQueryData(vehiclesQuery),
   head: () => ({
     meta: [
-      { title: "Repossessed Car Inventory | Bank Seized Cars" },
+      { title: "Bank Seized Car Inventory | Certified Auction Listings" },
       {
         name: "description",
         content:
-          "Browse our full inventory of bank repossessed cars, trucks and SUVs. Filter by make, price and mileage, then reserve online with nationwide delivery.",
+          "Browse our complete inventory of bank repossessed cars, trucks and SUVs. Filter by make, price and mileage, then reserve online with nationwide delivery.",
       },
-      { property: "og:title", content: "Repossessed Car Inventory | Bank Seized Cars" },
+      { property: "og:title", content: "Bank Seized Car Inventory | Certified Auction Listings" },
       {
         property: "og:description",
-        content: "Every bank seized vehicle currently available, with prices and full specs.",
+        content: "Every bank seized vehicle currently available, with asking prices, estimated down payments and full specs.",
       },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "/boutique" },
@@ -94,65 +95,82 @@ function Boutique() {
     <SiteLayout>
       <PageHero
         breadcrumb="Inventory"
-        title="Bank repossessed vehicles"
-        subtitle="Every vehicle below is a genuine bank or lender repossession with clean paperwork. Prices update as stock moves."
+        title="Certified Bank & Lender Repossessions"
+        subtitle="Every vehicle listed below is a genuine lender repossession with lien-free paperwork and multi-point inspection. Inventory is updated daily."
       />
 
       <div className="container-page py-12">
-        <div className="flex flex-wrap items-center gap-3">
-          <form
-            className="flex flex-1 min-w-64 gap-2"
-            onSubmit={(e) => {
-              e.preventDefault();
-              setSearch({ q: query || undefined });
-            }}
-          >
-            <Input
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              placeholder="Search by model, make or body type"
-            />
-            <Button type="submit" variant="hero">
-              Search
-            </Button>
-          </form>
+        {/* Filters Bar */}
+        <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+          <div className="flex flex-wrap items-center gap-3">
+            <form
+              className="flex flex-1 min-w-64 gap-2"
+              onSubmit={(e) => {
+                e.preventDefault();
+                setSearch({ q: query || undefined });
+              }}
+            >
+              <div className="relative flex-1">
+                <SearchIcon className="absolute left-3 top-3 size-4 text-slate-400" />
+                <Input
+                  value={query}
+                  onChange={(e) => setQuery(e.target.value)}
+                  placeholder="Search by make, model (e.g. Porsche, G63, SUV)..."
+                  className="pl-9 bg-slate-50 border-slate-200"
+                />
+              </div>
+              <Button type="submit" className="bg-blue-600 hover:bg-blue-700 font-bold uppercase text-xs">
+                Search
+              </Button>
+            </form>
 
-          <Select
-            value={search.make ?? "all"}
-            onValueChange={(value) => setSearch({ make: value === "all" ? undefined : value })}
-          >
-            <SelectTrigger className="w-48">
-              <SelectValue placeholder="All makes" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All makes</SelectItem>
-              {makes.map((make) => (
-                <SelectItem key={make} value={make}>
-                  {make}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+            <Select
+              value={search.make ?? "all"}
+              onValueChange={(value) => setSearch({ make: value === "all" ? undefined : value })}
+            >
+              <SelectTrigger className="w-48 bg-slate-50 border-slate-200 font-medium">
+                <SelectValue placeholder="All Makes" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Makes</SelectItem>
+                {makes.map((make) => (
+                  <SelectItem key={make} value={make}>
+                    {make}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
 
-          <Select
-            value={search.sort ?? "default"}
-            onValueChange={(value) => setSearch({ sort: value === "default" ? undefined : value })}
-          >
-            <SelectTrigger className="w-52">
-              <SelectValue placeholder="Default sorting" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="default">Default sorting</SelectItem>
-              <SelectItem value="price-asc">Price: low to high</SelectItem>
-              <SelectItem value="price-desc">Price: high to low</SelectItem>
-              <SelectItem value="name">Name A–Z</SelectItem>
-            </SelectContent>
-          </Select>
+            <Select
+              value={search.sort ?? "default"}
+              onValueChange={(value) => setSearch({ sort: value === "default" ? undefined : value })}
+            >
+              <SelectTrigger className="w-52 bg-slate-50 border-slate-200 font-medium">
+                <SelectValue placeholder="Default Sorting" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="default">Default Sorting</SelectItem>
+                <SelectItem value="price-asc">Price: Low to High</SelectItem>
+                <SelectItem value="price-desc">Price: High to Low</SelectItem>
+                <SelectItem value="name">Name A–Z</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
         </div>
 
-        <p className="mt-6 text-sm text-muted-foreground">
-          Showing {visible.length} of {filtered.length} vehicles
-        </p>
+        <div className="mt-6 flex items-center justify-between">
+          <p className="text-sm font-semibold text-slate-600">
+            Showing <span className="text-slate-900 font-bold">{visible.length}</span> of <span className="text-slate-900 font-bold">{filtered.length}</span> bank seized vehicles
+          </p>
+          {search.make || search.q || search.sort ? (
+            <Link
+              to="/boutique"
+              className="flex items-center gap-1 text-xs font-bold text-blue-600 hover:text-blue-800 uppercase tracking-wider"
+            >
+              <RefreshCcw className="size-3.5" /> Reset Filters
+            </Link>
+          ) : null}
+        </div>
 
         <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {visible.map((vehicle) => (
@@ -161,20 +179,28 @@ function Boutique() {
         </div>
 
         {visible.length === 0 ? (
-          <p className="py-16 text-center text-muted-foreground">
-            No vehicles match those filters.{" "}
-            <Link to="/boutique" className="text-hot underline">
-              Reset
-            </Link>
-          </p>
+          <div className="py-20 text-center bg-white rounded-xl border border-slate-200 mt-6 p-8">
+            <p className="text-lg font-bold text-slate-800">No vehicles match your criteria.</p>
+            <p className="text-sm text-slate-500 mt-1">Try broadening your search term or make selection.</p>
+            <Button
+              className="mt-4 bg-blue-600 hover:bg-blue-700 font-bold uppercase text-xs"
+              onClick={() => {
+                setQuery("");
+                navigate({ search: {} });
+              }}
+            >
+              Reset Filters
+            </Button>
+          </div>
         ) : null}
 
         {pages > 1 ? (
-          <div className="mt-10 flex flex-wrap items-center justify-center gap-2">
+          <div className="mt-12 flex flex-wrap items-center justify-center gap-2">
             {Array.from({ length: pages }, (_, i) => i + 1).map((n) => (
               <Button
                 key={n}
-                variant={n === page ? "hero" : "outline"}
+                variant={n === page ? "default" : "outline"}
+                className={n === page ? "bg-blue-600 text-white font-bold" : "border-slate-300 font-semibold"}
                 size="sm"
                 onClick={() => navigate({ search: (prev: Search) => ({ ...prev, page: n }) })}
               >

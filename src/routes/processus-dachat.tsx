@@ -2,20 +2,21 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteLayout, PageHero } from "@/components/SiteLayout";
 import { Button } from "@/components/ui/button";
 import { SITE } from "@/lib/site";
+import { Search, ShoppingBag, PhoneCall, ShieldCheck, CreditCard, Truck } from "lucide-react";
 
 export const Route = createFileRoute("/processus-dachat")({
   head: () => ({
     meta: [
-      { title: "How To Buy A Repossessed Car | Ordering Process" },
+      { title: "How to Buy a Bank Seized Car | 5-Step Order Process" },
       {
         name: "description",
         content:
-          "Our six-step buying process for bank repossessed vehicles: choose a car, reserve it, verify paperwork, pay securely and take delivery anywhere in the USA.",
+          "Our step-by-step buying process for bank repossessed vehicles: choose a car, reserve online, verify paperwork, pay securely, and take nationwide delivery.",
       },
-      { property: "og:title", content: "How To Buy A Repossessed Car | Bank Seized Cars" },
+      { property: "og:title", content: "How to Buy a Bank Seized Car | Bank Seized Cars" },
       {
         property: "og:description",
-        content: "The six steps from reserving a repo vehicle to delivery at your door.",
+        content: "The complete guide from reserving a repo vehicle to delivery at your door.",
       },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "/processus-dachat" },
@@ -44,28 +45,40 @@ export const Route = createFileRoute("/processus-dachat")({
 
 const STEPS = [
   {
-    title: "1. Choose your vehicle",
-    body: "Browse the live inventory and pick the repossessed car, truck or SUV that fits your budget. Every listing shows real photos, mileage and title status.",
+    icon: Search,
+    step: "01",
+    title: "Select & Inspect Vehicle",
+    body: "Browse our active inventory of bank-repossessed luxury vehicles. Review full specification sheets, 150-point inspection reports, and asking prices.",
   },
   {
-    title: "2. Reserve it online",
-    body: "Add the vehicle to your cart and complete checkout. No card is charged — this simply reserves the unit under your name for 48 hours.",
+    icon: ShoppingBag,
+    step: "02",
+    title: "Reserve Online",
+    body: "Click Reserve or Add to Cart to hold the vehicle under your name for 48 hours. No upfront payment is charged during online reservation.",
   },
   {
-    title: "3. Speak with a sales agent",
-    body: "A specialist calls or messages you within 24 hours to confirm availability, answer questions and send the VIN report.",
+    icon: PhoneCall,
+    step: "03",
+    title: "Speak with a Direct Agent",
+    body: "A liquidation advisor connects with you via Phone or WhatsApp within minutes to confirm availability, answer questions, and send the VIN report.",
   },
   {
-    title: "4. Verify the paperwork",
-    body: "You receive the title documentation, lien release and condition report before any money changes hands.",
+    icon: ShieldCheck,
+    step: "04",
+    title: "Title & Paperwork Verification",
+    body: "Receive official lien-release documents, bill of sale, and title transfer guarantee before submitting any payment.",
   },
   {
-    title: "5. Pay securely",
-    body: "Settle by bank transfer, Zelle, Cash App or escrow-backed crypto. Funds are only released once the vehicle is allocated to you.",
+    icon: CreditCard,
+    step: "05",
+    title: "Secure Escrow Payment",
+    body: "Settle payment securely via Wire Transfer, Bank Draft, Zelle, or Escrow. Funds are protected until vehicle shipping assignment.",
   },
   {
-    title: "6. Take delivery",
-    body: "Open or enclosed transport delivers to your driveway anywhere in the lower 48, typically in 3–10 business days.",
+    icon: Truck,
+    step: "06",
+    title: "Nationwide Door-to-Door Delivery",
+    body: "Fully insured open or enclosed auto-transport delivers the vehicle directly to your residence in 3–7 business days.",
   },
 ];
 
@@ -73,33 +86,63 @@ function Process() {
   return (
     <SiteLayout>
       <PageHero
-        breadcrumb="Buying process"
-        title="How ordering works"
-        subtitle="Six clear steps from browsing to delivery — no auction licence, no dealer fees, no surprises."
+        breadcrumb="How to Order"
+        title="Simple 6-Step Purchase Process"
+        subtitle="Buying a bank repossessed vehicle is straightforward. No dealer fees, no auction license required, and guaranteed lien-free titles."
       />
-      <div className="container-page py-12">
-        <ol className="grid gap-6 md:grid-cols-2">
+
+      <div className="container-page py-16">
+        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
           {STEPS.map((step) => (
-            <li key={step.title} className="rounded-lg border border-border bg-card p-6">
-              <h2 className="font-display text-lg uppercase tracking-wider text-hot">
+            <div
+              key={step.step}
+              className="relative overflow-hidden rounded-xl border border-slate-200 bg-white p-8 shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col"
+            >
+              <div className="flex items-center justify-between mb-6">
+                <div className="flex size-12 items-center justify-center rounded-xl bg-blue-100 text-blue-700">
+                  <step.icon className="size-6" />
+                </div>
+                <span className="font-display text-2xl font-black text-slate-300">
+                  {step.step}
+                </span>
+              </div>
+
+              <h2 className="font-display text-xl font-bold text-slate-900 mb-3">
                 {step.title}
               </h2>
-              <p className="mt-3 text-sm text-muted-foreground">{step.body}</p>
-            </li>
+              <p className="text-sm text-slate-600 leading-relaxed flex-1">
+                {step.body}
+              </p>
+            </div>
           ))}
-        </ol>
+        </div>
 
-        <div className="ink-panel mt-12 rounded-lg p-8">
-          <h2 className="text-2xl">Still have questions?</h2>
-          <p className="mt-3 max-w-2xl text-white/70">
-            Our team answers WhatsApp messages within minutes during business hours.
-          </p>
-          <div className="mt-6 flex flex-wrap gap-3">
-            <Button variant="hero" asChild>
-              <a href={SITE.whatsappLink}>WhatsApp {SITE.whatsapp}</a>
-            </Button>
-            <Button variant="outline" className="border-white/30 bg-transparent" asChild>
-              <Link to="/nous-contacter">Contact form</Link>
+        {/* WhatsApp Callout Card */}
+        <div className="mt-16 rounded-2xl bg-[#0b1e36] text-white p-10 shadow-xl border border-blue-900 flex flex-col md:flex-row items-center justify-between gap-8">
+          <div className="max-w-2xl">
+            <span className="text-xs font-extrabold uppercase tracking-widest text-emerald-400">
+              Need Instant Assistance?
+            </span>
+            <h2 className="mt-2 font-display text-3xl font-black text-white uppercase">
+              Speak With A Bank Repossession Specialist
+            </h2>
+            <p className="mt-3 text-slate-300 text-base leading-relaxed">
+              Have questions about title transfer, shipping rates, or reserving a specific car? Our advisors respond promptly on WhatsApp.
+            </p>
+          </div>
+
+          <div className="flex flex-col sm:flex-row gap-3 shrink-0 w-full md:w-auto">
+            <a
+              href={SITE.whatsappLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 px-6 py-4 text-sm font-extrabold text-white uppercase tracking-wider shadow-lg transition-colors"
+            >
+              <PhoneCall className="size-4" />
+              WhatsApp {SITE.whatsapp}
+            </a>
+            <Button variant="outline" className="border-white/30 text-white hover:bg-white/10 font-bold uppercase text-xs px-6 py-4" asChild>
+              <Link to="/nous-contacter">Submit Inquiry Form</Link>
             </Button>
           </div>
         </div>
