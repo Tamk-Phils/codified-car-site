@@ -4,7 +4,17 @@ import path from "path";
 const clientDir = path.join(process.cwd(), "dist", "client");
 const assetsDir = path.join(clientDir, "assets");
 
-// 1. Generate index.html with hashed bundles
+const tsrFallbackScript = `<script>
+if(!window.$_TSR){
+  window.$_TSR={
+    h(){},e(){},c(){},p(cb){if(typeof cb==='function')cb();},
+    initialized:false,buffer:[],
+    router:{manifest:{routes:{__root__:{preloads:[],scripts:[]}},version:'1'},matches:[{i:'__root__\\0',s:'success',ssr:false}]}
+  };
+}
+</script>`;
+
+// 1. Generate index.html with hashed bundles and inline $_TSR fallback script
 if (fs.existsSync(assetsDir)) {
   const files = fs.readdirSync(assetsDir);
   const jsFile = files.find((f) => f.startsWith("index-") && f.endsWith(".js"));
@@ -21,6 +31,7 @@ if (fs.existsSync(assetsDir)) {
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     <link rel="icon" type="image/png" href="/favicon.png" />
     <link rel="apple-touch-icon" href="/logo.png" />
+    ${tsrFallbackScript}
     ${cssFile ? `<link rel="stylesheet" href="/assets/${cssFile}" />` : ""}
   </head>
   <body>
@@ -30,43 +41,44 @@ if (fs.existsSync(assetsDir)) {
 </html>`;
 
   fs.writeFileSync(path.join(clientDir, "index.html"), html);
-  console.log("Generated dist/client/index.html");
+  console.log("Generated dist/client/index.html with inline $_TSR fallback");
 
-  // 2. Patch the JS bundle: make xn() safe when window.$_TSR is undefined
-  if (jsFile) {
-    const jsBundlePath = path.join(assetsDir, jsFile);
-    let js = fs.readFileSync(jsBundlePath, "utf8");
+  // 2. Patch ALL JS files in assets directory: make any 'let t=window.$_TSR,' safe
+  const jsFiles = files.filter((f) => f.endsWith(".js"));
+  let totalPatched = 0;
+  const safeTsrCode = "if(!window.$_TSR){window.$_TSR={h(){},e(){},c(){},p(cb){if(typeof cb==='function')cb();},initialized:false,buffer:[],router:{manifest:{routes:{__root__:{preloads:[],scripts:[]}},version:'1'},matches:[{i:'__root__\\0',s:'success',ssr:false}]}}};let t=window.$_TSR,";
 
-    // The exact pattern from the bundle - replace with a safe fallback
-    const original = "async function xn(e){let t=window.$_TSR,";
-    const patched =
-      "async function xn(e){" +
-      "if(!window.$_TSR){window.$_TSR={h(){},e(){},c(){},p(cb){cb()},initialized:false,buffer:[],router:{manifest:{routes:{__root__:{preloads:[],scripts:[]}},version:'1'},matches:[{i:'__root__\\0',s:'success',ssr:false}]}}}" +
-      "let t=window.$_TSR,";
-
-    if (js.includes(original)) {
-      js = js.replace(original, patched);
-      fs.writeFileSync(jsBundlePath, js);
-      console.log(`Patched ${jsFile}: added $_TSR safe fallback in xn()`);
-    } else {
-      console.warn("WARNING: Could not find xn() pattern to patch in JS bundle!");
+  for (const file of jsFiles) {
+    const filePath = path.join(assetsDir, file);
+    let js = fs.readFileSync(filePath, "utf8");
+    if (js.includes("let t=window.$_TSR,")) {
+      js = js.replaceAll("let t=window.$_TSR,", safeTsrCode);
+      fs.writeFileSync(filePath, js);
+      totalPatched++;
+      console.log(`Patched ${file}: injected $_TSR safety guard`);
     }
+  }
+  if (totalPatched === 0) {
+    console.warn("WARNING: No 'let t=window.$_TSR,' patterns found in JS files!");
   }
 }
 
-// 3. Also patch _shell.html to not self-delete $_TSR
+// 3. Patch _shell.html to inject inline $_TSR fallback and prevent self-deletion
 const shellPath = path.join(clientDir, "_shell.html");
 if (fs.existsSync(shellPath)) {
   let shell = fs.readFileSync(shellPath, "utf8");
-  const before = shell.length;
+
+  // Prevent self deletion
   shell = shell.replace(
     /c\(\)\{this\.hydrated&&this\.streamEnded&&\(delete self\.\$_TSR,delete self\.\$R\.tsr\)\}/g,
     "c(){}"
   );
-  if (shell.length !== before || shell.includes("c(){}")) {
-    fs.writeFileSync(shellPath, shell);
-    console.log("Patched _shell.html: removed $_TSR self-deletion");
-  } else {
-    console.warn("WARNING: _shell.html patch pattern not found");
+
+  // Inject fallback script in head if not already present
+  if (!shell.includes("if(!window.$_TSR)")) {
+    shell = shell.replace("<head>", `<head>${tsrFallbackScript}`);
   }
+
+  fs.writeFileSync(shellPath, shell);
+  console.log("Patched _shell.html with $_TSR safety guard");
 }
