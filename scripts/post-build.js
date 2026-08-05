@@ -6,8 +6,10 @@ const assetsDir = path.join(clientDir, "assets");
 
 if (fs.existsSync(assetsDir)) {
   const files = fs.readdirSync(assetsDir);
-  const jsFile = files.find((f) => f.startsWith("index-") && f.endsWith(".js")) || files.find((f) => f.endsWith(".js"));
-  const cssFile = files.find((f) => f.startsWith("styles-") && f.endsWith(".css")) || files.find((f) => f.endsWith(".css"));
+  const jsFile = files.find((f) => f.startsWith("index-") && f.endsWith(".js")) ||
+    files.find((f) => f.endsWith(".js"));
+  const cssFile = files.find((f) => f.startsWith("styles-") && f.endsWith(".css")) ||
+    files.find((f) => f.endsWith(".css"));
 
   console.log("Found client bundles:", { jsFile, cssFile });
 
@@ -34,4 +36,10 @@ if (fs.existsSync(assetsDir)) {
   console.log("Successfully generated production dist/client/index.html with JS and CSS bundles!");
 } else {
   console.error("dist/client/assets directory not found!");
+}
+
+// Also remove the netlify functions directory if it exists (clean up old approach)
+const fnDir = path.join(process.cwd(), "netlify", "functions");
+if (fs.existsSync(fnDir)) {
+  fs.readdirSync(fnDir).forEach((f) => fs.unlinkSync(path.join(fnDir, f)));
 }
