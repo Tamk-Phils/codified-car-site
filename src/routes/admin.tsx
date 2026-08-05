@@ -35,6 +35,7 @@ import {
   ArrowLeft,
   Upload,
   X,
+  Menu,
   Image as ImageIcon,
   ShieldCheck,
 } from "lucide-react";
@@ -52,6 +53,7 @@ function AdminPage() {
 
   // Dashboard state
   const [activeTab, setActiveTab] = useState<"overview" | "vehicles" | "orders" | "inquiries" | "posts" | "subscribers" | "settings">("overview");
+  const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
   const [stats, setStats] = useState<any>(null);
   const [vehicles, setVehicles] = useState<any[]>([]);
   const [orders, setOrders] = useState<any[]>([]);
@@ -149,10 +151,49 @@ function AdminPage() {
   };
 
   return (
-    <div className="flex min-h-screen bg-slate-100 text-slate-900">
+    <div className="flex flex-col lg:flex-row min-h-screen bg-slate-100 text-slate-900">
+      {/* Mobile Top Header Bar */}
+      <div className="lg:hidden flex items-center justify-between bg-[#0b1e36] text-white p-4 border-b border-blue-950 sticky top-0 z-40">
+        <div className="flex items-center gap-3">
+          <img
+            src="/logo.png"
+            alt="Bank Seized Cars Emblem"
+            className="size-8 rounded-lg object-contain bg-slate-900 border border-amber-500/30 p-1 shadow-md"
+          />
+          <div>
+            <h1 className="font-display text-xs font-black uppercase text-white leading-none">
+              Bank Seized Cars
+            </h1>
+            <span className="text-[9px] text-emerald-400 font-bold uppercase tracking-widest">
+              Admin Portal
+            </span>
+          </div>
+        </div>
+
+        <button
+          onClick={() => setIsMobileNavOpen(!isMobileNavOpen)}
+          className="p-2 rounded-lg bg-blue-900/50 hover:bg-blue-800 text-white transition-colors"
+          aria-label="Toggle navigation menu"
+        >
+          {isMobileNavOpen ? <X className="size-5" /> : <Menu className="size-5" />}
+        </button>
+      </div>
+
+      {/* Mobile Navigation Backdrop */}
+      {isMobileNavOpen && (
+        <div
+          onClick={() => setIsMobileNavOpen(false)}
+          className="lg:hidden fixed inset-0 bg-black/60 z-40 transition-opacity"
+        />
+      )}
+
       {/* Sidebar */}
-      <aside className="w-64 bg-[#0b1e36] text-white flex flex-col shrink-0 border-r border-blue-950">
-        <div className="p-6 border-b border-white/10">
+      <aside
+        className={`fixed inset-y-0 left-0 z-50 w-64 bg-[#0b1e36] text-white flex flex-col shrink-0 border-r border-blue-950 transform transition-transform duration-300 ease-in-out lg:static lg:translate-x-0 ${
+          isMobileNavOpen ? "translate-x-0" : "-translate-x-full"
+        }`}
+      >
+        <div className="p-6 border-b border-white/10 hidden lg:block">
           <div className="flex items-center gap-3">
             <img
               src="/logo.png"
@@ -170,7 +211,7 @@ function AdminPage() {
           </div>
         </div>
 
-        <nav className="flex-1 p-4 space-y-1">
+        <nav className="flex-1 p-4 space-y-1 overflow-y-auto">
           {[
             { id: "overview", label: "Overview", icon: LayoutDashboard },
             { id: "vehicles", label: "Vehicles", icon: Car },
@@ -182,7 +223,10 @@ function AdminPage() {
           ].map((tab) => (
             <button
               key={tab.id}
-              onClick={() => setActiveTab(tab.id as any)}
+              onClick={() => {
+                setActiveTab(tab.id as any);
+                setIsMobileNavOpen(false);
+              }}
               className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors ${
                 activeTab === tab.id
                   ? "bg-blue-600 text-white shadow-md"
@@ -214,10 +258,10 @@ function AdminPage() {
       </aside>
 
       {/* Main Content Area */}
-      <main className="flex-1 overflow-y-auto p-8">
-        <div className="flex items-center justify-between border-b border-slate-200 pb-6 mb-8">
+      <main className="flex-1 min-w-0 overflow-y-auto p-4 sm:p-6 lg:p-8">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 pb-6 mb-8">
           <div>
-            <h1 className="font-display text-2xl font-black uppercase text-slate-900">
+            <h1 className="font-display text-xl sm:text-2xl font-black uppercase text-slate-900">
               {activeTab} Management
             </h1>
             <p className="text-xs text-slate-500 mt-1">
@@ -225,7 +269,7 @@ function AdminPage() {
             </p>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3">
             <Button
               asChild
               variant="outline"
@@ -332,7 +376,7 @@ function AdminPage() {
             </div>
 
             <div className="overflow-x-auto rounded-xl border border-slate-200 bg-white shadow-sm">
-              <table className="w-full text-left text-xs">
+              <table className="w-full min-w-[640px] text-left text-xs">
                 <thead className="bg-slate-50 border-b border-slate-200 text-slate-500 font-bold uppercase">
                   <tr>
                     <th className="p-4">Image</th>
@@ -567,7 +611,7 @@ function AdminPage() {
         {activeTab === "orders" && (
           <div>
             <div className="overflow-x-auto rounded-xl border border-slate-200 bg-white shadow-sm">
-              <table className="w-full text-left text-xs">
+              <table className="w-full min-w-[640px] text-left text-xs">
                 <thead className="bg-slate-50 border-b border-slate-200 text-slate-500 font-bold uppercase">
                   <tr>
                     <th className="p-4">Customer</th>
@@ -717,8 +761,8 @@ function AdminPage() {
 
         {/* Tab 6: SUBSCRIBERS */}
         {activeTab === "subscribers" && (
-          <div className="rounded-xl border border-slate-200 bg-white shadow-sm overflow-hidden">
-            <table className="w-full text-left text-xs">
+          <div className="rounded-xl border border-slate-200 bg-white shadow-sm overflow-x-auto">
+            <table className="w-full min-w-[500px] text-left text-xs">
               <thead className="bg-slate-50 border-b border-slate-200 text-slate-500 font-bold uppercase">
                 <tr>
                   <th className="p-4">Email</th>
