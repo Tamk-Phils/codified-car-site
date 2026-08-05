@@ -39,12 +39,12 @@ export function VehicleCard({ vehicle }: { vehicle: Vehicle }) {
           )}
 
           {/* Reference Site Overlay Badge: ASKING & DOWN PAYMENT */}
-          <div className="absolute top-2 left-2 right-2 rounded bg-slate-900/90 p-1.5 text-center text-white backdrop-blur-xs border border-white/20">
-            <p className="text-[10px] font-black uppercase tracking-wider text-amber-300">
-              ASKING: {formatPrice(effectivePrice)}
+          <div className="absolute top-3 left-1/2 -translate-x-1/2 w-[92%] rounded bg-slate-950/90 py-1 px-2 text-center text-white backdrop-blur-xs shadow-md border border-white/20">
+            <p className="text-[11px] font-black uppercase tracking-tight text-white leading-none">
+              ASKING:{formatPrice(effectivePrice)}
             </p>
-            <p className="text-[9px] font-bold uppercase tracking-wider text-emerald-400">
-              DOWN PAYMENT: {formatPrice(downPayment)}
+            <p className="text-[10px] font-black uppercase tracking-tight text-emerald-400 leading-none mt-1">
+              DOWN PAYMENT:{formatPrice(downPayment)}
             </p>
           </div>
         </div>

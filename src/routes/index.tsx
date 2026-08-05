@@ -53,15 +53,40 @@ const HERO_SLIDES = [
 ];
 
 const TOP_BRANDS = [
-  { name: "Ferrari", logo: "🏎️" },
-  { name: "Cadillac", logo: "👑" },
-  { name: "Mercedes-Benz", logo: "⭐" },
-  { name: "Chevrolet", logo: "⚡" },
-  { name: "Rolls-Royce", logo: "✨" },
-  { name: "Porsche", logo: "🛡️" },
-  { name: "BMW", logo: "🏁" },
-  { name: "Audi", logo: "⭕" },
+  {
+    name: "Ferrari",
+    image: "https://bankseizedcars.online/wp-content/uploads/2026/06/hd-ferrari-black-logo-transparent-png-701751694773098iuwzos1hjw-removebg-preview.png",
+    make: "Ferrari",
+  },
+  {
+    name: "Cadillac",
+    image: "https://bankseizedcars.online/wp-content/uploads/2026/06/cadillac-115309621794y3hky6zha-removebg-preview.png",
+    make: "Cadillac",
+  },
+  {
+    name: "Mercedes-Benz",
+    image: "https://bankseizedcars.online/wp-content/uploads/2026/06/Mercedes-Benz-Logo-1024x637.png",
+    make: "Mercedes-Benz",
+  },
+  {
+    name: "Chevrolet / Corvette",
+    image: "https://bankseizedcars.online/wp-content/uploads/2026/06/corvette-logo-png_seeklogo-368597.png",
+    make: "Chevrolet",
+  },
 ];
+
+function SectionTitle({ title }: { title: string }) {
+  return (
+    <div className="container-page flex items-center justify-center gap-4 my-10">
+      <div className="flex-1 border-t border-slate-300" />
+      <div className="flex items-center gap-1.5 text-[#093e91] font-display text-sm md:text-base font-black uppercase tracking-widest">
+        <ChevronDown className="size-4 stroke-[3]" />
+        <span>{title}</span>
+      </div>
+      <div className="flex-1 border-t border-slate-300" />
+    </div>
+  );
+}
 
 function Home() {
   const { data: vehicles } = useSuspenseQuery(vehiclesQuery);
@@ -153,27 +178,24 @@ function Home() {
         </div>
       </section>
 
-      {/* 2. TOP BRANDS SECTION */}
-      <section className="py-12 bg-white border-b border-slate-100">
-        <div className="container-page">
-          <div className="flex items-center justify-center gap-1.5 text-[#0d47a1] font-display text-sm font-extrabold uppercase tracking-widest text-center mb-8">
-            <ChevronDown className="size-4" /> TOP BRANDS
-          </div>
+      {/* 2. TOP BRANDS SECTION - Exact 4 brand images with divider line */}
+      <section className="py-8 bg-white border-b border-slate-100">
+        <SectionTitle title="top brands" />
 
-          <div className="flex flex-wrap items-center justify-center gap-8 md:gap-14 opacity-80 hover:opacity-100 transition-opacity">
+        <div className="container-page">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 items-center justify-items-center max-w-4xl mx-auto px-4">
             {TOP_BRANDS.map((brand) => (
               <Link
                 key={brand.name}
                 to="/boutique"
-                search={{ make: brand.name }}
-                className="flex flex-col items-center gap-2 group transition-transform hover:scale-110"
+                search={{ make: brand.make }}
+                className="flex items-center justify-center p-4 transition-transform hover:scale-105 group w-full max-w-[200px]"
               >
-                <div className="flex size-14 items-center justify-center rounded-full bg-slate-50 border border-slate-200 text-2xl group-hover:border-[#0d47a1] shadow-sm">
-                  {brand.logo}
-                </div>
-                <span className="text-xs font-bold text-slate-700 uppercase group-hover:text-[#0d47a1]">
-                  {brand.name}
-                </span>
+                <img
+                  src={brand.image}
+                  alt={brand.name}
+                  className="max-h-24 md:max-h-28 w-auto object-contain transition-all group-hover:drop-shadow-md"
+                />
               </Link>
             ))}
           </div>
@@ -181,12 +203,9 @@ function Home() {
       </section>
 
       {/* 3. BEST SELLING SECTION */}
-      <section className="py-14 bg-slate-50/50">
+      <section className="py-10 bg-slate-50/50">
+        <SectionTitle title="BEST SELLING" />
         <div className="container-page">
-          <div className="flex items-center justify-center gap-1.5 text-[#0d47a1] font-display text-base font-extrabold uppercase tracking-widest text-center mb-10">
-            <ChevronDown className="size-4" /> BEST SELLING
-          </div>
-
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {bestSellingVehicles.map((vehicle) => (
               <VehicleCard key={vehicle.id} vehicle={vehicle} />
@@ -196,18 +215,14 @@ function Home() {
       </section>
 
       {/* 4. WHY BUY BANK-REPOSSESSED VEHICLES SECTION */}
-      <section className="py-16 bg-white border-y border-slate-200">
+      <section className="py-12 bg-white border-y border-slate-200">
+        <SectionTitle title="WHY BUY BANK-REPOSSESSED VEHICLES" />
         <div className="container-page max-w-6xl">
-          <div className="text-center max-w-3xl mx-auto">
-            <div className="flex items-center justify-center gap-1.5 text-[#0d47a1] font-display text-base font-extrabold uppercase tracking-widest text-center mb-2">
-              <ChevronDown className="size-4" /> WHY BUY BANK-REPOSSESSED VEHICLES
-            </div>
-            <p className="mt-3 text-xs sm:text-sm text-slate-600 font-medium">
-              Get access to vehicles repossessed by banks and lenders, priced to sell quickly, without dealership markups.
-            </p>
-          </div>
+          <p className="text-center text-xs sm:text-sm text-slate-600 font-medium max-w-3xl mx-auto mb-10">
+            Get access to vehicles repossessed by banks and lenders, priced to sell quickly, without dealership markups.
+          </p>
 
-          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             <div className="rounded-lg border border-slate-200 bg-slate-50/50 p-5 text-center shadow-xs">
               <h3 className="font-display text-xs font-extrabold uppercase tracking-wider text-slate-900">
                 BELOW MARKET PRICING
@@ -257,12 +272,9 @@ function Home() {
       </section>
 
       {/* 5. RECENT LISTINGS SECTION */}
-      <section className="py-14 bg-slate-50/50">
+      <section className="py-10 bg-slate-50/50">
+        <SectionTitle title="RECENT LISTINGS" />
         <div className="container-page">
-          <div className="flex items-center justify-center gap-1.5 text-[#0d47a1] font-display text-base font-extrabold uppercase tracking-widest text-center mb-10">
-            <ChevronDown className="size-4" /> RECENT LISTINGS
-          </div>
-
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {recentListings.map((vehicle) => (
               <VehicleCard key={vehicle.id} vehicle={vehicle} />
