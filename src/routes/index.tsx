@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { ShieldCheck, Truck, BadgeDollarSign, FileCheck2, ArrowRight, PhoneCall, Star, CheckCircle2 } from "lucide-react";
+import { ShieldCheck, Truck, BadgeDollarSign, FileCheck2, ArrowRight, PhoneCall, MessageSquare, Star, CheckCircle2 } from "lucide-react";
 import { SiteLayout } from "@/components/SiteLayout";
 import { VehicleCard } from "@/components/VehicleCard";
 import { Button } from "@/components/ui/button";
@@ -17,17 +17,17 @@ export const Route = createFileRoute("/")({
   },
   head: () => ({
     meta: [
-      { title: "Bank Seized Cars | Directly Sourced Certified Repossessions" },
+      { title: "KJ Autos | Certified Bank-Repossessed Vehicles in California" },
       {
         name: "description",
         content:
-          "Buy bank seized and lender repossessed cars, trucks and SUVs at up to 60% below retail value. Lien-free titles, verified inspection reports, and nationwide delivery across the USA.",
+          "Buy bank seized and lender repossessed cars, trucks and SUVs at up to 70% below market value. Sourced directly from financial institutions with lien-free titles and nationwide delivery.",
       },
-      { property: "og:title", content: "Bank Seized Cars | Certified Repossessed Vehicles For Sale" },
+      { property: "og:title", content: "KJ Autos | Certified Repossessed Vehicles For Sale" },
       {
         property: "og:description",
         content:
-          "Browse verified bank repossessed luxury cars, trucks and SUVs with clean titles and nationwide US delivery.",
+          "Browse verified bank repossessed luxury cars, trucks and SUVs with clean titles and nationwide delivery from California.",
       },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "/" },
@@ -39,9 +39,9 @@ export const Route = createFileRoute("/")({
 });
 
 const PERKS = [
-  { icon: BadgeDollarSign, title: "Below Market Liquidation", body: "Direct lender repossessions priced 40%–60% below standard retail value." },
+  { icon: BadgeDollarSign, title: "Below Market Liquidation", body: "Direct lender repossessions priced up to 70% below standard retail value." },
   { icon: FileCheck2, title: "Certified Lien-Free Titles", body: "Every vehicle sold includes verified paperwork and clean title transfer." },
-  { icon: Truck, title: "Nationwide Transport", body: "Insured open and enclosed vehicle delivery to your door in the lower 48." },
+  { icon: Truck, title: "Nationwide Transport", body: "Insured open and enclosed vehicle delivery from California to your door." },
   { icon: ShieldCheck, title: "Verified 150-Point Inspection", body: "Thorough multi-point inspection report included with every vehicle listing." },
 ];
 
@@ -61,12 +61,12 @@ function Home() {
 
   return (
     <SiteLayout>
-      {/* Hero Section */}
+      {/* Hero Section - Aligned with Reference Site */}
       <section className="relative isolate overflow-hidden bg-[#0b1e36] text-white py-20 md:py-32">
         {heroVehicle?.images?.[0] ? (
           <img
             src={heroVehicle.images[0]}
-            alt="Bank Repossessed Luxury Vehicle"
+            alt="KJ Autos Bank Repossessed Vehicle"
             className="absolute inset-0 size-full object-cover opacity-20 filter brightness-75 scale-105"
           />
         ) : null}
@@ -76,16 +76,26 @@ function Home() {
           <div className="max-w-3xl">
             <div className="inline-flex items-center gap-2 rounded-full border border-blue-400/30 bg-blue-500/10 px-4 py-1.5 text-xs font-extrabold uppercase tracking-widest text-blue-300 backdrop-blur-sm">
               <ShieldCheck className="size-4 text-emerald-400" />
-              <span>Directly Sourced Certified Bank Repossessions</span>
+              <span>KJ Autos • Sourced Directly From Financial Institutions</span>
             </div>
 
             <h1 className="mt-6 font-display text-4xl font-black leading-tight tracking-tight sm:text-5xl md:text-6xl text-white">
-              Buy Bank Seized Vehicles Up To <span className="text-blue-400">60% Below Retail</span>
+              Bank-Repossessed Vehicles at <span className="text-blue-400">Unbeatable Prices</span>
             </h1>
 
             <p className="mt-6 text-lg text-slate-300 leading-relaxed max-w-2xl">
-              Financial institutions need repossessed assets liquidated quickly. Access verified bank-seized luxury cars, trucks, and SUVs with clean titles, transparent inspections, and door-to-door delivery.
+              Browse a wide selection of certified bank seized cars directly sourced from financial institutions. No middlemen. Just real deals.
             </p>
+
+            {/* Save Up to 70% Callout */}
+            <div className="mt-6 rounded-xl border border-amber-500/30 bg-amber-500/10 p-4 text-slate-200 backdrop-blur-sm max-w-xl">
+              <p className="font-display text-base font-bold text-amber-300 uppercase tracking-wide">
+                🔥 Save Up to 70% on Repo Cars
+              </p>
+              <p className="mt-1 text-xs text-slate-300">
+                These vehicles won’t last long. Explore limited-time listings and secure your deal before it’s gone.
+              </p>
+            </div>
 
             <div className="mt-8 flex flex-wrap items-center gap-4">
               <Button size="lg" className="bg-blue-600 hover:bg-blue-700 text-white font-extrabold uppercase tracking-wider text-sm px-8 py-6 shadow-lg shadow-blue-600/30" asChild>
@@ -95,21 +105,29 @@ function Home() {
               </Button>
 
               <a
+                href={SITE.phoneLink}
+                className="inline-flex items-center gap-2 rounded-lg border border-blue-400/40 bg-blue-600/20 px-6 py-3.5 text-sm font-extrabold uppercase tracking-wider text-white hover:bg-blue-600 transition-all backdrop-blur-sm"
+              >
+                <PhoneCall className="size-4 text-blue-400" />
+                <span>Call/SMS: {SITE.phone}</span>
+              </a>
+
+              <a
                 href={SITE.whatsappLink}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 rounded-lg border border-emerald-500/50 bg-emerald-600/20 px-6 py-3.5 text-sm font-extrabold uppercase tracking-wider text-emerald-300 hover:bg-emerald-600 hover:text-white transition-all backdrop-blur-sm"
               >
-                <PhoneCall className="size-4" />
-                <span>WhatsApp: {SITE.whatsapp}</span>
+                <MessageSquare className="size-4" />
+                <span>WhatsApp: {SITE.phoneFormatted}</span>
               </a>
             </div>
 
             {/* Quick Guarantees Bar */}
             <div className="mt-12 flex flex-wrap gap-6 text-xs font-bold text-slate-300 uppercase tracking-wider border-t border-white/10 pt-6">
               <span className="flex items-center gap-1.5"><CheckCircle2 className="size-4 text-emerald-400" /> Lien-Free Title</span>
-              <span className="flex items-center gap-1.5"><CheckCircle2 className="size-4 text-emerald-400" /> 150-Point Inspection</span>
-              <span className="flex items-center gap-1.5"><CheckCircle2 className="size-4 text-emerald-400" /> Nationwide Shipping</span>
+              <span className="flex items-center gap-1.5"><CheckCircle2 className="size-4 text-emerald-400" /> California Verified Hub</span>
+              <span className="flex items-center gap-1.5"><CheckCircle2 className="size-4 text-emerald-400" /> Nationwide Delivery</span>
             </div>
           </div>
         </div>
@@ -137,7 +155,7 @@ function Home() {
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-slate-200 pb-6">
           <div>
             <span className="text-xs font-extrabold uppercase tracking-widest text-blue-700">Fresh Repossession Listings</span>
-            <h2 className="mt-1 font-display text-3xl font-black text-slate-900 uppercase">Featured Bank Seized Vehicles</h2>
+            <h2 className="mt-1 font-display text-3xl font-black text-slate-900 uppercase">Featured KJ Autos Inventory</h2>
           </div>
           <Button variant="outline" className="border-blue-600 text-blue-700 font-bold uppercase text-xs hover:bg-blue-50" asChild>
             <Link to="/boutique">View Complete Inventory ({vehicles.length})</Link>
@@ -148,6 +166,57 @@ function Home() {
           {featuredVehicles.map((vehicle) => (
             <VehicleCard key={vehicle.id} vehicle={vehicle} />
           ))}
+        </div>
+      </section>
+
+      {/* Why Buy Bank-Repossessed Vehicles Section - Exactly Aligned */}
+      <section className="bg-slate-900 text-white py-16">
+        <div className="container-page max-w-5xl">
+          <div className="text-center max-w-2xl mx-auto">
+            <span className="text-xs font-extrabold uppercase tracking-widest text-blue-400">Direct Financial Asset Clearance</span>
+            <h2 className="mt-2 font-display text-3xl font-black uppercase text-white">Why Buy Bank-Repossessed Vehicles</h2>
+            <p className="mt-3 text-sm text-slate-300 leading-relaxed">
+              Get access to vehicles repossessed by banks and lenders, priced to sell quickly, without dealership markups.
+            </p>
+          </div>
+
+          <div className="mt-12 grid gap-6 md:grid-cols-3">
+            <div className="rounded-xl border border-slate-800 bg-slate-800/50 p-6 backdrop-blur-sm">
+              <div className="size-10 rounded-lg bg-blue-500/20 text-blue-400 flex items-center justify-center mb-4">
+                <ShieldCheck className="size-6" />
+              </div>
+              <h3 className="font-display text-base font-bold text-white uppercase">Direct Sourcing & Verified Details</h3>
+              <p className="mt-2 text-xs text-slate-300 leading-relaxed">
+                All vehicles are sourced directly from banks and lenders. Each listing is reviewed for accuracy, ensuring transparent pricing, reliable details, and a trustworthy buying experience.
+              </p>
+            </div>
+
+            <div className="rounded-xl border border-slate-800 bg-slate-800/50 p-6 backdrop-blur-sm">
+              <div className="size-10 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center mb-4">
+                <BadgeDollarSign className="size-6" />
+              </div>
+              <h3 className="font-display text-base font-bold text-white uppercase">Diverse & Frequently Updated Inventory</h3>
+              <p className="mt-2 text-xs text-slate-300 leading-relaxed">
+                Choose from a diverse range of vehicles, including sedans, SUVs, trucks, and luxury models. Inventory is updated frequently, so you always have fresh options to explore.
+              </p>
+            </div>
+
+            <div className="rounded-xl border border-slate-800 bg-slate-800/50 p-6 backdrop-blur-sm">
+              <div className="size-10 rounded-lg bg-amber-500/20 text-amber-400 flex items-center justify-center mb-4">
+                <CheckCircle2 className="size-6" />
+              </div>
+              <h3 className="font-display text-base font-bold text-white uppercase">Streamlined Purchase Process</h3>
+              <p className="mt-2 text-xs text-slate-300 leading-relaxed">
+                Skip the long negotiations and delays. Our streamlined process lets you browse, select, and secure your vehicle quickly with clear steps and secure payment options.
+              </p>
+            </div>
+          </div>
+
+          <div className="mt-10 text-center">
+            <Button size="lg" className="bg-blue-600 hover:bg-blue-700 text-white font-extrabold uppercase tracking-wider text-xs px-8" asChild>
+              <Link to="/boutique">View All Deals</Link>
+            </Button>
+          </div>
         </div>
       </section>
 
@@ -235,7 +304,7 @@ function Home() {
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-slate-200 pb-6">
             <div>
               <span className="text-xs font-extrabold uppercase tracking-widest text-blue-700">Buyer Guide & Insights</span>
-              <h2 className="mt-1 font-display text-3xl font-black text-slate-900 uppercase">Bank Repo Insights Blog</h2>
+              <h2 className="mt-1 font-display text-3xl font-black text-slate-900 uppercase">KJ Autos Insights Blog</h2>
             </div>
           </div>
           <div className="mt-10 grid gap-6 md:grid-cols-3">

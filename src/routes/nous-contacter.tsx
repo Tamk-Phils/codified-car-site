@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { toast } from "sonner";
-import { Mail, MapPin, PhoneCall, Clock, CheckCircle2 } from "lucide-react";
+import { Mail, MapPin, PhoneCall, MessageSquare, Clock, CheckCircle2 } from "lucide-react";
 import { SiteLayout, PageHero } from "@/components/SiteLayout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -13,14 +13,14 @@ import { submitInquiry } from "@/lib/storefront.functions";
 export const Route = createFileRoute("/nous-contacter")({
   head: () => ({
     meta: [
-      { title: "Contact Sales Desk | Bank Seized Cars" },
+      { title: "Contact Sales Desk | KJ Autos California" },
       {
         name: "description",
         content:
-          "Contact our repossessed vehicle sales desk via WhatsApp, email, or inquiry form. New York office with nationwide door-to-door delivery.",
+          "Contact KJ Autos sales desk in California via Call, SMS, WhatsApp (213 298 4108), or inquiry form. Nationwide door-to-door vehicle shipping.",
       },
-      { property: "og:title", content: "Contact Sales Desk | Bank Seized Cars" },
-      { property: "og:description", content: "Reach our bank repossessed vehicle sales advisors in minutes." },
+      { property: "og:title", content: "Contact Sales Desk | KJ Autos" },
+      { property: "og:description", content: "Reach KJ Autos bank repossessed vehicle sales advisors in California." },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "/nous-contacter" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -38,8 +38,8 @@ function Contact() {
     <SiteLayout>
       <PageHero
         breadcrumb="Contact Us"
-        title="Contact Our Sales & Advisory Desk"
-        subtitle="Have questions regarding a bank seized listing, lien-free title transfer, or nationwide shipping? Our advisors are ready to assist."
+        title="Contact KJ Autos Sales & Advisory Desk"
+        subtitle="Have questions regarding a bank seized listing, lien-free title transfer, or nationwide shipping from California? Our advisors are ready to assist."
       />
       <div className="container-page grid gap-10 py-14 lg:grid-cols-[2fr_1fr]">
         <div className="rounded-xl border border-slate-200 bg-white p-8 shadow-sm">
@@ -48,7 +48,7 @@ function Contact() {
               <CheckCircle2 className="size-12 text-emerald-600 mx-auto mb-3" />
               <h2 className="font-display text-2xl font-bold text-slate-900">Inquiry Received</h2>
               <p className="mt-2 text-sm text-slate-600 leading-relaxed max-w-md mx-auto">
-                Thank you for contacting Bank Seized Cars. A liquidation advisor will review your message and reply within one business hour.
+                Thank you for contacting KJ Autos. A California liquidation advisor will review your message and reply within one business hour.
               </p>
               <Button
                 className="mt-6 bg-blue-600 hover:bg-blue-700 font-bold uppercase text-xs"
@@ -104,13 +104,13 @@ function Contact() {
                   <Label htmlFor="phone" className="text-xs font-bold text-slate-700 uppercase">
                     Phone Number
                   </Label>
-                  <Input id="phone" name="phone" placeholder="+1 (555) 000-0000" className="mt-1 bg-slate-50 border-slate-200" />
+                  <Input id="phone" name="phone" placeholder="(213) 298-4108" className="mt-1 bg-slate-50 border-slate-200" />
                 </div>
                 <div>
                   <Label htmlFor="subject" className="text-xs font-bold text-slate-700 uppercase">
-                    Subject / Stock #
+                    Subject / Vehicle ID
                   </Label>
-                  <Input id="subject" name="subject" placeholder="Inquiry about Porsche 911 / Shipping" className="mt-1 bg-slate-50 border-slate-200" />
+                  <Input id="subject" name="subject" placeholder="Inquiry about Porsche / Shipping to NY" className="mt-1 bg-slate-50 border-slate-200" />
                 </div>
               </div>
               <div>
@@ -128,8 +128,31 @@ function Contact() {
 
         <aside className="space-y-6 rounded-xl border border-slate-200 bg-white p-6 shadow-sm h-fit">
           <div className="flex gap-3.5 items-start">
-            <div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-emerald-100 text-emerald-700">
+            <div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-blue-100 text-blue-700">
               <PhoneCall className="size-5" />
+            </div>
+            <div>
+              <p className="font-display text-xs font-extrabold uppercase tracking-wider text-slate-400">Direct Phone / SMS</p>
+              <a
+                href={SITE.phoneLink}
+                className="text-sm font-bold text-blue-700 hover:underline block mt-0.5"
+              >
+                {SITE.phone}
+              </a>
+              <div className="mt-1.5 flex gap-2">
+                <a href={SITE.phoneLink} className="text-[10px] font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded border border-blue-200">
+                  Call Now
+                </a>
+                <a href={SITE.smsLink} className="text-[10px] font-bold text-slate-600 bg-slate-100 px-2 py-0.5 rounded border border-slate-200">
+                  Send SMS
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div className="flex gap-3.5 items-start">
+            <div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-emerald-100 text-emerald-700">
+              <MessageSquare className="size-5" />
             </div>
             <div>
               <p className="font-display text-xs font-extrabold uppercase tracking-wider text-slate-400">WhatsApp Instant Desk</p>
@@ -139,13 +162,13 @@ function Contact() {
                 rel="noopener noreferrer"
                 className="text-sm font-bold text-emerald-600 hover:underline block mt-0.5"
               >
-                {SITE.whatsapp}
+                {SITE.phoneFormatted}
               </a>
             </div>
           </div>
 
           <div className="flex gap-3.5 items-start">
-            <div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-blue-100 text-blue-700">
+            <div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-blue-50 text-blue-600">
               <Mail className="size-5" />
             </div>
             <div>
@@ -164,7 +187,7 @@ function Contact() {
               <MapPin className="size-5" />
             </div>
             <div>
-              <p className="font-display text-xs font-extrabold uppercase tracking-wider text-slate-400">Head Office</p>
+              <p className="font-display text-xs font-extrabold uppercase tracking-wider text-slate-400">California Office</p>
               {SITE.address.map((line) => (
                 <p key={line} className="text-xs text-slate-600 font-medium">
                   {line}

@@ -42,7 +42,7 @@ import {
 
 export const Route = createFileRoute("/admin")({
   head: () => ({
-    meta: [{ title: "Admin Portal | Bank Seized Cars" }],
+    meta: [{ title: "Admin Portal | KJ Autos" }],
   }),
   component: AdminPage,
 });
@@ -157,12 +157,12 @@ function AdminPage() {
         <div className="flex items-center gap-3">
           <img
             src="/logo.png"
-            alt="Bank Seized Cars Emblem"
+            alt="KJ Autos Emblem"
             className="size-8 rounded-lg object-contain bg-slate-900 border border-amber-500/30 p-1 shadow-md"
           />
           <div>
             <h1 className="font-display text-xs font-black uppercase text-white leading-none">
-              Bank Seized Cars
+              KJ Autos
             </h1>
             <span className="text-[9px] text-emerald-400 font-bold uppercase tracking-widest">
               Admin Portal
@@ -197,12 +197,12 @@ function AdminPage() {
           <div className="flex items-center gap-3">
             <img
               src="/logo.png"
-              alt="Bank Seized Cars Emblem"
+              alt="KJ Autos Emblem"
               className="size-10 rounded-lg object-contain bg-slate-900 border border-amber-500/30 p-1 shadow-md"
             />
             <div>
               <h1 className="font-display text-sm font-black uppercase text-white leading-none">
-                Bank Seized Cars
+                KJ Autos
               </h1>
               <span className="text-[10px] text-emerald-400 font-bold uppercase tracking-widest">
                 Admin Control Desk

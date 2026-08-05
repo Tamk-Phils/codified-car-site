@@ -26,8 +26,8 @@ if (fs.existsSync(assetsDir)) {
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Bank Seized Cars | Repossessed Vehicles For Sale</title>
-    <meta name="description" content="Bank repossessed cars, trucks and SUVs for sale below market value with nationwide US delivery." />
+    <title>KJ Autos | Certified Bank Repossessed Vehicles in California</title>
+    <meta name="description" content="KJ Autos - Bank repossessed cars, trucks and SUVs for sale in California below market value with nationwide delivery." />
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     <link rel="icon" type="image/png" href="/favicon.png" />
     <link rel="apple-touch-icon" href="/logo.png" />

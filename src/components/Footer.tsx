@@ -5,7 +5,7 @@ import { NAV, SITE, formatPrice } from "@/lib/site";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { subscribeToNewsletter } from "@/lib/storefront.functions";
-import { ShieldCheck, PhoneCall, Mail, MapPin, Clock } from "lucide-react";
+import { ShieldCheck, PhoneCall, MessageSquare, Mail, MapPin, Clock } from "lucide-react";
 
 export function Footer() {
   const [email, setEmail] = useState("");
@@ -19,15 +19,15 @@ export function Footer() {
           <div className="flex items-center gap-3 mb-4">
             <img
               src="/logo.png"
-              alt="Bank Seized Cars Logo"
+              alt="KJ Autos Logo"
               className="size-10 rounded-lg object-contain bg-slate-900 border border-amber-500/30 p-1 shadow-md"
             />
-            <p className="font-display text-lg font-black uppercase tracking-wider text-white">
-              Bank Seized Cars
+            <p className="font-display text-xl font-black uppercase tracking-wider text-white">
+              KJ AUTOS
             </p>
           </div>
           <p className="text-sm text-white/75 leading-relaxed">
-            We source bank and lender repossessed vehicles across the United States. Buy verified luxury cars, trucks, and SUVs at up to 60% below retail value with nationwide door-to-door delivery.
+            KJ Autos is your trusted California source for bank-repossessed vehicles, lender seized assets, and auction clearance inventory at up to 70% below retail value. Nationwide door-to-door delivery.
           </p>
           <div className="mt-4 flex items-center gap-2">
             <ShieldCheck className="size-4 text-emerald-400 shrink-0" />
@@ -40,7 +40,7 @@ export function Footer() {
         {/* Quick Links */}
         <div>
           <p className="font-display text-sm font-bold uppercase tracking-widest text-blue-400">
-            Quick Navigation
+            Quick Links
           </p>
           <ul className="mt-4 space-y-2.5 text-sm text-white/75">
             {NAV.map((item) => (
@@ -53,7 +53,7 @@ export function Footer() {
           </ul>
         </div>
 
-        {/* Location & Hours */}
+        {/* Location & Contact */}
         <div>
           <p className="font-display text-sm font-bold uppercase tracking-widest text-blue-400">
             Contact & Location
@@ -68,20 +68,26 @@ export function Footer() {
               </div>
             </div>
             <div className="flex items-center gap-2.5">
-              <Mail className="size-4 text-blue-400 shrink-0" />
-              <a href={`mailto:${SITE.email}`} className="hover:text-blue-400 transition-colors">
-                {SITE.email}
+              <PhoneCall className="size-4 text-blue-400 shrink-0" />
+              <a href={SITE.phoneLink} className="hover:text-blue-400 transition-colors font-semibold">
+                Call / SMS: {SITE.phone}
               </a>
             </div>
             <div className="flex items-center gap-2.5">
-              <PhoneCall className="size-4 text-emerald-400 shrink-0" />
+              <MessageSquare className="size-4 text-emerald-400 shrink-0" />
               <a
                 href={SITE.whatsappLink}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="font-bold text-emerald-400 hover:text-emerald-300 transition-colors"
               >
-                WhatsApp: {SITE.whatsapp}
+                WhatsApp: {SITE.phoneFormatted}
+              </a>
+            </div>
+            <div className="flex items-center gap-2.5">
+              <Mail className="size-4 text-blue-400 shrink-0" />
+              <a href={`mailto:${SITE.email}`} className="hover:text-blue-400 transition-colors">
+                {SITE.email}
               </a>
             </div>
             <div className="flex items-start gap-2.5 pt-1">
@@ -101,7 +107,7 @@ export function Footer() {
             Inventory Alerts
           </p>
           <p className="mt-4 text-sm text-white/75">
-            Subscribe to get immediate notification on fresh bank auction arrivals and clearance prices.
+            Be the first to know when new bank repo cars drop at unbeatable prices.
           </p>
           <form
             className="mt-4 flex flex-col sm:flex-row gap-2"
@@ -128,7 +134,7 @@ export function Footer() {
               className="border-white/20 bg-white/10 text-white placeholder:text-white/40 focus-visible:ring-blue-400"
             />
             <Button type="submit" className="bg-blue-600 hover:bg-blue-700 font-bold uppercase text-xs" disabled={busy}>
-              Join
+              Subscribe
             </Button>
           </form>
         </div>
@@ -138,10 +144,10 @@ export function Footer() {
       <div className="border-t border-white/10 bg-[#071322] py-6 text-xs text-white/60">
         <div className="container-page flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
           <p>
-            © {new Date().getFullYear()} {SITE.name}. All Rights Reserved. Bank & Lender Repossessions Storefront.
+            © {new Date().getFullYear()} {SITE.name}. All Rights Reserved. Bank-Repossessed Vehicles Dealer, California.
           </p>
           <p className="flex items-center gap-2">
-            <span>Prices displayed in USD ({formatPrice(0).slice(0, 1)})</span>
+            <span>Prices in USD</span>
             <span>•</span>
             <span className="text-emerald-400 font-semibold">Updated Daily</span>
           </p>

@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Menu, ShoppingCart, X, PhoneCall, ShieldCheck } from "lucide-react";
+import { Menu, ShoppingCart, X, PhoneCall, MessageSquare, ShieldCheck } from "lucide-react";
 import { useState } from "react";
 import { NAV, SITE } from "@/lib/site";
 import { useCart } from "@/lib/cart";
@@ -17,18 +17,28 @@ export function Header({ onOpenCart }: { onOpenCart: () => void }) {
           <div className="flex items-center gap-2 text-emerald-400">
             <ShieldCheck className="size-4 shrink-0" />
             <span className="tracking-wide text-white/90">
-              NATIONWIDE DELIVERY • CERTIFIED LIEN-FREE VEHICLES • DIRECT BANK AUCTION REPOS
+              CALIFORNIA DECK • CERTIFIED LIEN-FREE VEHICLES • NATIONWIDE SHIPPING
             </span>
           </div>
-          <a
-            href={SITE.whatsappLink}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-1.5 font-bold text-emerald-400 hover:text-emerald-300 transition-colors"
-          >
-            <PhoneCall className="size-3.5" />
-            <span>WhatsApp Inquiry: {SITE.whatsapp}</span>
-          </a>
+          <div className="flex items-center gap-4 text-xs">
+            <a
+              href={SITE.phoneLink}
+              className="flex items-center gap-1 font-bold text-white hover:text-blue-400 transition-colors"
+            >
+              <PhoneCall className="size-3 text-blue-400" />
+              <span>Call/SMS: {SITE.phone}</span>
+            </a>
+            <span className="text-white/30">|</span>
+            <a
+              href={SITE.whatsappLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1 font-bold text-emerald-400 hover:text-emerald-300 transition-colors"
+            >
+              <MessageSquare className="size-3" />
+              <span>WhatsApp: {SITE.phoneFormatted}</span>
+            </a>
+          </div>
         </div>
       </div>
 
@@ -39,15 +49,15 @@ export function Header({ onOpenCart }: { onOpenCart: () => void }) {
           <Link to="/" className="flex items-center gap-3 group">
             <img
               src="/logo.png"
-              alt="Bank Seized Cars Logo"
+              alt="KJ Autos Logo"
               className="size-11 rounded-lg object-contain bg-slate-900 border border-amber-500/30 p-1 shadow-lg group-hover:scale-105 transition-transform"
             />
             <div className="flex flex-col leading-none">
-              <span className="font-display text-xl font-black uppercase tracking-wider text-white group-hover:text-blue-400 transition-colors">
-                Bank Seized
+              <span className="font-display text-2xl font-black uppercase tracking-wider text-white group-hover:text-blue-400 transition-colors">
+                KJ AUTOS
               </span>
-              <span className="font-display text-xs font-semibold uppercase tracking-[0.25em] text-blue-400">
-                Cars & Liquidation
+              <span className="font-display text-[10px] font-semibold uppercase tracking-[0.2em] text-blue-400">
+                Bank Seized Vehicles • California
               </span>
             </div>
           </Link>
@@ -115,14 +125,20 @@ export function Header({ onOpenCart }: { onOpenCart: () => void }) {
                   {item.label}
                 </Link>
               ))}
-              <div className="pt-2 border-t border-white/10">
+              <div className="pt-2 border-t border-white/10 grid grid-cols-2 gap-2">
+                <a
+                  href={SITE.phoneLink}
+                  className="flex items-center justify-center gap-1.5 rounded-lg bg-blue-600 px-3 py-2 text-xs font-bold text-white uppercase tracking-wider"
+                >
+                  <PhoneCall className="size-3.5" /> Call / SMS
+                </a>
                 <a
                   href={SITE.whatsappLink}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-2 rounded-lg bg-emerald-600 px-4 py-2.5 text-xs font-bold text-white uppercase tracking-wider"
+                  className="flex items-center justify-center gap-1.5 rounded-lg bg-emerald-600 px-3 py-2 text-xs font-bold text-white uppercase tracking-wider"
                 >
-                  Contact Us on WhatsApp
+                  <MessageSquare className="size-3.5" /> WhatsApp
                 </a>
               </div>
             </div>
