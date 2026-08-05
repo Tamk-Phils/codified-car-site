@@ -5,6 +5,7 @@ import { useCart } from "@/lib/cart";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { ShieldCheck, MessageSquare } from "lucide-react";
+import { OptimizedImage } from "./OptimizedImage";
 
 export function VehicleCard({ vehicle }: { vehicle: Vehicle }) {
   const { add } = useCart();
@@ -25,10 +26,10 @@ export function VehicleCard({ vehicle }: { vehicle: Vehicle }) {
       <Link to="/produit/$slug" params={{ slug: vehicle.slug }} className="block overflow-hidden relative">
         <div className="relative aspect-4/3 overflow-hidden bg-slate-100">
           {image ? (
-            <img
+            <OptimizedImage
               src={image}
               alt={vehicle.name}
-              loading="lazy"
+              wrapperClassName="h-full w-full"
               className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
             />
           ) : (

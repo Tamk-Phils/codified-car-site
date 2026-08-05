@@ -12,6 +12,7 @@ import { useEffect, type ReactNode } from "react";
 import appCss from "../styles.css?url";
 import { CartProvider } from "../lib/cart";
 import { Toaster } from "../components/ui/sonner";
+import { NavigationSpinner } from "../components/NavigationSpinner";
 
 
 function NotFoundComponent() {
@@ -121,6 +122,7 @@ function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       <CartProvider>
+        <NavigationSpinner />
         {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
         <Outlet />
         <Toaster richColors position="top-right" />

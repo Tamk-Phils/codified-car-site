@@ -4,6 +4,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { SiteLayout } from "@/components/SiteLayout";
 import { VehicleCard } from "@/components/VehicleCard";
+import { OptimizedImage } from "@/components/OptimizedImage";
 import { Button } from "@/components/ui/button";
 import { formatPrice, SITE } from "@/lib/site";
 import { useCart } from "@/lib/cart";
@@ -114,9 +115,10 @@ function Product() {
           <div>
             <div className="overflow-hidden rounded-lg border border-border bg-muted">
               {vehicle.images?.[active] ? (
-                <img
+                <OptimizedImage
                   src={vehicle.images[active]}
                   alt={vehicle.name}
+                  priority
                   className="aspect-4/3 w-full object-cover"
                 />
               ) : null}
@@ -132,7 +134,7 @@ function Product() {
                       index === active ? "border-primary" : "border-transparent"
                     }`}
                   >
-                    <img src={src} alt="" className="aspect-square w-full object-cover" />
+                    <OptimizedImage src={src} alt="" className="aspect-square w-full object-cover" />
                   </button>
                 ))}
               </div>
