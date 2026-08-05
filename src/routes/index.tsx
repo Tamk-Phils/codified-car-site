@@ -1,33 +1,31 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { ShieldCheck, Truck, BadgeDollarSign, FileCheck2, ArrowRight, PhoneCall, MessageSquare, Star, CheckCircle2 } from "lucide-react";
+import { useState, useEffect } from "react";
+import { ChevronDown, ChevronLeft, ChevronRight } from "lucide-react";
 import { SiteLayout } from "@/components/SiteLayout";
 import { VehicleCard } from "@/components/VehicleCard";
-import { Button } from "@/components/ui/button";
-import { vehiclesQuery, postsQuery, reviewsQuery } from "@/lib/queries";
-import { SITE } from "@/lib/site";
+import { vehiclesQuery, reviewsQuery } from "@/lib/queries";
 
 export const Route = createFileRoute("/")({
   loader: async ({ context }) => {
     await Promise.all([
       context.queryClient.ensureQueryData(vehiclesQuery),
-      context.queryClient.ensureQueryData(postsQuery),
       context.queryClient.ensureQueryData(reviewsQuery),
     ]);
   },
   head: () => ({
     meta: [
-      { title: "KJ Autos | Certified Bank-Repossessed Vehicles in California" },
+      { title: "KJ Autos | Bank Seized Cars & Repossessed Vehicles" },
       {
         name: "description",
         content:
-          "Buy bank seized and lender repossessed cars, trucks and SUVs at up to 70% below market value. Sourced directly from financial institutions with lien-free titles and nationwide delivery.",
+          "Browse certified bank repossessed luxury cars, trucks and SUVs directly sourced from financial institutions in California with nationwide delivery.",
       },
-      { property: "og:title", content: "KJ Autos | Certified Repossessed Vehicles For Sale" },
+      { property: "og:title", content: "KJ Autos | Bank Seized Cars" },
       {
         property: "og:description",
         content:
-          "Browse verified bank repossessed luxury cars, trucks and SUVs with clean titles and nationwide delivery from California.",
+          "Browse certified bank repossessed luxury cars, trucks and SUVs below market value with clean titles.",
       },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "/" },
@@ -38,305 +36,237 @@ export const Route = createFileRoute("/")({
   component: Home,
 });
 
-const PERKS = [
-  { icon: BadgeDollarSign, title: "Below Market Liquidation", body: "Direct lender repossessions priced up to 70% below standard retail value." },
-  { icon: FileCheck2, title: "Certified Lien-Free Titles", body: "Every vehicle sold includes verified paperwork and clean title transfer." },
-  { icon: Truck, title: "Nationwide Transport", body: "Insured open and enclosed vehicle delivery from California to your door." },
-  { icon: ShieldCheck, title: "Verified 150-Point Inspection", body: "Thorough multi-point inspection report included with every vehicle listing." },
+const HERO_SLIDES = [
+  {
+    title: "BANK-REPOSSESSED VEHICLES AT UNBEATABLE PRICES",
+    subtitle: "Browse a wide selection of certified bank seized cars directly sourced from financial institutions. No middlemen. Just real deals.",
+    primaryBtn: { label: "BROWSE INVENTORY >", to: "/boutique" },
+  },
+  {
+    title: "SAVE UP TO 70% ON REPO CARS",
+    subtitle: "These vehicles won’t last long. Explore limited-time listings and secure your deal before it’s gone.",
+    primaryBtn: { label: "SEE LISTINGS >", to: "/boutique" },
+    secondaryBtn: { label: "HOW IT WORKS >", to: "/processus-dachat" },
+  },
 ];
 
-const LUXURY_BRANDS = [
-  "Porsche", "Mercedes-Benz", "BMW", "Audi", "Land Rover",
-  "Rolls-Royce", "Ferrari", "Lamborghini", "Bentley", "Cadillac"
+const TOP_BRANDS = [
+  { name: "Ferrari", logo: "🏎️" },
+  { name: "Cadillac", logo: "👑" },
+  { name: "Mercedes-Benz", logo: "⭐" },
+  { name: "Chevrolet", logo: "⚡" },
+  { name: "Rolls-Royce", logo: "✨" },
+  { name: "Porsche", logo: "🛡️" },
+  { name: "BMW", logo: "🏁" },
+  { name: "Audi", logo: "⭕" },
 ];
 
 function Home() {
   const { data: vehicles } = useSuspenseQuery(vehiclesQuery);
-  const { data: posts } = useSuspenseQuery(postsQuery);
-  const { data: reviews } = useSuspenseQuery(reviewsQuery);
+  const [activeSlide, setActiveSlide] = useState(0);
 
-  const heroVehicle = vehicles[0];
-  const featuredVehicles = vehicles.slice(0, 8);
-  const hotDeals = vehicles.filter((v) => v.is_hot_deal && !v.is_sold).slice(8, 16);
+  // Auto-play hero slider
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setActiveSlide((prev) => (prev + 1) % HERO_SLIDES.length);
+    }, 6000);
+    return () => clearInterval(timer);
+  }, []);
+
+  const slide = (HERO_SLIDES[activeSlide] || HERO_SLIDES[0])!;
+  const bestSellingVehicles = vehicles.slice(0, 12);
+  const recentListings = vehicles.slice(4, 16);
 
   return (
     <SiteLayout>
-      {/* Hero Section - Aligned with Reference Site */}
-      <section className="relative isolate overflow-hidden bg-[#0b1e36] text-white py-20 md:py-32">
-        {heroVehicle?.images?.[0] ? (
+      {/* 1. HERO SLIDER CAROUSEL - Exactly matching reference site */}
+      <section className="relative isolate overflow-hidden bg-slate-950 text-white min-h-[460px] md:min-h-[540px] flex items-center justify-center">
+        {/* Background Car Image Overlay */}
+        <div className="absolute inset-0 z-0 opacity-40 mix-blend-overlay">
           <img
-            src={heroVehicle.images[0]}
-            alt="KJ Autos Bank Repossessed Vehicle"
-            className="absolute inset-0 size-full object-cover opacity-20 filter brightness-75 scale-105"
+            src={vehicles[0]?.images?.[0] || "https://images.unsplash.com/photo-1617814076367-b759c7d7e738?auto=format&fit=crop&w=1920&q=80"}
+            alt="Hero Background Cars"
+            className="h-full w-full object-cover transition-opacity duration-1000"
           />
-        ) : null}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#0b1e36] via-[#0b1e36]/90 to-transparent z-0" />
+        </div>
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/60 to-slate-950/40 z-0" />
 
-        <div className="container-page relative z-10">
-          <div className="max-w-3xl">
-            <div className="inline-flex items-center gap-2 rounded-full border border-blue-400/30 bg-blue-500/10 px-4 py-1.5 text-xs font-extrabold uppercase tracking-widest text-blue-300 backdrop-blur-sm">
-              <ShieldCheck className="size-4 text-emerald-400" />
-              <span>KJ Autos • Sourced Directly From Financial Institutions</span>
-            </div>
+        {/* Carousel Content */}
+        <div className="container-page relative z-10 py-16 text-center max-w-4xl mx-auto px-6">
+          <h1 className="font-display text-3xl font-extrabold uppercase tracking-tight sm:text-4xl md:text-5xl text-white leading-tight transition-all duration-500">
+            {slide.title}
+          </h1>
+          <p className="mt-4 text-sm sm:text-base text-slate-300 max-w-2xl mx-auto font-light leading-relaxed">
+            {slide.subtitle}
+          </p>
 
-            <h1 className="mt-6 font-display text-4xl font-black leading-tight tracking-tight sm:text-5xl md:text-6xl text-white">
-              Bank-Repossessed Vehicles at <span className="text-blue-400">Unbeatable Prices</span>
-            </h1>
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
+            <Link
+              to={slide.primaryBtn.to}
+              className="inline-flex items-center rounded-full border border-white bg-white/10 px-7 py-3 text-xs font-bold uppercase tracking-wider text-white hover:bg-white hover:text-slate-900 transition-all shadow-lg"
+            >
+              {slide.primaryBtn.label}
+            </Link>
 
-            <p className="mt-6 text-lg text-slate-300 leading-relaxed max-w-2xl">
-              Browse a wide selection of certified bank seized cars directly sourced from financial institutions. No middlemen. Just real deals.
-            </p>
-
-            {/* Save Up to 70% Callout */}
-            <div className="mt-6 rounded-xl border border-amber-500/30 bg-amber-500/10 p-4 text-slate-200 backdrop-blur-sm max-w-xl">
-              <p className="font-display text-base font-bold text-amber-300 uppercase tracking-wide">
-                🔥 Save Up to 70% on Repo Cars
-              </p>
-              <p className="mt-1 text-xs text-slate-300">
-                These vehicles won’t last long. Explore limited-time listings and secure your deal before it’s gone.
-              </p>
-            </div>
-
-            <div className="mt-8 flex flex-wrap items-center gap-4">
-              <Button size="lg" className="bg-blue-600 hover:bg-blue-700 text-white font-extrabold uppercase tracking-wider text-sm px-8 py-6 shadow-lg shadow-blue-600/30" asChild>
-                <Link to="/boutique">
-                  Browse Inventory <ArrowRight className="ml-2 size-5" />
-                </Link>
-              </Button>
-
-              <a
-                href={SITE.phoneLink}
-                className="inline-flex items-center gap-2 rounded-lg border border-blue-400/40 bg-blue-600/20 px-6 py-3.5 text-sm font-extrabold uppercase tracking-wider text-white hover:bg-blue-600 transition-all backdrop-blur-sm"
+            {slide.secondaryBtn ? (
+              <Link
+                to={slide.secondaryBtn.to}
+                className="inline-flex items-center rounded-full border border-white bg-white/10 px-7 py-3 text-xs font-bold uppercase tracking-wider text-white hover:bg-white hover:text-slate-900 transition-all shadow-lg"
               >
-                <PhoneCall className="size-4 text-blue-400" />
-                <span>Call/SMS: {SITE.phone}</span>
-              </a>
-
-              <a
-                href={SITE.whatsappLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-lg border border-emerald-500/50 bg-emerald-600/20 px-6 py-3.5 text-sm font-extrabold uppercase tracking-wider text-emerald-300 hover:bg-emerald-600 hover:text-white transition-all backdrop-blur-sm"
-              >
-                <MessageSquare className="size-4" />
-                <span>WhatsApp: {SITE.phoneFormatted}</span>
-              </a>
-            </div>
-
-            {/* Quick Guarantees Bar */}
-            <div className="mt-12 flex flex-wrap gap-6 text-xs font-bold text-slate-300 uppercase tracking-wider border-t border-white/10 pt-6">
-              <span className="flex items-center gap-1.5"><CheckCircle2 className="size-4 text-emerald-400" /> Lien-Free Title</span>
-              <span className="flex items-center gap-1.5"><CheckCircle2 className="size-4 text-emerald-400" /> California Verified Hub</span>
-              <span className="flex items-center gap-1.5"><CheckCircle2 className="size-4 text-emerald-400" /> Nationwide Delivery</span>
-            </div>
+                {slide.secondaryBtn.label}
+              </Link>
+            ) : null}
           </div>
         </div>
-      </section>
 
-      {/* Perks Banner */}
-      <section className="border-b border-slate-200 bg-white py-12 shadow-sm">
-        <div className="container-page grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
-          {PERKS.map((perk) => (
-            <div key={perk.title} className="flex gap-4 items-start p-4 rounded-xl bg-slate-50 border border-slate-100">
-              <div className="flex size-12 shrink-0 items-center justify-center rounded-lg bg-blue-100 text-blue-700">
-                <perk.icon className="size-6" />
-              </div>
-              <div>
-                <h3 className="font-display text-sm font-bold uppercase tracking-wide text-slate-900">{perk.title}</h3>
-                <p className="mt-1 text-xs text-slate-600 leading-relaxed">{perk.body}</p>
-              </div>
-            </div>
+        {/* Prev / Next Arrows */}
+        <button
+          onClick={() => setActiveSlide((prev) => (prev === 0 ? HERO_SLIDES.length - 1 : prev - 1))}
+          aria-label="Previous Slide"
+          className="absolute left-4 top-1/2 -translate-y-1/2 rounded-full p-2 text-white/70 hover:text-white hover:bg-white/10 transition-colors z-20"
+        >
+          <ChevronLeft className="size-8" />
+        </button>
+        <button
+          onClick={() => setActiveSlide((prev) => (prev + 1) % HERO_SLIDES.length)}
+          aria-label="Next Slide"
+          className="absolute right-4 top-1/2 -translate-y-1/2 rounded-full p-2 text-white/70 hover:text-white hover:bg-white/10 transition-colors z-20"
+        >
+          <ChevronRight className="size-8" />
+        </button>
+
+        {/* Carousel Pagination Dots */}
+        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-2 z-20">
+          {HERO_SLIDES.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setActiveSlide(index)}
+              aria-label={`Go to slide ${index + 1}`}
+              className={`size-2.5 rounded-full transition-all ${
+                index === activeSlide ? "bg-white w-6" : "bg-white/40 hover:bg-white/70"
+              }`}
+            />
           ))}
         </div>
       </section>
 
-      {/* Featured Inventory Grid */}
-      <section className="container-page py-16">
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-slate-200 pb-6">
-          <div>
-            <span className="text-xs font-extrabold uppercase tracking-widest text-blue-700">Fresh Repossession Listings</span>
-            <h2 className="mt-1 font-display text-3xl font-black text-slate-900 uppercase">Featured KJ Autos Inventory</h2>
+      {/* 2. TOP BRANDS SECTION */}
+      <section className="py-12 bg-white border-b border-slate-100">
+        <div className="container-page">
+          <div className="flex items-center justify-center gap-1.5 text-[#0d47a1] font-display text-sm font-extrabold uppercase tracking-widest text-center mb-8">
+            <ChevronDown className="size-4" /> TOP BRANDS
           </div>
-          <Button variant="outline" className="border-blue-600 text-blue-700 font-bold uppercase text-xs hover:bg-blue-50" asChild>
-            <Link to="/boutique">View Complete Inventory ({vehicles.length})</Link>
-          </Button>
-        </div>
 
-        <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {featuredVehicles.map((vehicle) => (
-            <VehicleCard key={vehicle.id} vehicle={vehicle} />
-          ))}
+          <div className="flex flex-wrap items-center justify-center gap-8 md:gap-14 opacity-80 hover:opacity-100 transition-opacity">
+            {TOP_BRANDS.map((brand) => (
+              <Link
+                key={brand.name}
+                to="/boutique"
+                search={{ make: brand.name }}
+                className="flex flex-col items-center gap-2 group transition-transform hover:scale-110"
+              >
+                <div className="flex size-14 items-center justify-center rounded-full bg-slate-50 border border-slate-200 text-2xl group-hover:border-[#0d47a1] shadow-sm">
+                  {brand.logo}
+                </div>
+                <span className="text-xs font-bold text-slate-700 uppercase group-hover:text-[#0d47a1]">
+                  {brand.name}
+                </span>
+              </Link>
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* Why Buy Bank-Repossessed Vehicles Section - Exactly Aligned */}
-      <section className="bg-slate-900 text-white py-16">
-        <div className="container-page max-w-5xl">
-          <div className="text-center max-w-2xl mx-auto">
-            <span className="text-xs font-extrabold uppercase tracking-widest text-blue-400">Direct Financial Asset Clearance</span>
-            <h2 className="mt-2 font-display text-3xl font-black uppercase text-white">Why Buy Bank-Repossessed Vehicles</h2>
-            <p className="mt-3 text-sm text-slate-300 leading-relaxed">
+      {/* 3. BEST SELLING SECTION */}
+      <section className="py-14 bg-slate-50/50">
+        <div className="container-page">
+          <div className="flex items-center justify-center gap-1.5 text-[#0d47a1] font-display text-base font-extrabold uppercase tracking-widest text-center mb-10">
+            <ChevronDown className="size-4" /> BEST SELLING
+          </div>
+
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {bestSellingVehicles.map((vehicle) => (
+              <VehicleCard key={vehicle.id} vehicle={vehicle} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 4. WHY BUY BANK-REPOSSESSED VEHICLES SECTION */}
+      <section className="py-16 bg-white border-y border-slate-200">
+        <div className="container-page max-w-6xl">
+          <div className="text-center max-w-3xl mx-auto">
+            <div className="flex items-center justify-center gap-1.5 text-[#0d47a1] font-display text-base font-extrabold uppercase tracking-widest text-center mb-2">
+              <ChevronDown className="size-4" /> WHY BUY BANK-REPOSSESSED VEHICLES
+            </div>
+            <p className="mt-3 text-xs sm:text-sm text-slate-600 font-medium">
               Get access to vehicles repossessed by banks and lenders, priced to sell quickly, without dealership markups.
             </p>
           </div>
 
-          <div className="mt-12 grid gap-6 md:grid-cols-3">
-            <div className="rounded-xl border border-slate-800 bg-slate-800/50 p-6 backdrop-blur-sm">
-              <div className="size-10 rounded-lg bg-blue-500/20 text-blue-400 flex items-center justify-center mb-4">
-                <ShieldCheck className="size-6" />
-              </div>
-              <h3 className="font-display text-base font-bold text-white uppercase">Direct Sourcing & Verified Details</h3>
-              <p className="mt-2 text-xs text-slate-300 leading-relaxed">
+          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="rounded-lg border border-slate-200 bg-slate-50/50 p-5 text-center shadow-xs">
+              <h3 className="font-display text-xs font-extrabold uppercase tracking-wider text-slate-900">
+                BELOW MARKET PRICING
+              </h3>
+              <p className="mt-3 text-[11px] text-slate-600 leading-relaxed">
+                Banks aim to recover losses, not maximize profits. That means vehicles are priced below market value, giving you access to real deals without inflated dealership markups.
+              </p>
+            </div>
+
+            <div className="rounded-lg border border-slate-200 bg-slate-50/50 p-5 text-center shadow-xs">
+              <h3 className="font-display text-xs font-extrabold uppercase tracking-wider text-slate-900">
+                VERIFIED INVENTORY
+              </h3>
+              <p className="mt-3 text-[11px] text-slate-600 leading-relaxed">
                 All vehicles are sourced directly from banks and lenders. Each listing is reviewed for accuracy, ensuring transparent pricing, reliable details, and a trustworthy buying experience.
               </p>
             </div>
 
-            <div className="rounded-xl border border-slate-800 bg-slate-800/50 p-6 backdrop-blur-sm">
-              <div className="size-10 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center mb-4">
-                <BadgeDollarSign className="size-6" />
-              </div>
-              <h3 className="font-display text-base font-bold text-white uppercase">Diverse & Frequently Updated Inventory</h3>
-              <p className="mt-2 text-xs text-slate-300 leading-relaxed">
+            <div className="rounded-lg border border-slate-200 bg-slate-50/50 p-5 text-center shadow-xs">
+              <h3 className="font-display text-xs font-extrabold uppercase tracking-wider text-slate-900">
+                WIDE VEHICLE SELECTION
+              </h3>
+              <p className="mt-3 text-[11px] text-slate-600 leading-relaxed">
                 Choose from a diverse range of vehicles, including sedans, SUVs, trucks, and luxury models. Inventory is updated frequently, so you always have fresh options to explore.
               </p>
             </div>
 
-            <div className="rounded-xl border border-slate-800 bg-slate-800/50 p-6 backdrop-blur-sm">
-              <div className="size-10 rounded-lg bg-amber-500/20 text-amber-400 flex items-center justify-center mb-4">
-                <CheckCircle2 className="size-6" />
-              </div>
-              <h3 className="font-display text-base font-bold text-white uppercase">Streamlined Purchase Process</h3>
-              <p className="mt-2 text-xs text-slate-300 leading-relaxed">
+            <div className="rounded-lg border border-slate-200 bg-slate-50/50 p-5 text-center shadow-xs">
+              <h3 className="font-display text-xs font-extrabold uppercase tracking-wider text-slate-900">
+                FAST & SIMPLE PROCESS
+              </h3>
+              <p className="mt-3 text-[11px] text-slate-600 leading-relaxed">
                 Skip the long negotiations and delays. Our streamlined process lets you browse, select, and secure your vehicle quickly with clear steps and secure payment options.
               </p>
             </div>
           </div>
 
           <div className="mt-10 text-center">
-            <Button size="lg" className="bg-blue-600 hover:bg-blue-700 text-white font-extrabold uppercase tracking-wider text-xs px-8" asChild>
-              <Link to="/boutique">View All Deals</Link>
-            </Button>
+            <Link
+              to="/boutique"
+              className="inline-flex items-center rounded-full bg-[#0d47a1] px-8 py-3 text-xs font-extrabold uppercase tracking-wider text-white hover:bg-blue-800 transition-colors shadow-md"
+            >
+              VIEW ALL DEALS &gt;
+            </Link>
           </div>
         </div>
       </section>
 
-      {/* Top Luxury Brands */}
-      <section className="bg-[#0b1e36] text-white py-14 border-y border-blue-900">
+      {/* 5. RECENT LISTINGS SECTION */}
+      <section className="py-14 bg-slate-50/50">
         <div className="container-page">
-          <div className="text-center max-w-2xl mx-auto">
-            <span className="text-xs font-extrabold uppercase tracking-widest text-blue-400">Premier Manufacturers</span>
-            <h2 className="mt-1 font-display text-2xl font-black uppercase text-white">Top Repossessed Brands In Stock</h2>
+          <div className="flex items-center justify-center gap-1.5 text-[#0d47a1] font-display text-base font-extrabold uppercase tracking-widest text-center mb-10">
+            <ChevronDown className="size-4" /> RECENT LISTINGS
           </div>
-          <div className="mt-8 flex flex-wrap justify-center gap-3">
-            {LUXURY_BRANDS.map((brand) => (
-              <Link
-                key={brand}
-                to="/boutique"
-                search={{ make: brand }}
-                className="rounded-full border border-blue-400/30 bg-blue-500/10 px-5 py-2.5 text-xs font-bold uppercase tracking-wider text-slate-200 transition-all hover:border-blue-400 hover:bg-blue-600 hover:text-white hover:shadow-lg"
-              >
-                {brand}
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
 
-      {/* Hot Clearance Deals */}
-      {hotDeals.length > 0 ? (
-        <section className="container-page py-16">
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-slate-200 pb-6">
-            <div>
-              <span className="text-xs font-extrabold uppercase tracking-widest text-red-600">Urgent Liquidation</span>
-              <h2 className="mt-1 font-display text-3xl font-black text-slate-900 uppercase">Hot Price Drop Deals</h2>
-            </div>
-          </div>
-          <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {hotDeals.map((vehicle) => (
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {recentListings.map((vehicle) => (
               <VehicleCard key={vehicle.id} vehicle={vehicle} />
             ))}
           </div>
-        </section>
-      ) : null}
-
-      {/* Verified Reviews Section */}
-      {reviews.length > 0 ? (
-        <section className="bg-slate-100 py-16 border-t border-slate-200">
-          <div className="container-page">
-            <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
-              <div>
-                <span className="text-xs font-extrabold uppercase tracking-widest text-blue-700">Verified Buyer Experiences</span>
-                <h2 className="mt-1 font-display text-3xl font-black text-slate-900 uppercase">Customer Reviews</h2>
-              </div>
-              <Button variant="outline" className="border-slate-300 font-bold uppercase text-xs" asChild>
-                <Link to="/avis-client">Read All Customer Reviews</Link>
-              </Button>
-            </div>
-
-            <div className="mt-10 grid gap-6 md:grid-cols-3">
-              {reviews.slice(0, 6).map((review) => (
-                <div key={review.id} className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm flex flex-col">
-                  <div className="flex items-center gap-1 text-amber-500 mb-3">
-                    {Array.from({ length: review.rating }).map((_, i) => (
-                      <Star key={i} className="size-4 fill-amber-400 text-amber-400" />
-                    ))}
-                  </div>
-                  <p className="text-sm text-slate-700 leading-relaxed flex-1 italic">"{review.body}"</p>
-                  <div className="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between">
-                    <div>
-                      <p className="text-sm font-bold text-slate-900">{review.name}</p>
-                      <p className="text-xs text-slate-500">{review.location}</p>
-                    </div>
-                    <span className="inline-flex items-center gap-1 rounded-md bg-emerald-50 px-2 py-1 text-[10px] font-bold text-emerald-700 border border-emerald-200">
-                      <CheckCircle2 className="size-3" /> Verified Buyer
-                    </span>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-      ) : null}
-
-      {/* Blog Articles */}
-      {posts.length > 0 ? (
-        <section className="container-page py-16">
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-slate-200 pb-6">
-            <div>
-              <span className="text-xs font-extrabold uppercase tracking-widest text-blue-700">Buyer Guide & Insights</span>
-              <h2 className="mt-1 font-display text-3xl font-black text-slate-900 uppercase">KJ Autos Insights Blog</h2>
-            </div>
-          </div>
-          <div className="mt-10 grid gap-6 md:grid-cols-3">
-            {posts.slice(0, 3).map((post) => (
-              <Link
-                key={post.id}
-                to="/blog/$slug"
-                params={{ slug: post.slug }}
-                className="group overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm hover:shadow-md transition-all flex flex-col"
-              >
-                {post.cover_image ? (
-                  <div className="aspect-16/9 overflow-hidden bg-slate-100">
-                    <img
-                      src={post.cover_image}
-                      alt={post.title}
-                      loading="lazy"
-                      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                    />
-                  </div>
-                ) : null}
-                <div className="p-6 flex flex-1 flex-col">
-                  <span className="text-[11px] font-bold uppercase tracking-wider text-blue-600">{post.category}</span>
-                  <h3 className="mt-2 font-display text-lg font-bold text-slate-900 group-hover:text-blue-600 transition-colors leading-snug">
-                    {post.title}
-                  </h3>
-                  <p className="mt-2 line-clamp-3 text-xs text-slate-600 leading-relaxed flex-1">{post.excerpt}</p>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </section>
-      ) : null}
+        </div>
+      </section>
     </SiteLayout>
   );
 }
