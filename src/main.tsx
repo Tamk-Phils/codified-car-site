@@ -1,12 +1,23 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
-import { RouterProvider } from "@tanstack/react-router";
-import { getRouter } from "./router";
+import React, { StrictMode, startTransition } from "react";
+import { hydrateRoot, createRoot } from "react-dom/client";
+import { StartClient } from "@tanstack/react-start/client";
 
-const router = getRouter();
-
-const rootElement = document.getElementById("root")!;
-if (!rootElement.innerHTML) {
-  const root = ReactDOM.createRoot(rootElement);
-  root.render(<RouterProvider router={router} />);
-}
+startTransition(() => {
+  const rootEl = document.getElementById("root");
+  if (rootEl && rootEl.innerHTML.trim().length > 0) {
+    hydrateRoot(
+      document,
+      <StrictMode>
+        <StartClient />
+      </StrictMode>
+    );
+  } else {
+    const container = rootEl || document.body;
+    const root = createRoot(container);
+    root.render(
+      <StrictMode>
+        <StartClient />
+      </StrictMode>
+    );
+  }
+});
