@@ -38,11 +38,13 @@ export const Route = createFileRoute("/")({
 
 const HERO_SLIDES = [
   {
+    image: "https://bankseizedcars.online/wp-content/uploads/2026/06/peter-broomfield-m3m-lnR90uM-unsplash-scaled.jpg",
     title: "BANK-REPOSSESSED VEHICLES AT UNBEATABLE PRICES",
     subtitle: "Browse a wide selection of certified bank seized cars directly sourced from financial institutions. No middlemen. Just real deals.",
     primaryBtn: { label: "BROWSE INVENTORY >", to: "/boutique" },
   },
   {
+    image: "https://bankseizedcars.online/wp-content/uploads/2026/06/erik-mclean-H1NxvaTUf_o-unsplash-scaled.jpg",
     title: "SAVE UP TO 70% ON REPO CARS",
     subtitle: "These vehicles won’t last long. Explore limited-time listings and secure your deal before it’s gone.",
     primaryBtn: { label: "SEE LISTINGS >", to: "/boutique" },
@@ -79,17 +81,18 @@ function Home() {
 
   return (
     <SiteLayout>
-      {/* 1. HERO SLIDER CAROUSEL - Exactly matching reference site */}
-      <section className="relative isolate overflow-hidden bg-slate-950 text-white min-h-[460px] md:min-h-[540px] flex items-center justify-center">
-        {/* Background Car Image Overlay */}
-        <div className="absolute inset-0 z-0 opacity-40 mix-blend-overlay">
+      {/* 1. HERO SLIDER CAROUSEL - Exact replicate of bankseizedcars.online */}
+      <section className="relative isolate overflow-hidden bg-slate-950 text-white min-h-[480px] md:min-h-[560px] flex items-center justify-center">
+        {/* Background Car Image */}
+        <div className="absolute inset-0 z-0 transition-opacity duration-700">
           <img
-            src={vehicles[0]?.images?.[0] || "https://images.unsplash.com/photo-1617814076367-b759c7d7e738?auto=format&fit=crop&w=1920&q=80"}
-            alt="Hero Background Cars"
-            className="h-full w-full object-cover transition-opacity duration-1000"
+            src={slide.image}
+            alt={slide.title}
+            className="h-full w-full object-cover object-center transition-transform duration-1000 scale-105"
           />
+          {/* Exact dark overlay rgba(0,0,0,0.5) */}
+          <div className="absolute inset-0 bg-black/55" />
         </div>
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/60 to-slate-950/40 z-0" />
 
         {/* Carousel Content */}
         <div className="container-page relative z-10 py-16 text-center max-w-4xl mx-auto px-6">
