@@ -21,7 +21,7 @@ export function Footer() {
               KJ AUTOS
             </span>
             <span className="text-[10px] font-extrabold uppercase tracking-widest text-blue-400">
-              Bank Seized Cars • California
+              KJ Autos • California
             </span>
           </div>
           <p className="text-xs text-slate-300 leading-relaxed">

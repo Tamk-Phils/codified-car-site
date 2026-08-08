@@ -8,13 +8,13 @@ import { formatPrice } from "@/lib/site";
 export const Route = createFileRoute("/panier")({
   head: () => ({
     meta: [
-      { title: "Your Cart | Bank Seized Cars" },
+      { title: "Your Cart | KJ Autos" },
       {
         name: "description",
         content:
           "Review the repossessed vehicles you have reserved before checkout, adjust quantities and continue to secure payment.",
       },
-      { property: "og:title", content: "Your Cart | Bank Seized Cars" },
+      { property: "og:title", content: "Your Cart | KJ Autos" },
       { property: "og:description", content: "Review your reserved repossessed vehicles." },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "/panier" },

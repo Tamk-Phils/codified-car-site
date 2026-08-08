@@ -55,7 +55,7 @@ export const Route = createFileRoute("/produit/$slug")({
                 name: vehicle.name,
                 image: vehicle.images,
                 description: vehicle.description?.slice(0, 400),
-                brand: { "@type": "Brand", name: vehicle.make ?? "Bank Seized Cars" },
+                brand: { "@type": "Brand", name: vehicle.make ?? "KJ Autos" },
                 offers: {
                   "@type": "Offer",
                   priceCurrency: "USD",

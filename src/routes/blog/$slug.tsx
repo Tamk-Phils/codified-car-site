@@ -48,7 +48,7 @@ export const Route = createFileRoute("/blog/$slug")({
                 image: post.cover_image ? [post.cover_image] : undefined,
                 datePublished: post.published_at,
                 author: { "@type": "Organization", name: post.author },
-                publisher: { "@type": "Organization", name: "Bank Seized Cars" },
+                publisher: { "@type": "Organization", name: "KJ Autos" },
                 keywords: post.keywords?.join(", "),
               }),
             },

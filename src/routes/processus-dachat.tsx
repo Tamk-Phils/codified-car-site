@@ -7,13 +7,13 @@ import { Search, ShoppingBag, PhoneCall, ShieldCheck, CreditCard, Truck } from "
 export const Route = createFileRoute("/processus-dachat")({
   head: () => ({
     meta: [
-      { title: "How to Buy a Bank Seized Car | 5-Step Order Process" },
+      { title: "How to Buy a Bank Repossessed Car | 5-Step Order Process" },
       {
         name: "description",
         content:
           "Our step-by-step buying process for bank repossessed vehicles: choose a car, reserve online, verify paperwork, pay securely, and take nationwide delivery.",
       },
-      { property: "og:title", content: "How to Buy a Bank Seized Car | Bank Seized Cars" },
+      { property: "og:title", content: "How to Buy a Bank Repossessed Car | KJ Autos" },
       {
         property: "og:description",
         content: "The complete guide from reserving a repo vehicle to delivery at your door.",

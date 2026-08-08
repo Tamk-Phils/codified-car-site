@@ -4,7 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 export const adminLogin = async ({ data }: { data: any }) => {
   const { username, password } = data;
   const normalizedUsername = username?.trim().toLowerCase();
-  const email = normalizedUsername === "admin" ? "admin@bankseizedcars.online" : (username?.trim() || "");
+  const email = normalizedUsername === "admin" ? "admin@kjautos.online" : (username?.trim() || "");
   
   const { data: authData, error } = await supabase.auth.signInWithPassword({
     email,

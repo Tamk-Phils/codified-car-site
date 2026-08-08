@@ -77,10 +77,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Bank Seized Cars | Repossessed Vehicles For Sale" },
+      { title: "KJ Autos | Repossessed Vehicles For Sale" },
       { name: "description", content: "Bank repossessed cars, trucks and SUVs for sale below market value with nationwide US delivery." },
-      { name: "author", content: "Bank Seized Cars" },
-      { property: "og:title", content: "Bank Seized Cars" },
+      { name: "author", content: "KJ Autos" },
+      { property: "og:title", content: "KJ Autos" },
       { property: "og:description", content: "Bank repossessed vehicles for sale below market value." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },

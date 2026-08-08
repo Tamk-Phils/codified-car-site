@@ -32,13 +32,13 @@ export const Route = createFileRoute("/boutique")({
   loader: ({ context }) => context.queryClient.ensureQueryData(vehiclesQuery),
   head: () => ({
     meta: [
-      { title: "Bank Seized Car Inventory | Certified Auction Listings" },
+      { title: "Bank Repossessed Car Inventory | Certified Auction Listings" },
       {
         name: "description",
         content:
           "Browse our complete inventory of bank repossessed cars, trucks and SUVs. Filter by make, price and mileage, then reserve online with nationwide delivery.",
       },
-      { property: "og:title", content: "Bank Seized Car Inventory | Certified Auction Listings" },
+      { property: "og:title", content: "Bank Repossessed Car Inventory | Certified Auction Listings" },
       {
         property: "og:description",
         content: "Every bank seized vehicle currently available, with asking prices, estimated down payments and full specs.",

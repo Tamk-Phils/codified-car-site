@@ -8,13 +8,13 @@ export const Route = createFileRoute("/avis-client")({
   loader: ({ context }) => context.queryClient.ensureQueryData(reviewsQuery),
   head: () => ({
     meta: [
-      { title: "Verified Customer Reviews | Bank Seized Cars" },
+      { title: "Verified Customer Reviews | KJ Autos" },
       {
         name: "description",
         content:
           "Read authentic buyer reviews from customers who purchased certified bank repossessed luxury vehicles with nationwide US delivery.",
       },
-      { property: "og:title", content: "Verified Customer Reviews | Bank Seized Cars" },
+      { property: "og:title", content: "Verified Customer Reviews | KJ Autos" },
       { property: "og:description", content: "Verified buyer feedback and ratings on our bank seized vehicle inventory." },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "/avis-client" },

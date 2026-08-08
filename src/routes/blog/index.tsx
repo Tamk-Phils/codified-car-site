@@ -16,7 +16,7 @@ export const Route = createFileRoute("/blog/")({
         content:
           "Expert guides on buying bank repossessed cars: inspections, titles, financing, shipping and how to spot a genuine repo deal in the USA.",
       },
-      { property: "og:title", content: "Repo Car Blog | Bank Seized Cars" },
+      { property: "og:title", content: "Repo Car Blog | KJ Autos" },
       {
         property: "og:description",
         content: "Buying guides, inspection checklists and title advice for repossessed vehicles.",

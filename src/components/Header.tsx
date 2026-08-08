@@ -55,7 +55,7 @@ export function Header({ onOpenCart }: { onOpenCart: () => void }) {
                 KJ AUTOS
               </span>
               <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-slate-500">
-                Bank Seized Cars
+                KJ Autos
               </span>
             </div>
           </Link>

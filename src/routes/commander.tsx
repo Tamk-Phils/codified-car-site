@@ -14,13 +14,13 @@ import { submitOrder } from "@/lib/storefront.functions";
 export const Route = createFileRoute("/commander")({
   head: () => ({
     meta: [
-      { title: "Checkout | Bank Seized Cars" },
+      { title: "Checkout | KJ Autos" },
       {
         name: "description",
         content:
           "Complete your repossessed vehicle order. Enter delivery details, choose a payment method and our team confirms availability within 24 hours.",
       },
-      { property: "og:title", content: "Checkout | Bank Seized Cars" },
+      { property: "og:title", content: "Checkout | KJ Autos" },
       { property: "og:description", content: "Complete your repossessed vehicle order." },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "/commander" },

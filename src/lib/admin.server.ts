@@ -160,7 +160,7 @@ export const postInput = z.object({
   keywords: z.array(z.string().max(80)).max(30).default([]),
   meta_title: z.string().max(200).nullable().default(null),
   meta_description: z.string().max(400).nullable().default(null),
-  author: z.string().max(120).default("Bank Seized Cars"),
+  author: z.string().max(120).default("KJ Autos"),
   read_minutes: z.number().int().min(1).max(60).default(5),
   is_published: z.boolean().default(true),
 });
