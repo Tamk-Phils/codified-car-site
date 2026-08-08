@@ -28,16 +28,9 @@ function createSupabaseFetch(supabaseKey: string): typeof fetch {
 
 
 function createSupabaseClient() {
-  // Use import.meta.env for client-side (Vite build-time replacement)
-  // Fall back to process.env for SSR (server-side rendering)
-  const SUPABASE_URL =
-    import.meta.env['VITE_SUPABASE_URL'] ||
-    process.env['SUPABASE_URL'] ||
-    'https://yehnqmufskriwtogpwzt.supabase.co';
-  const SUPABASE_PUBLISHABLE_KEY =
-    import.meta.env['VITE_SUPABASE_PUBLISHABLE_KEY'] ||
-    process.env['SUPABASE_PUBLISHABLE_KEY'] ||
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InllaG5xbXVmc2tyaXd0b2dwd3p0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODYxNDk3ODIsImV4cCI6MjEwMTcyNTc4Mn0.Wfu_UZe5fKOvZPVHshhREJzn7niKiW0OQOPXwIA9uH0';
+  // Hardcoded to ensure Lovable build environments don't accidentally inject template project URLs
+  const SUPABASE_URL = 'https://yehnqmufskriwtogpwzt.supabase.co';
+  const SUPABASE_PUBLISHABLE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InllaG5xbXVmc2tyaXd0b2dwd3p0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODYxNDk3ODIsImV4cCI6MjEwMTcyNTc4Mn0.Wfu_UZe5fKOvZPVHshhREJzn7niKiW0OQOPXwIA9uH0';
 
   return createClient<Database>(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, {
     global: {
