@@ -3,7 +3,7 @@
   publish = "dist/client"
 
 [build.environment]
-  NODE_VERSION = "20"
+  NODE_VERSION = "22"
 
 # Serve the SPA shell for all non-static routes
 [[redirects]]
