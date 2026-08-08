@@ -33,11 +33,11 @@ function createSupabaseClient() {
   const SUPABASE_URL =
     import.meta.env['VITE_SUPABASE_URL'] ||
     process.env['SUPABASE_URL'] ||
-    'https://ccrvwzvtfbwdgdgveagm.supabase.co';
+    'https://yehnqmufskriwtogpwzt.supabase.co';
   const SUPABASE_PUBLISHABLE_KEY =
     import.meta.env['VITE_SUPABASE_PUBLISHABLE_KEY'] ||
     process.env['SUPABASE_PUBLISHABLE_KEY'] ||
-    'sb_publishable_H1l6BX_mwt_Lc7n1ZFc30A_gJlyI-WK';
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InllaG5xbXVmc2tyaXd0b2dwd3p0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODYxNDk3ODIsImV4cCI6MjEwMTcyNTc4Mn0.Wfu_UZe5fKOvZPVHshhREJzn7niKiW0OQOPXwIA9uH0';
 
   return createClient<Database>(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, {
     global: {

@@ -3,7 +3,8 @@ import { supabase } from "@/integrations/supabase/client";
 // Since we are no longer using SSR server functions, we rely completely on Supabase Auth sessions.
 export const adminLogin = async ({ data }: { data: any }) => {
   const { username, password } = data;
-  const email = username === "admin" ? "admin@bankseizedcars.online" : username;
+  const normalizedUsername = username?.trim().toLowerCase();
+  const email = normalizedUsername === "admin" ? "admin@bankseizedcars.online" : (username?.trim() || "");
   
   const { data: authData, error } = await supabase.auth.signInWithPassword({
     email,
