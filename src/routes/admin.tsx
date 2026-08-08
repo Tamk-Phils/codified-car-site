@@ -876,9 +876,8 @@ function AdminPage() {
                   setEditingReview({
                     name: "",
                     location: "",
-                    content: "",
+                    body: "",
                     rating: 5,
-                    is_verified: true,
                   });
                   setIsReviewModalOpen(true);
                 }}
@@ -901,7 +900,7 @@ function AdminPage() {
                       </div>
                     </div>
                     {r.location && <p className="text-[10px] text-slate-500 uppercase tracking-widest mb-2">{r.location}</p>}
-                    <p className="text-xs text-slate-700 italic line-clamp-4">"{r.content}"</p>
+                    <p className="text-xs text-slate-700 italic line-clamp-4">"{r.body}"</p>
                   </div>
                   <div className="flex items-center justify-between mt-4 pt-3 border-t">
                     <span className="text-[10px] font-bold text-slate-500">{new Date(r.created_at).toLocaleDateString()}</span>
@@ -979,6 +978,7 @@ function AdminPage() {
             </form>
           </div>
         )}
+
         {/* POST MODAL */}
         {isPostModalOpen && editingPost && (
           <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 p-4 overflow-y-auto backdrop-blur-sm">
@@ -1153,21 +1153,10 @@ function AdminPage() {
                   <Label className="text-xs font-bold uppercase text-slate-700">Review Content</Label>
                   <Textarea
                     required
-                    value={editingReview.content}
-                    onChange={(e) => setEditingReview({ ...editingReview, content: e.target.value })}
+                    value={editingReview.body}
+                    onChange={(e) => setEditingReview({ ...editingReview, body: e.target.value })}
                     className="mt-1 min-h-[120px]"
                   />
-                </div>
-                
-                <div className="flex gap-6 py-2 border-b pb-4">
-                  <label className="flex items-center gap-2 font-bold cursor-pointer text-sm">
-                    <input
-                      type="checkbox"
-                      checked={editingReview.is_verified}
-                      onChange={(e) => setEditingReview({ ...editingReview, is_verified: e.target.checked })}
-                    />
-                    Verified Buyer Badge
-                  </label>
                 </div>
 
                 <div className="flex justify-end gap-2 pt-2">
