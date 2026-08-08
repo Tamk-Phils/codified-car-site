@@ -1,0 +1,327 @@
+{
+  "id": 15476,
+  "date": "2026-08-08T00:32:09",
+  "date_gmt": "2026-08-08T00:32:09",
+  "guid": {
+    "rendered": "https://bankseizedcars.online/?post_type=product&#038;p=15476"
+  },
+  "modified": "2026-08-08T00:32:09",
+  "modified_gmt": "2026-08-08T00:32:09",
+  "slug": "2023ferrariconvertible2d",
+  "status": "publish",
+  "type": "product",
+  "link": "https://bankseizedcars.online/produit/2023ferrariconvertible2d/",
+  "title": {
+    "rendered": "2023FerrariConvertible2D"
+  },
+  "content": {
+    "rendered": "<ul>\n<li>* Mileage: 1,889 miles * Transmission: Automatic * Exterior Color: White * Interior Color: Red * Fuel Type: Petrol * Trim: Convertible 2D * Title: Clean title * Condition: No significant damage or issues #Ferrari812 #2023Ferrari #Convertible2D #LuxuryCars #DreamCar</li>\n</ul>\n",
+    "protected": false
+  },
+  "excerpt": {
+    "rendered": "<p>* Mileage: 1,889 miles * Transmission: Automatic * Exterior Color: White * Interior Color: Red * Fuel Type: Petrol * Trim: Convertible 2D * Title: Clean title * Condition: No significant damage or issues #Ferrari812 #2023Ferrari #Convertible2D #LuxuryCars #DreamCar</p>\n",
+    "protected": false
+  },
+  "featured_media": 15477,
+  "comment_status": "open",
+  "ping_status": "closed",
+  "template": "",
+  "meta": [],
+  "product_brand": [],
+  "product_cat": [
+    78
+  ],
+  "product_tag": [],
+  "class_list": [
+    "post-15476",
+    "product",
+    "type-product",
+    "status-publish",
+    "has-post-thumbnail",
+    "product_cat-hot-deal",
+    "first",
+    "instock",
+    "shipping-taxable",
+    "purchasable",
+    "product-type-simple"
+  ],
+  "jetpack_sharing_enabled": true,
+  "_links": {
+    "self": [
+      {
+        "href": "https://bankseizedcars.online/wp-json/wp/v2/product/15476",
+        "targetHints": {
+          "allow": [
+            "GET"
+          ]
+        }
+      }
+    ],
+    "collection": [
+      {
+        "href": "https://bankseizedcars.online/wp-json/wp/v2/product"
+      }
+    ],
+    "about": [
+      {
+        "href": "https://bankseizedcars.online/wp-json/wp/v2/types/product"
+      }
+    ],
+    "replies": [
+      {
+        "embeddable": true,
+        "href": "https://bankseizedcars.online/wp-json/wp/v2/comments?post=15476"
+      }
+    ],
+    "wp:featuredmedia": [
+      {
+        "embeddable": true,
+        "href": "https://bankseizedcars.online/wp-json/wp/v2/media/15477"
+      }
+    ],
+    "wp:attachment": [
+      {
+        "href": "https://bankseizedcars.online/wp-json/wp/v2/media?parent=15476"
+      }
+    ],
+    "wp:term": [
+      {
+        "taxonomy": "product_brand",
+        "embeddable": true,
+        "href": "https://bankseizedcars.online/wp-json/wp/v2/product_brand?post=15476"
+      },
+      {
+        "taxonomy": "product_cat",
+        "embeddable": true,
+        "href": "https://bankseizedcars.online/wp-json/wp/v2/product_cat?post=15476"
+      },
+      {
+        "taxonomy": "product_tag",
+        "embeddable": true,
+        "href": "https://bankseizedcars.online/wp-json/wp/v2/product_tag?post=15476"
+      }
+    ],
+    "curies": [
+      {
+        "name": "wp",
+        "href": "https://api.w.org/{rel}",
+        "templated": true
+      }
+    ]
+  },
+  "_embedded": {
+    "wp:featuredmedia": [
+      {
+        "id": 15477,
+        "date": "2026-08-08T00:30:20",
+        "slug": "ahatok_bankrepossessedcars0404_cce9cca5-427f-4197-b4b5-a02c19e69986_",
+        "type": "attachment",
+        "link": "https://bankseizedcars.online/?attachment_id=15477#main",
+        "title": {
+          "rendered": "AhaTok_bankrepossessedcars0404_cce9cca5-427f-4197-b4b5-a02c19e69986_"
+        },
+        "author": 7,
+        "featured_media": 0,
+        "jetpack_sharing_enabled": true,
+        "caption": {
+          "rendered": ""
+        },
+        "alt_text": "",
+        "media_type": "image",
+        "mime_type": "image/jpeg",
+        "media_details": {
+          "width": 1180,
+          "height": 1574,
+          "file": "2026/08/AhaTok_bankrepossessedcars0404_cce9cca5-427f-4197-b4b5-a02c19e69986_.jpg",
+          "filesize": 396193,
+          "sizes": {
+            "medium": {
+              "file": "AhaTok_bankrepossessedcars0404_cce9cca5-427f-4197-b4b5-a02c19e69986_-225x300.jpg",
+              "width": 225,
+              "height": 300,
+              "filesize": 15271,
+              "mime_type": "image/jpeg",
+              "source_url": "https://bankseizedcars.online/wp-content/uploads/2026/08/AhaTok_bankrepossessedcars0404_cce9cca5-427f-4197-b4b5-a02c19e69986_-225x300.jpg"
+            },
+            "large": {
+              "file": "AhaTok_bankrepossessedcars0404_cce9cca5-427f-4197-b4b5-a02c19e69986_-768x1024.jpg",
+              "width": 768,
+              "height": 1024,
+              "filesize": 116474,
+              "mime_type": "image/jpeg",
+              "source_url": "https://bankseizedcars.online/wp-content/uploads/2026/08/AhaTok_bankrepossessedcars0404_cce9cca5-427f-4197-b4b5-a02c19e69986_-768x1024.jpg"
+            },
+            "thumbnail": {
+              "file": "AhaTok_bankrepossessedcars0404_cce9cca5-427f-4197-b4b5-a02c19e69986_-150x150.jpg",
+              "width": 150,
+              "height": 150,
+              "filesize": 6775,
+              "mime_type": "image/jpeg",
+              "source_url": "https://bankseizedcars.online/wp-content/uploads/2026/08/AhaTok_bankrepossessedcars0404_cce9cca5-427f-4197-b4b5-a02c19e69986_-150x150.jpg"
+            },
+            "medium_large": {
+              "file": "AhaTok_bankrepossessedcars0404_cce9cca5-427f-4197-b4b5-a02c19e69986_-768x1024.jpg",
+              "width": 768,
+              "height": 1024,
+              "filesize": 116474,
+              "mime_type": "image/jpeg",
+              "source_url": "https://bankseizedcars.online/wp-content/uploads/2026/08/AhaTok_bankrepossessedcars0404_cce9cca5-427f-4197-b4b5-a02c19e69986_-768x1024.jpg"
+            },
+            "1536x1536": {
+              "file": "AhaTok_bankrepossessedcars0404_cce9cca5-427f-4197-b4b5-a02c19e69986_-1152x1536.jpg",
+              "width": 1152,
+              "height": 1536,
+              "filesize": 224710,
+              "mime_type": "image/jpeg",
+              "source_url": "https://bankseizedcars.online/wp-content/uploads/2026/08/AhaTok_bankrepossessedcars0404_cce9cca5-427f-4197-b4b5-a02c19e69986_-1152x1536.jpg"
+            },
+            "woocommerce_thumbnail": {
+              "file": "AhaTok_bankrepossessedcars0404_cce9cca5-427f-4197-b4b5-a02c19e69986_-300x300.jpg",
+              "width": 300,
+              "height": 300,
+              "filesize": 20722,
+              "uncropped": false,
+              "mime_type": "image/jpeg",
+              "source_url": "https://bankseizedcars.online/wp-content/uploads/2026/08/AhaTok_bankrepossessedcars0404_cce9cca5-427f-4197-b4b5-a02c19e69986_-300x300.jpg"
+            },
+            "woocommerce_single": {
+              "file": "AhaTok_bankrepossessedcars0404_cce9cca5-427f-4197-b4b5-a02c19e69986_-600x800.jpg",
+              "width": 600,
+              "height": 800,
+              "filesize": 77705,
+              "mime_type": "image/jpeg",
+              "source_url": "https://bankseizedcars.online/wp-content/uploads/2026/08/AhaTok_bankrepossessedcars0404_cce9cca5-427f-4197-b4b5-a02c19e69986_-600x800.jpg"
+            },
+            "woocommerce_gallery_thumbnail": {
+              "file": "AhaTok_bankrepossessedcars0404_cce9cca5-427f-4197-b4b5-a02c19e69986_-100x100.jpg",
+              "width": 100,
+              "height": 100,
+              "filesize": 3650,
+              "mime_type": "image/jpeg",
+              "source_url": "https://bankseizedcars.online/wp-content/uploads/2026/08/AhaTok_bankrepossessedcars0404_cce9cca5-427f-4197-b4b5-a02c19e69986_-100x100.jpg"
+            },
+            "full": {
+              "file": "AhaTok_bankrepossessedcars0404_cce9cca5-427f-4197-b4b5-a02c19e69986_.jpg",
+              "width": 1180,
+              "height": 1574,
+              "mime_type": "image/jpeg",
+              "source_url": "https://bankseizedcars.online/wp-content/uploads/2026/08/AhaTok_bankrepossessedcars0404_cce9cca5-427f-4197-b4b5-a02c19e69986_.jpg"
+            }
+          },
+          "image_meta": {
+            "aperture": "0",
+            "credit": "",
+            "camera": "",
+            "caption": "",
+            "created_timestamp": "0",
+            "copyright": "",
+            "focal_length": "0",
+            "iso": "0",
+            "shutter_speed": "0",
+            "title": "",
+            "orientation": "0",
+            "keywords": [],
+            "alt": ""
+          }
+        },
+        "source_url": "https://bankseizedcars.online/wp-content/uploads/2026/08/AhaTok_bankrepossessedcars0404_cce9cca5-427f-4197-b4b5-a02c19e69986_.jpg",
+        "_links": {
+          "self": [
+            {
+              "href": "https://bankseizedcars.online/wp-json/wp/v2/media/15477",
+              "targetHints": {
+                "allow": [
+                  "GET"
+                ]
+              }
+            }
+          ],
+          "collection": [
+            {
+              "href": "https://bankseizedcars.online/wp-json/wp/v2/media"
+            }
+          ],
+          "about": [
+            {
+              "href": "https://bankseizedcars.online/wp-json/wp/v2/types/attachment"
+            }
+          ],
+          "author": [
+            {
+              "embeddable": true,
+              "href": "https://bankseizedcars.online/wp-json/wp/v2/users/7"
+            }
+          ],
+          "replies": [
+            {
+              "embeddable": true,
+              "href": "https://bankseizedcars.online/wp-json/wp/v2/comments?post=15477"
+            }
+          ],
+          "wp:attached-to": [
+            {
+              "embeddable": true,
+              "post_type": "product",
+              "id": 15476,
+              "href": "https://bankseizedcars.online/wp-json/wp/v2/product/15476"
+            }
+          ],
+          "curies": [
+            {
+              "name": "wp",
+              "href": "https://api.w.org/{rel}",
+              "templated": true
+            }
+          ]
+        }
+      }
+    ],
+    "wp:term": [
+      [],
+      [
+        {
+          "id": 78,
+          "link": "https://bankseizedcars.online/categorie-produit/hot-deal/",
+          "name": "Hot deal",
+          "slug": "hot-deal",
+          "taxonomy": "product_cat",
+          "_links": {
+            "self": [
+              {
+                "href": "https://bankseizedcars.online/wp-json/wp/v2/product_cat/78",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://bankseizedcars.online/wp-json/wp/v2/product_cat"
+              }
+            ],
+            "about": [
+              {
+                "href": "https://bankseizedcars.online/wp-json/wp/v2/taxonomies/product_cat"
+              }
+            ],
+            "wp:post_type": [
+              {
+                "href": "https://bankseizedcars.online/wp-json/wp/v2/product?product_cat=78"
+              }
+            ],
+            "curies": [
+              {
+                "name": "wp",
+                "href": "https://api.w.org/{rel}",
+                "templated": true
+              }
+            ]
+          }
+        }
+      ],
+      []
+    ]
+  }
+}

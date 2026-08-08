@@ -2,6 +2,9 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
 import { toast } from "sonner";
 import {
+  adminLogin,
+  adminLogout,
+  adminMe,
   adminStats,
   adminVehicles,
   adminPosts,
@@ -48,8 +51,10 @@ export const Route = createFileRoute("/admin")({
 });
 
 function AdminPage() {
-  // Authentication disabled for development access
-  const admin = { id: "00000000-0000-0000-0000-000000000000", username: "Admin" };
+  const [admin, setAdmin] = useState<{ id: string; username: string } | null>(null);
+  const [loadingAuth, setLoadingAuth] = useState(true);
+  const [loginForm, setLoginForm] = useState({ username: "", password: "" });
+  const [loginError, setLoginError] = useState("");
 
   // Dashboard state
   const [activeTab, setActiveTab] = useState<"overview" | "vehicles" | "orders" | "inquiries" | "posts" | "subscribers" | "settings">("overview");
@@ -75,8 +80,27 @@ function AdminPage() {
   const [newPassword, setNewPassword] = useState("");
   const [updatingPass, setUpdatingPass] = useState(false);
 
+  useEffect(() => {
+    adminMe().then((res) => {
+      setAdmin(res.admin);
+      setLoadingAuth(false);
+    });
+  }, []);
+
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoginError("");
+    try {
+      const res = await adminLogin({ data: loginForm });
+      setAdmin({ id: "server-session", username: res.username });
+    } catch (err: any) {
+      setLoginError(err.message || "Invalid credentials");
+    }
+  };
+
   // Fetch tab data when tab changes
   const refreshData = async () => {
+    if (!admin) return;
     setLoadingData(true);
     try {
       if (activeTab === "overview") {
@@ -107,7 +131,7 @@ function AdminPage() {
 
   useEffect(() => {
     refreshData();
-  }, [activeTab]);
+  }, [activeTab, admin]);
 
   const handleDelete = async (table: "vehicles" | "posts" | "orders" | "inquiries", id: string) => {
     if (!confirm(`Are you sure you want to delete this entry from ${table}?`)) return;
@@ -149,6 +173,55 @@ function AdminPage() {
       images: (prev?.images || []).filter((_: any, idx: number) => idx !== indexToRemove),
     }));
   };
+
+  if (loadingAuth) {
+    return <div className="min-h-screen bg-slate-100 flex items-center justify-center p-4"><RefreshCw className="animate-spin text-blue-600 size-6 mr-3"/> <span className="font-bold text-slate-700">Loading secure portal...</span></div>;
+  }
+
+  if (!admin) {
+    return (
+      <div className="min-h-screen bg-slate-100 flex items-center justify-center p-4">
+        <form onSubmit={handleLogin} className="max-w-sm w-full bg-white p-8 rounded-2xl shadow-xl border border-slate-200">
+          <div className="flex flex-col items-center mb-8">
+            <img src="/logo.png" alt="Logo" className="size-16 rounded-xl bg-slate-900 border border-amber-500/30 p-2 shadow-md mb-4" />
+            <h1 className="font-display text-2xl font-black uppercase text-slate-900">Admin Login</h1>
+            <p className="text-xs text-slate-500 font-bold uppercase tracking-widest mt-1">Authorized Access Only</p>
+          </div>
+
+          {loginError && (
+            <div className="bg-red-50 text-red-600 p-3 rounded-lg text-xs font-bold mb-4 border border-red-100 text-center">
+              {loginError}
+            </div>
+          )}
+
+          <div className="space-y-4">
+            <div>
+              <Label className="text-xs font-bold uppercase text-slate-700">Username</Label>
+              <Input 
+                required 
+                value={loginForm.username} 
+                onChange={e => setLoginForm({...loginForm, username: e.target.value})} 
+                className="mt-1"
+              />
+            </div>
+            <div>
+              <Label className="text-xs font-bold uppercase text-slate-700">Password</Label>
+              <Input 
+                type="password" 
+                required 
+                value={loginForm.password} 
+                onChange={e => setLoginForm({...loginForm, password: e.target.value})} 
+                className="mt-1"
+              />
+            </div>
+            <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 font-bold uppercase mt-2">
+              Sign In to Portal
+            </Button>
+          </div>
+        </form>
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col lg:flex-row min-h-screen bg-slate-100 text-slate-900">
@@ -250,9 +323,19 @@ function AdminPage() {
               <ArrowLeft className="size-4 mr-2 text-blue-400" /> Back to Storefront
             </Link>
           </Button>
-          <div className="flex items-center justify-between text-[11px] text-slate-400 px-1">
+          <Button
+            onClick={async () => {
+              await adminLogout();
+              setAdmin(null);
+            }}
+            variant="outline"
+            className="w-full border-red-400/40 bg-red-500/10 hover:bg-red-600 text-white font-bold uppercase text-xs tracking-wider"
+          >
+            <Lock className="size-4 mr-2 text-red-400" /> Secure Logout
+          </Button>
+          <div className="flex items-center justify-between text-[11px] text-slate-400 px-1 mt-2">
             <span>Status:</span>
-            <span className="font-bold text-emerald-400">Direct Admin Access</span>
+            <span className="font-bold text-emerald-400">Secure Session Active</span>
           </div>
         </div>
       </aside>
