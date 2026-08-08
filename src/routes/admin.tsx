@@ -17,6 +17,8 @@ import {
   adminSetOrderStatus,
   adminSetInquiryStatus,
   adminChangePassword,
+  adminReviews,
+  adminSaveReview,
 } from "@/lib/admin.functions";
 import { formatPrice } from "@/lib/site";
 import { Button } from "@/components/ui/button";
@@ -41,6 +43,7 @@ import {
   Menu,
   Image as ImageIcon,
   ShieldCheck,
+  Star,
 } from "lucide-react";
 
 export const Route = createFileRoute("/admin")({
@@ -57,13 +60,14 @@ function AdminPage() {
   const [loginError, setLoginError] = useState("");
 
   // Dashboard state
-  const [activeTab, setActiveTab] = useState<"overview" | "vehicles" | "orders" | "inquiries" | "posts" | "subscribers" | "settings">("overview");
+  const [activeTab, setActiveTab] = useState<"overview" | "vehicles" | "orders" | "inquiries" | "posts" | "reviews" | "subscribers" | "settings">("overview");
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
   const [stats, setStats] = useState<any>(null);
   const [vehicles, setVehicles] = useState<any[]>([]);
   const [orders, setOrders] = useState<any[]>([]);
   const [inquiries, setInquiries] = useState<any[]>([]);
   const [posts, setPosts] = useState<any[]>([]);
+  const [reviews, setReviews] = useState<any[]>([]);
   const [subscribers, setSubscribers] = useState<any[]>([]);
   const [loadingData, setLoadingData] = useState(false);
 
@@ -75,6 +79,10 @@ function AdminPage() {
   // Post Modal state
   const [editingPost, setEditingPost] = useState<any | null>(null);
   const [isPostModalOpen, setIsPostModalOpen] = useState(false);
+
+  // Review Modal state
+  const [editingReview, setEditingReview] = useState<any | null>(null);
+  const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
 
   // Change password state
   const [newPassword, setNewPassword] = useState("");
@@ -118,6 +126,9 @@ function AdminPage() {
       } else if (activeTab === "posts") {
         const p = await adminPosts();
         setPosts(p);
+      } else if (activeTab === "reviews") {
+        const r = await adminReviews();
+        setReviews(r);
       } else if (activeTab === "subscribers") {
         const sub = await adminSubscribers();
         setSubscribers(sub);
@@ -133,7 +144,7 @@ function AdminPage() {
     refreshData();
   }, [activeTab, admin]);
 
-  const handleDelete = async (table: "vehicles" | "posts" | "orders" | "inquiries", id: string) => {
+  const handleDelete = async (table: "vehicles" | "posts" | "orders" | "inquiries" | "reviews", id: string) => {
     if (!confirm(`Are you sure you want to delete this entry from ${table}?`)) return;
     try {
       await adminDelete({ data: { table, id } });
@@ -243,13 +254,20 @@ function AdminPage() {
           </div>
         </div>
 
-        <button
-          onClick={() => setIsMobileNavOpen(!isMobileNavOpen)}
-          className="p-2 rounded-lg bg-blue-900/50 hover:bg-blue-800 text-white transition-colors"
-          aria-label="Toggle navigation menu"
-        >
-          {isMobileNavOpen ? <X className="size-5" /> : <Menu className="size-5" />}
-        </button>
+        <div className="flex items-center gap-2">
+          <Button asChild variant="ghost" size="sm" className="text-white hover:bg-blue-900/50 hover:text-white px-2">
+            <Link to="/">
+              <ArrowLeft className="size-4" />
+            </Link>
+          </Button>
+          <button
+            onClick={() => setIsMobileNavOpen(!isMobileNavOpen)}
+            className="p-2 rounded-lg bg-blue-900/50 hover:bg-blue-800 text-white transition-colors"
+            aria-label="Toggle navigation menu"
+          >
+            {isMobileNavOpen ? <X className="size-5" /> : <Menu className="size-5" />}
+          </button>
+        </div>
       </div>
 
       {/* Mobile Navigation Backdrop */}
@@ -291,6 +309,7 @@ function AdminPage() {
             { id: "orders", label: "Orders", icon: ShoppingBag },
             { id: "inquiries", label: "Inquiries", icon: MessageSquare },
             { id: "posts", label: "Blog Posts", icon: FileText },
+            { id: "reviews", label: "Reviews", icon: Star },
             { id: "subscribers", label: "Subscribers", icon: Mail },
             { id: "settings", label: "Settings", icon: Lock },
           ].map((tab) => (
@@ -847,6 +866,60 @@ function AdminPage() {
           </div>
         )}
 
+        {/* Tab 8: REVIEWS */}
+        {activeTab === "reviews" && (
+          <div>
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="font-bold text-lg text-slate-900">Customer Reviews</h2>
+              <Button
+                onClick={() => {
+                  setEditingReview({
+                    name: "",
+                    location: "",
+                    content: "",
+                    rating: 5,
+                    is_verified: true,
+                  });
+                  setIsReviewModalOpen(true);
+                }}
+                className="bg-blue-600 hover:bg-blue-700 font-bold uppercase text-xs"
+              >
+                <Plus className="size-4 mr-1.5" /> Add Review
+              </Button>
+            </div>
+
+            <div className="grid gap-4 md:grid-cols-3">
+              {reviews.map((r) => (
+                <div key={r.id} className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm flex flex-col justify-between">
+                  <div>
+                    <div className="flex items-center justify-between mb-2">
+                      <h3 className="font-bold text-slate-900 text-sm">{r.name}</h3>
+                      <div className="flex">
+                        {[...Array(5)].map((_, i) => (
+                          <Star key={i} className={`size-3 ${i < r.rating ? 'fill-amber-400 text-amber-400' : 'text-slate-200'}`} />
+                        ))}
+                      </div>
+                    </div>
+                    {r.location && <p className="text-[10px] text-slate-500 uppercase tracking-widest mb-2">{r.location}</p>}
+                    <p className="text-xs text-slate-700 italic line-clamp-4">"{r.content}"</p>
+                  </div>
+                  <div className="flex items-center justify-between mt-4 pt-3 border-t">
+                    <span className="text-[10px] font-bold text-slate-500">{new Date(r.created_at).toLocaleDateString()}</span>
+                    <div className="flex gap-2">
+                      <Button size="sm" variant="outline" onClick={() => { setEditingReview(r); setIsReviewModalOpen(true); }} className="text-blue-600 h-8">
+                        <Edit className="size-3.5" />
+                      </Button>
+                      <Button size="sm" variant="outline" onClick={() => handleDelete("reviews", r.id)} className="h-8 border-red-200 text-red-600 hover:bg-red-50">
+                        <Trash2 className="size-3.5" />
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
         {/* Tab 6: SUBSCRIBERS */}
         {activeTab === "subscribers" && (
           <div className="rounded-xl border border-slate-200 bg-white shadow-sm overflow-x-auto">
@@ -1009,6 +1082,100 @@ function AdminPage() {
                   </Button>
                   <Button type="submit" className="bg-blue-600 hover:bg-blue-700 font-bold uppercase">
                     Save Article
+                  </Button>
+                </div>
+              </form>
+            </div>
+          </div>
+        )}
+        {/* REVIEW MODAL */}
+        {isReviewModalOpen && editingReview && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 p-4 overflow-y-auto backdrop-blur-sm">
+            <div className="bg-white rounded-2xl w-full max-w-xl shadow-xl overflow-hidden my-8">
+              <div className="p-4 border-b bg-slate-50 flex items-center justify-between sticky top-0 z-10">
+                <h3 className="font-bold text-slate-900 uppercase">
+                  {editingReview.id ? "Edit Review" : "Add Review"}
+                </h3>
+                <button onClick={() => setIsReviewModalOpen(false)} className="text-slate-400 hover:text-slate-600">
+                  <X className="size-5" />
+                </button>
+              </div>
+              
+              <form
+                onSubmit={async (e) => {
+                  e.preventDefault();
+                  try {
+                    await adminSaveReview({ data: editingReview });
+                    toast.success("Review saved successfully");
+                    setIsReviewModalOpen(false);
+                    refreshData();
+                  } catch (err: any) {
+                    toast.error("Failed to save review", { description: err?.message });
+                  }
+                }}
+                className="p-6 space-y-4"
+              >
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <Label className="text-xs font-bold uppercase text-slate-700">Customer Name</Label>
+                    <Input
+                      required
+                      value={editingReview.name}
+                      onChange={(e) => setEditingReview({ ...editingReview, name: e.target.value })}
+                      className="mt-1"
+                    />
+                  </div>
+                  <div>
+                    <Label className="text-xs font-bold uppercase text-slate-700">Location</Label>
+                    <Input
+                      value={editingReview.location}
+                      onChange={(e) => setEditingReview({ ...editingReview, location: e.target.value })}
+                      placeholder="e.g. Dallas, TX"
+                      className="mt-1"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <Label className="text-xs font-bold uppercase text-slate-700">Rating (1-5)</Label>
+                  <select
+                    className="w-full mt-1 rounded-md border border-slate-200 px-3 py-2 text-sm"
+                    value={editingReview.rating}
+                    onChange={(e) => setEditingReview({ ...editingReview, rating: Number(e.target.value) })}
+                  >
+                    {[1, 2, 3, 4, 5].map(n => (
+                      <option key={n} value={n}>{n} Stars</option>
+                    ))}
+                  </select>
+                </div>
+
+                <div>
+                  <Label className="text-xs font-bold uppercase text-slate-700">Review Content</Label>
+                  <Textarea
+                    required
+                    value={editingReview.content}
+                    onChange={(e) => setEditingReview({ ...editingReview, content: e.target.value })}
+                    className="mt-1 min-h-[120px]"
+                  />
+                </div>
+                
+                <div className="flex gap-6 py-2 border-b pb-4">
+                  <label className="flex items-center gap-2 font-bold cursor-pointer text-sm">
+                    <input
+                      type="checkbox"
+                      checked={editingReview.is_verified}
+                      onChange={(e) => setEditingReview({ ...editingReview, is_verified: e.target.checked })}
+                    />
+                    Verified Buyer Badge
+                  </label>
+                </div>
+
+                <div className="flex justify-end gap-2 pt-2">
+                  <Button type="button" variant="outline" onClick={() => setIsReviewModalOpen(false)}>
+                    Cancel
+                  </Button>
+                  <Button type="submit" className="bg-blue-600 hover:bg-blue-700 font-bold uppercase">
+                    Save Review
                   </Button>
                 </div>
               </form>

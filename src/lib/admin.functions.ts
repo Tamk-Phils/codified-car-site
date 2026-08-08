@@ -123,6 +123,32 @@ export const adminSubscribers = async () => {
   return data ?? [];
 };
 
+export const adminReviews = async () => {
+  const { data, error } = await supabase
+    .from("reviews")
+    .select("*")
+    .order("created_at", { ascending: false })
+    .limit(200);
+  if (error) throw new Error(error.message);
+  return data ?? [];
+};
+
+export const adminSaveReview = async ({ data }: { data: any }) => {
+  const { id, created_at, ...values } = data;
+  if (id) {
+    const { error } = await supabase.from("reviews").update(values).eq("id", id);
+    if (error) throw new Error(error.message);
+    return { id };
+  }
+  const { data: res, error } = await supabase
+    .from("reviews")
+    .insert(values)
+    .select("id")
+    .single();
+  if (error) throw new Error(error.message);
+  return { id: res.id };
+};
+
 export const adminSaveVehicle = async ({ data }: { data: any }) => {
   const { id, created_at, ...values } = data;
   if (id) {
