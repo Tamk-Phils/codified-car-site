@@ -832,9 +832,14 @@ function AdminPage() {
                   </div>
                   <div className="flex items-center justify-between mt-4 pt-3 border-t">
                     <span className="text-xs font-bold text-emerald-600">{p.is_published ? "Published" : "Draft"}</span>
-                    <Button size="sm" variant="outline" onClick={() => handleDelete("posts", p.id)} className="text-red-600">
-                      <Trash2 className="size-3.5" />
-                    </Button>
+                    <div className="flex gap-2">
+                      <Button size="sm" variant="outline" onClick={() => { setEditingPost(p); setIsPostModalOpen(true); }} className="text-blue-600 h-8">
+                        <Edit className="size-3.5" />
+                      </Button>
+                      <Button size="sm" variant="outline" onClick={() => handleDelete("posts", p.id)} className="h-8 border-red-200 text-red-600 hover:bg-red-50">
+                        <Trash2 className="size-3.5" />
+                      </Button>
+                    </div>
                   </div>
                 </div>
               ))}
@@ -899,6 +904,115 @@ function AdminPage() {
                 Update Password
               </Button>
             </form>
+          </div>
+        )}
+        {/* POST MODAL */}
+        {isPostModalOpen && editingPost && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 p-4 overflow-y-auto backdrop-blur-sm">
+            <div className="bg-white rounded-2xl w-full max-w-2xl shadow-xl overflow-hidden my-8">
+              <div className="p-4 border-b bg-slate-50 flex items-center justify-between sticky top-0 z-10">
+                <h3 className="font-bold text-slate-900 uppercase">
+                  {editingPost.id ? "Edit Article" : "Create Article"}
+                </h3>
+                <button onClick={() => setIsPostModalOpen(false)} className="text-slate-400 hover:text-slate-600">
+                  <X className="size-5" />
+                </button>
+              </div>
+              
+              <form
+                onSubmit={async (e) => {
+                  e.preventDefault();
+                  try {
+                    await adminSavePost({ data: editingPost });
+                    toast.success("Post saved successfully");
+                    setIsPostModalOpen(false);
+                    refreshData();
+                  } catch (err: any) {
+                    toast.error("Failed to save post", { description: err?.message });
+                  }
+                }}
+                className="p-6 space-y-4"
+              >
+                <div>
+                  <Label className="text-xs font-bold uppercase text-slate-700">Title</Label>
+                  <Input
+                    required
+                    value={editingPost.title}
+                    onChange={(e) => setEditingPost({ ...editingPost, title: e.target.value })}
+                    className="mt-1"
+                  />
+                </div>
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <Label className="text-xs font-bold uppercase text-slate-700">Slug</Label>
+                    <Input
+                      required
+                      value={editingPost.slug}
+                      onChange={(e) => setEditingPost({ ...editingPost, slug: e.target.value })}
+                      className="mt-1"
+                    />
+                  </div>
+                  <div>
+                    <Label className="text-xs font-bold uppercase text-slate-700">Category</Label>
+                    <select
+                      className="w-full mt-1 rounded-md border border-slate-200 px-3 py-2 text-sm"
+                      value={editingPost.category}
+                      onChange={(e) => setEditingPost({ ...editingPost, category: e.target.value })}
+                    >
+                      <option value="Guides">Guides</option>
+                      <option value="News">News</option>
+                      <option value="Analysis">Analysis</option>
+                    </select>
+                  </div>
+                </div>
+                <div>
+                  <Label className="text-xs font-bold uppercase text-slate-700">Excerpt</Label>
+                  <Textarea
+                    required
+                    value={editingPost.excerpt}
+                    onChange={(e) => setEditingPost({ ...editingPost, excerpt: e.target.value })}
+                    className="mt-1 min-h-[80px]"
+                  />
+                </div>
+                <div>
+                  <Label className="text-xs font-bold uppercase text-slate-700">Content (Markdown/HTML)</Label>
+                  <Textarea
+                    required
+                    value={editingPost.content}
+                    onChange={(e) => setEditingPost({ ...editingPost, content: e.target.value })}
+                    className="mt-1 min-h-[200px]"
+                  />
+                </div>
+                <div>
+                  <Label className="text-xs font-bold uppercase text-slate-700">Cover Image URL (Optional)</Label>
+                  <Input
+                    value={editingPost.cover_image || ""}
+                    onChange={(e) => setEditingPost({ ...editingPost, cover_image: e.target.value })}
+                    className="mt-1"
+                  />
+                </div>
+                
+                <div className="flex gap-6 py-2 border-b pb-4">
+                  <label className="flex items-center gap-2 font-bold cursor-pointer text-sm">
+                    <input
+                      type="checkbox"
+                      checked={editingPost.is_published}
+                      onChange={(e) => setEditingPost({ ...editingPost, is_published: e.target.checked })}
+                    />
+                    Published Status
+                  </label>
+                </div>
+
+                <div className="flex justify-end gap-2 pt-2">
+                  <Button type="button" variant="outline" onClick={() => setIsPostModalOpen(false)}>
+                    Cancel
+                  </Button>
+                  <Button type="submit" className="bg-blue-600 hover:bg-blue-700 font-bold uppercase">
+                    Save Article
+                  </Button>
+                </div>
+              </form>
+            </div>
           </div>
         )}
       </main>
