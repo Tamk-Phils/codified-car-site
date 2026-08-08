@@ -38,13 +38,13 @@ export const Route = createFileRoute("/")({
 
 const HERO_SLIDES = [
   {
-    image: "https://kjautos.online/wp-content/uploads/2026/06/peter-broomfield-m3m-lnR90uM-unsplash-scaled.jpg",
+    image: "https://bankseizedcars.online/wp-content/uploads/2026/06/peter-broomfield-m3m-lnR90uM-unsplash-scaled.jpg",
     title: "BANK-REPOSSESSED VEHICLES AT UNBEATABLE PRICES",
     subtitle: "Browse a wide selection of certified bank seized cars directly sourced from financial institutions. No middlemen. Just real deals.",
     primaryBtn: { label: "BROWSE INVENTORY >", to: "/boutique" },
   },
   {
-    image: "https://kjautos.online/wp-content/uploads/2026/06/erik-mclean-H1NxvaTUf_o-unsplash-scaled.jpg",
+    image: "https://bankseizedcars.online/wp-content/uploads/2026/06/erik-mclean-H1NxvaTUf_o-unsplash-scaled.jpg",
     title: "SAVE UP TO 70% ON REPO CARS",
     subtitle: "These vehicles won’t last long. Explore limited-time listings and secure your deal before it’s gone.",
     primaryBtn: { label: "SEE LISTINGS >", to: "/boutique" },
@@ -55,22 +55,22 @@ const HERO_SLIDES = [
 const TOP_BRANDS = [
   {
     name: "Ferrari",
-    image: "https://kjautos.online/wp-content/uploads/2026/06/hd-ferrari-black-logo-transparent-png-701751694773098iuwzos1hjw-removebg-preview.png",
+    image: "https://bankseizedcars.online/wp-content/uploads/2026/06/hd-ferrari-black-logo-transparent-png-701751694773098iuwzos1hjw-removebg-preview.png",
     make: "Ferrari",
   },
   {
     name: "Cadillac",
-    image: "https://kjautos.online/wp-content/uploads/2026/06/cadillac-115309621794y3hky6zha-removebg-preview.png",
+    image: "https://bankseizedcars.online/wp-content/uploads/2026/06/cadillac-115309621794y3hky6zha-removebg-preview.png",
     make: "Cadillac",
   },
   {
     name: "Mercedes-Benz",
-    image: "https://kjautos.online/wp-content/uploads/2026/06/Mercedes-Benz-Logo-1024x637.png",
+    image: "https://bankseizedcars.online/wp-content/uploads/2026/06/Mercedes-Benz-Logo-1024x637.png",
     make: "Mercedes-Benz",
   },
   {
     name: "Chevrolet / Corvette",
-    image: "https://kjautos.online/wp-content/uploads/2026/06/corvette-logo-png_seeklogo-368597.png",
+    image: "https://bankseizedcars.online/wp-content/uploads/2026/06/corvette-logo-png_seeklogo-368597.png",
     make: "Chevrolet",
   },
 ];
