@@ -75,14 +75,20 @@ function AdminPage() {
   const [editingVehicle, setEditingVehicle] = useState<any | null>(null);
   const [isVehicleModalOpen, setIsVehicleModalOpen] = useState(false);
   const [uploadingImage, setUploadingImage] = useState(false);
+  const [submittingVehicle, setSubmittingVehicle] = useState(false);
 
   // Post Modal state
   const [editingPost, setEditingPost] = useState<any | null>(null);
   const [isPostModalOpen, setIsPostModalOpen] = useState(false);
+  const [submittingPost, setSubmittingPost] = useState(false);
 
   // Review Modal state
   const [editingReview, setEditingReview] = useState<any | null>(null);
   const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
+  const [submittingReview, setSubmittingReview] = useState(false);
+
+  // Login state
+  const [submittingLogin, setSubmittingLogin] = useState(false);
 
   // Change password state
   const [newPassword, setNewPassword] = useState("");
@@ -98,11 +104,14 @@ function AdminPage() {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoginError("");
+    setSubmittingLogin(true);
     try {
       const res = await adminLogin({ data: loginForm });
       setAdmin({ id: "server-session", username: res.username });
     } catch (err: any) {
       setLoginError(err.message || "Invalid credentials");
+    } finally {
+      setSubmittingLogin(false);
     }
   };
 
@@ -161,21 +170,27 @@ function AdminPage() {
     if (!files || files.length === 0) return;
     setUploadingImage(true);
 
-    Array.from(files).forEach((file) => {
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        const result = event.target?.result as string;
-        if (result) {
-          setEditingVehicle((prev: any) => ({
-            ...prev,
-            images: [...(prev?.images || []), result],
-          }));
-          toast.success(`Uploaded ${file.name}`);
-        }
-      };
-      reader.readAsDataURL(file);
+    const promises = Array.from(files).map((file) => {
+      return new Promise<void>((resolve) => {
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          const result = event.target?.result as string;
+          if (result) {
+            setEditingVehicle((prev: any) => ({
+              ...prev,
+              images: [...(prev?.images || []), result],
+            }));
+            toast.success(`Uploaded ${file.name}`);
+          }
+          resolve();
+        };
+        reader.readAsDataURL(file);
+      });
     });
-    setUploadingImage(false);
+
+    Promise.all(promises).finally(() => {
+      setUploadingImage(false);
+    });
   };
 
   const removeVehicleImage = (indexToRemove: number) => {
@@ -225,8 +240,9 @@ function AdminPage() {
                 className="mt-1"
               />
             </div>
-            <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 font-bold uppercase mt-2">
-              Sign In to Portal
+            <Button type="submit" disabled={submittingLogin} className="w-full bg-blue-600 hover:bg-blue-700 font-bold uppercase mt-2">
+              {submittingLogin ? <RefreshCw className="size-4 animate-spin mr-2" /> : null}
+              {submittingLogin ? "Signing in..." : "Sign In to Portal"}
             </Button>
           </div>
         </form>
@@ -562,6 +578,7 @@ function AdminPage() {
                   <form
                     onSubmit={async (e) => {
                       e.preventDefault();
+                      setSubmittingVehicle(true);
                       try {
                         await adminSaveVehicle({ data: editingVehicle });
                         toast.success("Vehicle saved successfully!");
@@ -569,6 +586,8 @@ function AdminPage() {
                         refreshData();
                       } catch (err: any) {
                         toast.error("Error saving vehicle", { description: err?.message });
+                      } finally {
+                        setSubmittingVehicle(false);
                       }
                     }}
                     className="space-y-4 text-xs"
@@ -650,10 +669,16 @@ function AdminPage() {
                       <Button
                         type="button"
                         variant="outline"
+                        disabled={uploadingImage}
                         onClick={() => document.getElementById("vehicle-image-upload")?.click()}
                         className="border-blue-400 text-blue-700 hover:bg-blue-100 font-bold uppercase text-xs"
                       >
-                        <Upload className="size-3.5 mr-1.5" /> Choose Image Files
+                        {uploadingImage ? (
+                          <RefreshCw className="size-3.5 mr-1.5 animate-spin" />
+                        ) : (
+                          <Upload className="size-3.5 mr-1.5" />
+                        )}
+                        {uploadingImage ? "Uploading Photos..." : "Choose Image Files"}
                       </Button>
 
                       {/* Display Image Previews */}
@@ -695,11 +720,18 @@ function AdminPage() {
                     </div>
 
                     <div className="flex justify-end gap-2 pt-4 border-t">
-                      <Button type="button" variant="outline" onClick={() => setIsVehicleModalOpen(false)}>
+                      <Button type="button" variant="outline" onClick={() => setIsVehicleModalOpen(false)} disabled={submittingVehicle}>
                         Cancel
                       </Button>
-                      <Button type="submit" className="bg-blue-600 hover:bg-blue-700 font-bold uppercase">
-                        Save Vehicle Listing
+                      <Button type="submit" disabled={submittingVehicle || uploadingImage} className="bg-blue-600 hover:bg-blue-700 font-bold uppercase">
+                        {submittingVehicle ? (
+                          <>
+                            <RefreshCw className="size-4 animate-spin mr-2" />
+                            Saving Vehicle...
+                          </>
+                        ) : (
+                          "Save Vehicle Listing"
+                        )}
                       </Button>
                     </div>
                   </form>
@@ -995,6 +1027,7 @@ function AdminPage() {
               <form
                 onSubmit={async (e) => {
                   e.preventDefault();
+                  setSubmittingPost(true);
                   try {
                     await adminSavePost({ data: editingPost });
                     toast.success("Post saved successfully");
@@ -1002,6 +1035,8 @@ function AdminPage() {
                     refreshData();
                   } catch (err: any) {
                     toast.error("Failed to save post", { description: err?.message });
+                  } finally {
+                    setSubmittingPost(false);
                   }
                 }}
                 className="p-6 space-y-4"
@@ -1077,11 +1112,18 @@ function AdminPage() {
                 </div>
 
                 <div className="flex justify-end gap-2 pt-2">
-                  <Button type="button" variant="outline" onClick={() => setIsPostModalOpen(false)}>
+                  <Button type="button" variant="outline" onClick={() => setIsPostModalOpen(false)} disabled={submittingPost}>
                     Cancel
                   </Button>
-                  <Button type="submit" className="bg-blue-600 hover:bg-blue-700 font-bold uppercase">
-                    Save Article
+                  <Button type="submit" disabled={submittingPost} className="bg-blue-600 hover:bg-blue-700 font-bold uppercase">
+                    {submittingPost ? (
+                      <>
+                        <RefreshCw className="size-4 animate-spin mr-2" />
+                        Saving Article...
+                      </>
+                    ) : (
+                      "Save Article"
+                    )}
                   </Button>
                 </div>
               </form>
@@ -1104,6 +1146,7 @@ function AdminPage() {
               <form
                 onSubmit={async (e) => {
                   e.preventDefault();
+                  setSubmittingReview(true);
                   try {
                     await adminSaveReview({ data: editingReview });
                     toast.success("Review saved successfully");
@@ -1111,6 +1154,8 @@ function AdminPage() {
                     refreshData();
                   } catch (err: any) {
                     toast.error("Failed to save review", { description: err?.message });
+                  } finally {
+                    setSubmittingReview(false);
                   }
                 }}
                 className="p-6 space-y-4"
@@ -1160,11 +1205,18 @@ function AdminPage() {
                 </div>
 
                 <div className="flex justify-end gap-2 pt-2">
-                  <Button type="button" variant="outline" onClick={() => setIsReviewModalOpen(false)}>
+                  <Button type="button" variant="outline" onClick={() => setIsReviewModalOpen(false)} disabled={submittingReview}>
                     Cancel
                   </Button>
-                  <Button type="submit" className="bg-blue-600 hover:bg-blue-700 font-bold uppercase">
-                    Save Review
+                  <Button type="submit" disabled={submittingReview} className="bg-blue-600 hover:bg-blue-700 font-bold uppercase">
+                    {submittingReview ? (
+                      <>
+                        <RefreshCw className="size-4 animate-spin mr-2" />
+                        Saving Review...
+                      </>
+                    ) : (
+                      "Save Review"
+                    )}
                   </Button>
                 </div>
               </form>
