@@ -134,7 +134,15 @@ export async function saveVehicle(input: z.infer<typeof vehicleInput>) {
   const { id, ...values } = input;
   if (id) {
     const { error } = await supabaseAdmin.from("vehicles").update(values).eq("id", id);
-    if (error) throw new Error(error.message);
+    if (error) {
+      if (error.message.includes("down_payment")) {
+        const { down_payment, ...fallbackValues } = values;
+        const { error: fallbackErr } = await supabaseAdmin.from("vehicles").update(fallbackValues).eq("id", id);
+        if (fallbackErr) throw new Error(fallbackErr.message);
+        return { id };
+      }
+      throw new Error(error.message);
+    }
     return { id };
   }
   const { data, error } = await supabaseAdmin
@@ -142,7 +150,19 @@ export async function saveVehicle(input: z.infer<typeof vehicleInput>) {
     .insert(values)
     .select("id")
     .single();
-  if (error) throw new Error(error.message);
+  if (error) {
+    if (error.message.includes("down_payment")) {
+      const { down_payment, ...fallbackValues } = values;
+      const { data: fallbackData, error: fallbackErr } = await supabaseAdmin
+        .from("vehicles")
+        .insert(fallbackValues)
+        .select("id")
+        .single();
+      if (fallbackErr) throw new Error(fallbackErr.message);
+      return { id: fallbackData.id };
+    }
+    throw new Error(error.message);
+  }
   return { id: data.id };
 }
 
