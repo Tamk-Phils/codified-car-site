@@ -1,0 +1,165 @@
+import nodemailer from 'nodemailer';
+
+const SMTP_HOST = process.env.SMTP_HOST || "mail.spacemail.com";
+const SMTP_PORT = Number(process.env.SMTP_PORT || 465);
+const SMTP_USER = process.env.SMTP_USER || "support@kjautos.online";
+const SMTP_PASS = process.env.SMTP_PASS || "Marc1234?";
+
+export const mailTransporter = nodemailer.createTransport({
+  host: SMTP_HOST,
+  port: SMTP_PORT,
+  secure: SMTP_PORT === 465,
+  auth: {
+    user: SMTP_USER,
+    pass: SMTP_PASS,
+  },
+  tls: {
+    rejectUnauthorized: false
+  }
+});
+
+export interface OrderEmailPayload {
+  orderNumber: string;
+  fullName: string;
+  email: string;
+  phone: string;
+  address: string;
+  city: string;
+  state: string;
+  postcode: string;
+  country: string;
+  paymentMethod: string;
+  notes?: string;
+  total: number;
+  items: Array<{
+    vehicle_name: string;
+    quantity: number;
+    unit_price: number;
+  }>;
+}
+
+export async function sendOrderNotificationEmails(payload: OrderEmailPayload) {
+  try {
+    const formattedTotal = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(payload.total);
+
+    const itemsHtml = payload.items.map(item => `
+      <tr>
+        <td style="padding: 10px; border-bottom: 1px solid #eee; font-weight: bold;">${item.vehicle_name}</td>
+        <td style="padding: 10px; border-bottom: 1px solid #eee; text-align: center;">x${item.quantity}</td>
+        <td style="padding: 10px; border-bottom: 1px solid #eee; text-align: right; font-weight: bold;">
+          ${new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(item.unit_price * item.quantity)}
+        </td>
+      </tr>
+    `).join('');
+
+    // 1. Send Admin Email Notification
+    const adminHtml = `
+      <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f6f9; padding: 30px 15px;">
+        <div style="max-width: 600px; margin: 0 auto; background: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.08);">
+          <div style="background-color: #0b192c; padding: 24px; text-align: center;">
+            <h1 style="color: #ffffff; margin: 0; font-size: 22px; text-transform: uppercase; tracking: 1px;">New Vehicle Order Received</h1>
+            <p style="color: #60a5fa; margin: 6px 0 0 0; font-size: 14px; font-weight: bold;">Order #${payload.orderNumber}</p>
+          </div>
+          
+          <div style="padding: 24px; color: #334155;">
+            <h3 style="color: #0f172a; margin-top: 0; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px;">Customer Information</h3>
+            <p style="margin: 4px 0;"><strong>Name:</strong> ${payload.fullName}</p>
+            <p style="margin: 4px 0;"><strong>Email:</strong> <a href="mailto:${payload.email}" style="color: #2563eb;">${payload.email}</a></p>
+            <p style="margin: 4px 0;"><strong>Phone:</strong> ${payload.phone}</p>
+            <p style="margin: 4px 0;"><strong>Delivery Address:</strong> ${payload.address}, ${payload.city}, ${payload.state} ${payload.postcode}, ${payload.country}</p>
+            <p style="margin: 4px 0;"><strong>Payment Method:</strong> <span style="background: #e0f2fe; color: #0369a1; padding: 2px 8px; border-radius: 4px; font-weight: bold;">${payload.paymentMethod.toUpperCase()}</span></p>
+            ${payload.notes ? `<p style="margin: 8px 0; background: #fffbeb; padding: 10px; border-left: 4px solid #f59e0b;"><strong>Order Notes:</strong> ${payload.notes}</p>` : ''}
+
+            <h3 style="color: #0f172a; margin-top: 24px; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px;">Order Details</h3>
+            <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
+              <thead>
+                <tr style="background: #f8fafc; text-align: left; font-size: 12px; color: #64748b;">
+                  <th style="padding: 8px;">Vehicle</th>
+                  <th style="padding: 8px; text-align: center;">Qty</th>
+                  <th style="padding: 8px; text-align: right;">Price</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${itemsHtml}
+              </tbody>
+            </table>
+
+            <div style="margin-top: 20px; padding: 16px; background: #0f172a; color: #ffffff; border-radius: 6px; text-align: right;">
+              <span style="font-size: 14px; text-transform: uppercase;">Total Order Amount:</span>
+              <strong style="font-size: 22px; color: #38bdf8; display: block;">${formattedTotal}</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+
+    // 2. Send Customer Confirmation Email
+    const customerHtml = `
+      <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f8fafc; padding: 30px 15px;">
+        <div style="max-width: 600px; margin: 0 auto; background: #ffffff; border-radius: 8px; overflow: hidden; border: 1px solid #e2e8f0;">
+          <div style="background-color: #0d47a1; padding: 28px; text-align: center;">
+            <h1 style="color: #ffffff; margin: 0; font-size: 24px;">KJ AUTOS</h1>
+            <p style="color: #93c5fd; margin: 4px 0 0 0; font-size: 13px; text-transform: uppercase; letter-spacing: 1px;">Bank Repossessed Vehicles — California</p>
+          </div>
+
+          <div style="padding: 28px; color: #334155;">
+            <h2 style="color: #0f172a; margin-top: 0; font-size: 20px;">Thank you for your order, ${payload.fullName}!</h2>
+            <p style="line-height: 1.6;">We have successfully received your order <strong>#${payload.orderNumber}</strong>. A California liquidation advisor will review your vehicle selection and contact you shortly with final delivery confirmation and payment instructions.</p>
+
+            <div style="background: #f1f5f9; border-radius: 6px; padding: 16px; margin: 20px 0;">
+              <h4 style="margin: 0 0 10px 0; color: #0f172a; text-transform: uppercase; font-size: 12px; letter-spacing: 0.5px;">Order Summary</h4>
+              <table style="width: 100%; border-collapse: collapse;">
+                <tbody>
+                  ${itemsHtml}
+                </tbody>
+              </table>
+              <div style="border-top: 2px solid #cbd5e1; margin-top: 12px; padding-top: 10px; text-align: right;">
+                <span style="font-size: 14px; font-weight: bold; color: #0f172a;">Total: ${formattedTotal}</span>
+              </div>
+            </div>
+
+            <h4 style="color: #0f172a; margin-bottom: 6px;">Delivery Address:</h4>
+            <p style="margin: 0; color: #64748b; font-size: 14px;">${payload.address}, ${payload.city}, ${payload.state} ${payload.postcode}, ${payload.country}</p>
+
+            <h4 style="color: #0f172a; margin-bottom: 6px; margin-top: 16px;">Selected Payment Method:</h4>
+            <p style="margin: 0; color: #64748b; font-size: 14px; text-transform: uppercase; font-weight: bold;">${payload.paymentMethod}</p>
+
+            <div style="margin-top: 28px; padding: 16px; background: #eff6ff; border-left: 4px solid #2563eb; border-radius: 4px;">
+              <p style="margin: 0; font-size: 13px; color: #1e40af; line-height: 1.5;">
+                Need instant assistance or wire instructions right away? You can message our California sales desk directly on 
+                <a href="https://wa.me/12132984108" style="color: #2563eb; font-weight: bold; text-decoration: underline;">WhatsApp: +1 (213) 298-4108</a>.
+              </p>
+            </div>
+
+            <p style="margin-top: 24px; font-size: 13px; color: #94a3b8; text-align: center;">
+              KJ Autos • California Headquarters<br/>
+              Support Email: <a href="mailto:support@kjautos.online" style="color: #2563eb;">support@kjautos.online</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    `;
+
+    // Dispatch emails asynchronously
+    await Promise.allSettled([
+      // Admin Email
+      mailTransporter.sendMail({
+        from: `"KJ Autos Orders" <${SMTP_USER}>`,
+        to: 'support@kjautos.online',
+        subject: `🚨 New Order #${payload.orderNumber} - ${payload.fullName} (${formattedTotal})`,
+        html: adminHtml,
+      }),
+      // Customer Email
+      mailTransporter.sendMail({
+        from: `"KJ Autos Support" <${SMTP_USER}>`,
+        to: payload.email,
+        subject: `Order Confirmation #${payload.orderNumber} - KJ Autos`,
+        html: customerHtml,
+      })
+    ]);
+
+    console.log(`Order emails dispatched for #${payload.orderNumber}`);
+  } catch (err) {
+    console.error("Error sending order emails via Spacemail SMTP:", err);
+  }
+}

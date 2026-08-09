@@ -1,4 +1,5 @@
 import { supabase } from "@/integrations/supabase/client";
+import { sendOrderNotificationEmails } from "./email";
 
 export async function submitOrder({ data }: { data: any }) {
   const ids = data.items.map((i: any) => i.vehicleId);
@@ -48,6 +49,23 @@ export async function submitOrder({ data }: { data: any }) {
     .from("order_items")
     .insert(priced.map((i: any) => ({ ...i, order_id: order.id })));
   if (itemsError) throw new Error(itemsError.message);
+
+  // Trigger SMTP order notification emails (Admin & Customer)
+  sendOrderNotificationEmails({
+    orderNumber: String(order.order_number),
+    fullName: data.full_name,
+    email: data.email,
+    phone: data.phone,
+    address: data.address,
+    city: data.city,
+    state: data.state,
+    postcode: data.postcode,
+    country: data.country || "United States",
+    paymentMethod: data.payment_method,
+    notes: data.notes,
+    total: Number(order.total),
+    items: priced,
+  }).catch((err) => console.error("Order notification error:", err));
 
   return { orderNumber: order.order_number, total: Number(order.total) };
 }
