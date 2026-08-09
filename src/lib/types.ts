@@ -4,6 +4,7 @@ export type Vehicle = {
   name: string;
   price: number;
   sale_price: number | null;
+  down_payment: number | null;
   description: string;
   mileage: string | null;
   transmission: string | null;

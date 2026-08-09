@@ -111,6 +111,7 @@ export const vehicleInput = z.object({
   name: z.string().min(2).max(200),
   price: z.number().nonnegative(),
   sale_price: z.number().nonnegative().nullable().default(null),
+  down_payment: z.number().nonnegative().nullable().default(null),
   description: z.string().max(8000).default(""),
   mileage: z.string().max(80).nullable().default(null),
   transmission: z.string().max(80).nullable().default(null),

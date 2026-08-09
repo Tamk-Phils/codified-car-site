@@ -11,10 +11,13 @@ export function VehicleCard({ vehicle }: { vehicle: Vehicle }) {
   const { add } = useCart();
   const image = vehicle.images?.[0] ?? null;
   const hasSale = vehicle.sale_price !== null && Number(vehicle.sale_price) > 0;
-  const effectivePrice = hasSale ? Number(vehicle.sale_price) : Number(vehicle.price);
+  const askingPrice = Number(vehicle.price);
+  const effectivePrice = hasSale ? Number(vehicle.sale_price) : askingPrice;
 
-  // Estimate down payment ~10-15% of effective price
-  const downPayment = Math.round(effectivePrice * 0.1);
+  // Use explicit down_payment if specified, else estimate ~10%
+  const downPayment = vehicle.down_payment !== null && Number(vehicle.down_payment) > 0
+    ? Number(vehicle.down_payment)
+    : Math.round(effectivePrice * 0.1);
 
   const whatsappInquiryUrl = `${SITE.whatsappLink}?text=${encodeURIComponent(
     `Hello KJ Autos, I am inquiring about: ${vehicle.name} (${formatPrice(effectivePrice)})`
@@ -39,10 +42,21 @@ export function VehicleCard({ vehicle }: { vehicle: Vehicle }) {
           )}
 
           {/* Reference Site Overlay Badge: ASKING & DOWN PAYMENT */}
-          <div className="absolute top-3 left-1/2 -translate-x-1/2 w-[92%] rounded bg-slate-950/90 py-1 px-2 text-center text-white backdrop-blur-xs shadow-md border border-white/20">
-            <p className="text-[11px] font-black uppercase tracking-tight text-white leading-none">
-              ASKING:{formatPrice(effectivePrice)}
-            </p>
+          <div className="absolute top-3 left-1/2 -translate-x-1/2 w-[92%] rounded bg-slate-950/90 py-1.5 px-2 text-center text-white backdrop-blur-xs shadow-md border border-white/20">
+            {hasSale ? (
+              <div className="flex items-center justify-center gap-1.5">
+                <span className="text-[10px] font-bold text-slate-400 line-through">
+                  {formatPrice(askingPrice)}
+                </span>
+                <span className="text-[11px] font-black uppercase text-amber-400">
+                  SALE:{formatPrice(effectivePrice)}
+                </span>
+              </div>
+            ) : (
+              <p className="text-[11px] font-black uppercase tracking-tight text-white leading-none">
+                ASKING:{formatPrice(effectivePrice)}
+              </p>
+            )}
             <p className="text-[10px] font-black uppercase tracking-tight text-emerald-400 leading-none mt-1">
               DOWN PAYMENT:{formatPrice(downPayment)}
             </p>
@@ -60,9 +74,16 @@ export function VehicleCard({ vehicle }: { vehicle: Vehicle }) {
             {vehicle.name}
           </h3>
         </Link>
-        <p className="mt-1 font-display text-base font-black text-slate-900">
-          {formatPrice(effectivePrice)}
-        </p>
+        <div className="mt-1 flex items-center justify-center gap-2">
+          {hasSale && (
+            <span className="text-xs font-bold text-slate-400 line-through">
+              {formatPrice(askingPrice)}
+            </span>
+          )}
+          <span className={`font-display text-base font-black ${hasSale ? 'text-amber-600' : 'text-slate-900'}`}>
+            {formatPrice(effectivePrice)}
+          </span>
+        </div>
 
         {/* Action Buttons */}
         <div className="mt-4 grid grid-cols-2 gap-2 pt-2 border-t border-slate-100">

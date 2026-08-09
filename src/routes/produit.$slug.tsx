@@ -142,14 +142,31 @@ function Product() {
           </div>
 
           <div>
-            <h1 className="text-3xl">{vehicle.name}</h1>
-            <div className="mt-4 flex items-baseline gap-3">
+            <h1 className="text-3xl font-black text-slate-900">{vehicle.name}</h1>
+            <div className="mt-4 flex flex-wrap items-center gap-4">
               {vehicle.sale_price ? (
-                <span className="text-lg text-muted-foreground line-through">
+                <div className="flex items-baseline gap-2">
+                  <span className="text-lg text-slate-400 line-through">
+                    {formatPrice(vehicle.price)}
+                  </span>
+                  <span className="text-3xl font-black text-amber-600">
+                    {formatPrice(vehicle.sale_price)}
+                  </span>
+                  <span className="rounded bg-amber-100 px-2 py-0.5 text-xs font-bold uppercase text-amber-800">
+                    ON SALE
+                  </span>
+                </div>
+              ) : (
+                <span className="text-3xl font-black text-slate-900">
                   {formatPrice(vehicle.price)}
                 </span>
-              ) : null}
-              <span className="text-3xl font-bold text-hot">{formatPrice(price)}</span>
+              )}
+
+              <div className="rounded-lg bg-emerald-50 px-3 py-1.5 border border-emerald-200">
+                <span className="text-xs font-bold uppercase text-emerald-700">
+                  Down Payment: {formatPrice(vehicle.down_payment ?? Math.round(price * 0.1))}
+                </span>
+              </div>
             </div>
 
             <p className="mt-6 whitespace-pre-line text-sm leading-relaxed text-muted-foreground">

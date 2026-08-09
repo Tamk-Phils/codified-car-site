@@ -468,6 +468,7 @@ function AdminPage() {
                     name: "",
                     price: 0,
                     sale_price: null,
+                    down_payment: null,
                     description: "",
                     mileage: "15,000 miles",
                     transmission: "Automatic",
@@ -619,16 +620,28 @@ function AdminPage() {
                           required
                           value={editingVehicle.price}
                           onChange={(e) => setEditingVehicle({ ...editingVehicle, price: Number(e.target.value) })}
+                          placeholder="Full asking price"
                           className="mt-1"
                         />
                       </div>
                       <div>
-                        <Label>Sale / Down Payment Price ($)</Label>
+                        <Label>Sale Price ($) <span className="text-slate-400 font-normal">(If on sale)</span></Label>
                         <Input
                           type="number"
                           value={editingVehicle.sale_price ?? ""}
                           onChange={(e) => setEditingVehicle({ ...editingVehicle, sale_price: e.target.value ? Number(e.target.value) : null })}
-                          className="mt-1"
+                          placeholder="Leave empty if not on sale"
+                          className="mt-1 border-amber-300 focus:border-amber-500"
+                        />
+                      </div>
+                      <div>
+                        <Label>Down Payment ($) <span className="text-slate-400 font-normal">(Deposit required)</span></Label>
+                        <Input
+                          type="number"
+                          value={editingVehicle.down_payment ?? ""}
+                          onChange={(e) => setEditingVehicle({ ...editingVehicle, down_payment: e.target.value ? Number(e.target.value) : null })}
+                          placeholder="e.g. 1500 (defaults to 10%)"
+                          className="mt-1 border-emerald-300 focus:border-emerald-500"
                         />
                       </div>
                       <div>
