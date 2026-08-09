@@ -150,41 +150,20 @@ export const adminSaveReview = async ({ data }: { data: any }) => {
 };
 
 export const adminSaveVehicle = async ({ data }: { data: any }) => {
-  const { id, created_at, updated_at, ...values } = data;
-
-  const attemptUpdate = async (payload: any): Promise<{ id: string }> => {
-    const { error } = await supabase.from("vehicles").update(payload).eq("id", id);
-    if (error) {
-      if (error.message.includes("down_payment") && "down_payment" in payload) {
-        const { down_payment, ...fallbackPayload } = payload;
-        return attemptUpdate(fallbackPayload);
-      }
-      throw new Error(error.message);
-    }
-    return { id };
-  };
-
-  const attemptInsert = async (payload: any): Promise<{ id: string }> => {
-    const { data: res, error } = await supabase
-      .from("vehicles")
-      .insert(payload)
-      .select("id")
-      .single();
-    if (error) {
-      if (error.message.includes("down_payment") && "down_payment" in payload) {
-        const { down_payment, ...fallbackPayload } = payload;
-        return attemptInsert(fallbackPayload);
-      }
-      throw new Error(error.message);
-    }
-    return { id: res.id };
-  };
+  const { id, created_at, updated_at, down_payment, ...values } = data;
 
   if (id) {
-    return attemptUpdate(values);
-  } else {
-    return attemptInsert(values);
+    const { error } = await supabase.from("vehicles").update(values).eq("id", id);
+    if (error) throw new Error(error.message);
+    return { id };
   }
+  const { data: res, error } = await supabase
+    .from("vehicles")
+    .insert(values)
+    .select("id")
+    .single();
+  if (error) throw new Error(error.message);
+  return { id: res.id };
 };
 
 export const adminSavePost = async ({ data }: { data: any }) => {
