@@ -599,6 +599,7 @@ function AdminPage() {
                           required
                           value={editingVehicle.name}
                           onChange={(e) => setEditingVehicle({ ...editingVehicle, name: e.target.value })}
+                          placeholder="e.g. 2017 Porsche Macan GTS"
                           className="mt-1"
                         />
                       </div>
@@ -635,6 +636,7 @@ function AdminPage() {
                         <Input
                           value={editingVehicle.make ?? ""}
                           onChange={(e) => setEditingVehicle({ ...editingVehicle, make: e.target.value })}
+                          placeholder="e.g. Porsche, Ford, BMW"
                           className="mt-1"
                         />
                       </div>
@@ -643,10 +645,93 @@ function AdminPage() {
                         <Input
                           type="number"
                           value={editingVehicle.year ?? ""}
-                          onChange={(e) => setEditingVehicle({ ...editingVehicle, year: Number(e.target.value) })}
+                          onChange={(e) => setEditingVehicle({ ...editingVehicle, year: e.target.value ? Number(e.target.value) : null })}
+                          placeholder="e.g. 2017"
                           className="mt-1"
                         />
                       </div>
+                      <div>
+                        <Label>Body Type</Label>
+                        <Input
+                          value={editingVehicle.body_type ?? ""}
+                          onChange={(e) => setEditingVehicle({ ...editingVehicle, body_type: e.target.value })}
+                          placeholder="e.g. SUV, Sedan, Coupe, Truck"
+                          className="mt-1"
+                        />
+                      </div>
+                      <div>
+                        <Label>Mileage</Label>
+                        <Input
+                          value={editingVehicle.mileage ?? ""}
+                          onChange={(e) => setEditingVehicle({ ...editingVehicle, mileage: e.target.value })}
+                          placeholder="e.g. 15,000 miles"
+                          className="mt-1"
+                        />
+                      </div>
+                      <div>
+                        <Label>Transmission</Label>
+                        <Input
+                          value={editingVehicle.transmission ?? ""}
+                          onChange={(e) => setEditingVehicle({ ...editingVehicle, transmission: e.target.value })}
+                          placeholder="e.g. Automatic, Manual"
+                          className="mt-1"
+                        />
+                      </div>
+                      <div>
+                        <Label>Exterior Color</Label>
+                        <Input
+                          value={editingVehicle.exterior_color ?? ""}
+                          onChange={(e) => setEditingVehicle({ ...editingVehicle, exterior_color: e.target.value })}
+                          placeholder="e.g. Black, White, Metallic"
+                          className="mt-1"
+                        />
+                      </div>
+                      <div>
+                        <Label>Interior Color</Label>
+                        <Input
+                          value={editingVehicle.interior_color ?? ""}
+                          onChange={(e) => setEditingVehicle({ ...editingVehicle, interior_color: e.target.value })}
+                          placeholder="e.g. Leather, Black, Red"
+                          className="mt-1"
+                        />
+                      </div>
+                      <div>
+                        <Label>Fuel Type</Label>
+                        <Input
+                          value={editingVehicle.fuel_type ?? ""}
+                          onChange={(e) => setEditingVehicle({ ...editingVehicle, fuel_type: e.target.value })}
+                          placeholder="e.g. Gasoline, Diesel, Electric, Hybrid"
+                          className="mt-1"
+                        />
+                      </div>
+                      <div>
+                        <Label>Trim</Label>
+                        <Input
+                          value={editingVehicle.trim ?? ""}
+                          onChange={(e) => setEditingVehicle({ ...editingVehicle, trim: e.target.value })}
+                          placeholder="e.g. Base, Sport, GTS"
+                          className="mt-1"
+                        />
+                      </div>
+                      <div>
+                        <Label>Title Status</Label>
+                        <Input
+                          value={editingVehicle.title_status ?? ""}
+                          onChange={(e) => setEditingVehicle({ ...editingVehicle, title_status: e.target.value })}
+                          placeholder="e.g. Clean Title, Lien-Free"
+                          className="mt-1"
+                        />
+                      </div>
+                    </div>
+
+                    <div>
+                      <Label>Vehicle Description / Notes</Label>
+                      <Textarea
+                        value={editingVehicle.description ?? ""}
+                        onChange={(e) => setEditingVehicle({ ...editingVehicle, description: e.target.value })}
+                        placeholder="Condition notes, repo details, features..."
+                        className="mt-1 min-h-[90px]"
+                      />
                     </div>
 
                     {/* REAL IMAGE UPLOADER */}
