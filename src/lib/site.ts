@@ -9,7 +9,7 @@ export const SITE = {
   whatsappLink: "https://wa.me/12132984108",
   email: "support@kjautos.online",
   location: "California",
-  address: ["Wilshire Blvd", "Los Angeles, California"],
+  address: ["California"],
   hours: [
     "Monday – Friday: 8:00 AM – 7:00 PM (PST)",
     "Saturday: 9:00 AM – 6:00 PM (PST)",
