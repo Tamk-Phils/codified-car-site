@@ -60,7 +60,7 @@ export async function submitOrder({ data }: { data: any }) {
     city: data.city,
     state: data.state,
     postcode: data.postcode,
-    country: data.country || "United States",
+    country: data.country || "California",
     paymentMethod: data.payment_method,
     notes: data.notes,
     total: Number(order.total),

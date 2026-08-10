@@ -37,7 +37,7 @@ function Reviews() {
       <PageHero
         breadcrumb="Reviews"
         title="Verified Customer Feedback"
-        subtitle={`Rated ${average} out of 5 stars by verified buyers across the United States.`}
+        subtitle={`Rated ${average} out of 5 stars by verified buyers in California.`}
       />
 
       <div className="container-page py-14">

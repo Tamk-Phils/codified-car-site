@@ -2,45 +2,57 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://kjautos.online/</loc>
-    <lastmod>2026-08-09T14:55:45.027Z</lastmod>
+    <lastmod>2026-08-10T18:55:39.694Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1</priority>
   </url>
   <url>
     <loc>https://kjautos.online/boutique</loc>
-    <lastmod>2026-08-09T14:55:45.028Z</lastmod>
+    <lastmod>2026-08-10T18:55:39.695Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://kjautos.online/processus-dachat</loc>
-    <lastmod>2026-08-09T14:55:45.028Z</lastmod>
+    <lastmod>2026-08-10T18:55:39.695Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://kjautos.online/a-propos</loc>
-    <lastmod>2026-08-09T14:55:45.028Z</lastmod>
+    <lastmod>2026-08-10T18:55:39.695Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://kjautos.online/nous-contacter</loc>
-    <lastmod>2026-08-09T14:55:45.028Z</lastmod>
+    <lastmod>2026-08-10T18:55:39.695Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://kjautos.online/avis-client</loc>
-    <lastmod>2026-08-09T14:55:45.028Z</lastmod>
+    <lastmod>2026-08-10T18:55:39.695Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://kjautos.online/blog</loc>
-    <lastmod>2026-08-09T14:55:45.028Z</lastmod>
+    <lastmod>2026-08-10T18:55:39.695Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kjautos.online/produit/2012 Hyundai Equus Signature</loc>
+    <lastmod>2026-08-10T03:53:06.454959+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://kjautos.online/produit/2020 Chevrolet Camaro LT Coupe</loc>
+    <lastmod>2026-08-10T02:55:24.597854+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
   </url>
   <url>
     <loc>https://kjautos.online/produit/Infinity Q60</loc>
@@ -49,241 +61,67 @@
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://kjautos.online/produit/2021-porsche-718-cayman-gt4-coupe</loc>
-    <lastmod>2026-08-08T12:37:28.65716+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://kjautos.online/produit/dodgeviper2017</loc>
-    <lastmod>2026-08-08T12:37:28.65716+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://kjautos.online/produit/rollsroyceghost</loc>
-    <lastmod>2026-08-08T12:37:28.65716+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://kjautos.online/produit/bmw2021</loc>
-    <lastmod>2026-08-08T12:37:28.65716+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://kjautos.online/produit/rollsroycewraith</loc>
-    <lastmod>2026-08-08T12:37:28.65716+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://kjautos.online/produit/2024porsche911-2</loc>
-    <lastmod>2026-08-08T12:37:28.65716+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://kjautos.online/produit/sport-utility-4d</loc>
-    <lastmod>2026-08-08T12:37:28.65716+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://kjautos.online/produit/2020ferrariferrarif8tributo</loc>
-    <lastmod>2026-08-08T12:37:28.65716+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://kjautos.online/produit/lamborghini2024revuelto2024</loc>
-    <lastmod>2026-08-08T12:37:28.65716+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://kjautos.online/produit/2011-lexus-is-250c</loc>
-    <lastmod>2026-08-08T12:37:28.65716+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://kjautos.online/produit/2023urus</loc>
-    <lastmod>2026-08-08T12:37:28.65716+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://kjautos.online/produit/sclass2023</loc>
-    <lastmod>2026-08-08T12:37:28.65716+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://kjautos.online/produit/2023audir8</loc>
-    <lastmod>2026-08-08T12:37:28.65716+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://kjautos.online/produit/2024porschereveal</loc>
-    <lastmod>2026-08-08T12:37:28.65716+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://kjautos.online/produit/2024porsche911</loc>
-    <lastmod>2026-08-08T12:37:28.65716+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://kjautos.online/produit/bmw2025</loc>
-    <lastmod>2026-08-08T12:37:28.65716+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://kjautos.online/produit/2016-lamborghini-huracan-lp-580-2</loc>
-    <lastmod>2026-08-08T12:37:28.65716+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://kjautos.online/produit/2020-nissan-altima-sr</loc>
-    <lastmod>2026-08-08T12:37:28.65716+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://kjautos.online/produit/2023-f350-xlt-drw-6-7-power</loc>
-    <lastmod>2026-08-08T12:37:28.65716+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://kjautos.online/produit/lamborghini2021</loc>
-    <lastmod>2026-08-08T12:37:28.65716+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://kjautos.online/produit/2025-lexus-is-350-f-sport</loc>
+    <loc>https://kjautos.online/produit/2018 Dodge Charger GT Plus AWD</loc>
     <lastmod>2026-08-08T12:37:28.437374+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://kjautos.online/produit/rollsroycedawn2016dawn</loc>
+    <loc>https://kjautos.online/produit/2011 Ford Mustang GT Premium Convertible</loc>
     <lastmod>2026-08-08T12:37:28.437374+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://kjautos.online/produit/mercedesbenz2021maybachsclass</loc>
+    <loc>https://kjautos.online/produit/2019 Range Rover Sport Supercharged Dynamic</loc>
     <lastmod>2026-08-08T12:37:28.437374+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://kjautos.online/produit/aventador2018lamborghini2018</loc>
+    <loc>https://kjautos.online/produit/2015 Scion FR-S Release Series 1.0</loc>
     <lastmod>2026-08-08T12:37:28.437374+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://kjautos.online/produit/maseratifansgrecale2023</loc>
+    <loc>https://kjautos.online/produit/2013 Subaru BRZ Limited</loc>
     <lastmod>2026-08-08T12:37:28.437374+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://kjautos.online/produit/mercedesbenzlifestyleg-63-amg-4matic-sport-utility-4d</loc>
+    <loc>https://kjautos.online/produit/2013 Ford Mustang Saleen</loc>
     <lastmod>2026-08-08T12:37:28.437374+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://kjautos.online/produit/mercedesbenz2015s-550-4matic-sedan-4d</loc>
+    <loc>https://kjautos.online/produit/2025 Toyota Tacoma SR5</loc>
     <lastmod>2026-08-08T12:37:28.437374+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://kjautos.online/produit/2024mercedesbenzglc</loc>
+    <loc>https://kjautos.online/produit/2005 Bentley Continental GT</loc>
     <lastmod>2026-08-08T12:37:28.437374+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://kjautos.online/produit/2017dodge</loc>
+    <loc>https://kjautos.online/produit/2014 Chevrolet SS</loc>
     <lastmod>2026-08-08T12:37:28.437374+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://kjautos.online/produit/2025fordf150</loc>
+    <loc>https://kjautos.online/produit/2011 Audi S4 Prestige</loc>
     <lastmod>2026-08-08T12:37:28.437374+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://kjautos.online/produit/2020porscheporsche-taycan-turbo-s</loc>
-    <lastmod>2026-08-08T12:37:28.437374+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://kjautos.online/produit/2024-toyota-tundra-hybrid-trd-pro-clean-title-%e2%9c%85</loc>
-    <lastmod>2026-08-08T12:37:28.437374+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://kjautos.online/produit/2023-bmw-xm-sports-activity</loc>
-    <lastmod>2026-08-08T12:37:28.437374+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://kjautos.online/produit/2022-audi-rs7-solar-orange-black-maxton-design-body-kit-vossen-23-inch-hf7-wheels-hr-springs-xpel-window</loc>
-    <lastmod>2026-08-08T12:37:28.437374+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://kjautos.online/produit/bmw328i328i-xdrive-sedan-4d</loc>
-    <lastmod>2026-08-08T12:37:28.437374+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://kjautos.online/produit/cadillacescaladetrim-premium-luxury-sport-utility-4d</loc>
-    <lastmod>2026-08-08T12:37:28.437374+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://kjautos.online/produit/chevroletsilveradowhite-charcoal-gasoline-14-0-mpg-city-20-0-mpg-highway-16-0-mpg-combined-ls-pickup-2d-6-1-2-ft</loc>
-    <lastmod>2026-08-08T12:37:28.437374+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://kjautos.online/produit/2021-ford-mustang-mach-e-gt-360-degree-camera-active-park-assist-2-0</loc>
-    <lastmod>2026-08-08T12:37:28.437374+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://kjautos.online/produit/2022-hyundai-sante-fe-limited-1-owner-fully-loaded</loc>
-    <lastmod>2026-08-08T12:37:28.437374+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://kjautos.online/produit/2023ferrariconvertible2d</loc>
+    <loc>https://kjautos.online/produit/2019 Honda Civic Si Coupe</loc>
     <lastmod>2026-08-08T12:37:28.437374+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>

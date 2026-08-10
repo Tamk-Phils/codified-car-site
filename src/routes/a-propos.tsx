@@ -11,7 +11,7 @@ export const Route = createFileRoute("/a-propos")({
       {
         name: "description",
         content:
-          "Welcome to KJ Autos, your trusted source for affordable bank-repossessed and seized vehicles across North America. Based in California with nationwide delivery.",
+          "Welcome to KJ Autos, your trusted source for affordable bank-repossessed and seized vehicles in California. Based in California with direct delivery options.",
       },
       { property: "og:title", content: "About Us | KJ Autos" },
       {
@@ -43,10 +43,10 @@ export function About() {
               Welcome to KJ Autos
             </h2>
             <p className="text-base text-slate-800 leading-relaxed font-medium">
-              Welcome to <strong>KJ Autos</strong>, your trusted source for affordable vehicles across the United States and Canada.
+              Welcome to <strong>KJ Autos</strong>, your trusted source for affordable vehicles in California.
             </p>
             <p>
-              We specialize in offering vehicles sourced from bank repossessions, seized assets, and surplus inventories. These vehicles are often sold below market value, giving our customers the opportunity to purchase quality cars at significantly reduced prices.
+              We specialize in offering vehicles sourced from bank repossessions, seized assets, and surplus inventories in California. These vehicles are often sold below market value, giving our customers the opportunity to purchase quality cars at significantly reduced prices.
             </p>
             <p>
               Our goal is to make car buying simple, transparent, and accessible. Whether you’re looking for a reliable daily driver or a great deal on a newer luxury model, we provide a wide selection of vehicles to match your needs and budget.
@@ -64,8 +64,8 @@ export function About() {
             </h3>
             <div className="grid gap-3 sm:grid-cols-1">
               {[
-                "Below-market prices on repossessed and seized vehicles",
-                "Wide selection across California, the United States, and Canada",
+                "Below-market prices on repossessed and seized vehicles in California",
+                "Wide selection of certified vehicles across California",
                 "Transparent listings with detailed vehicle information and inspection reports",
                 "Secure payment options and clear purchase process",
                 "Dedicated customer support available via Phone, SMS, and WhatsApp",
@@ -86,7 +86,7 @@ export function About() {
               </div>
               <h3 className="font-display text-lg font-bold text-slate-900 uppercase">Our Mission</h3>
               <p className="mt-2 text-xs text-slate-600 leading-relaxed">
-                To provide customers with access to some of the best vehicle deals in North America, while maintaining transparency, trust, and simplicity throughout the buying process.
+                To provide customers with access to some of the best vehicle deals in California, while maintaining transparency, trust, and simplicity throughout the buying process.
               </p>
             </div>
 

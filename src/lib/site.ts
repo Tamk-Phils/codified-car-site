@@ -7,9 +7,9 @@ export const SITE = {
   smsLink: "sms:+12132984108",
   whatsapp: "+1 (213) 298-4108",
   whatsappLink: "https://wa.me/12132984108",
-  email: "support@kjautos.com",
-  location: "California, United States",
-  address: ["Wilshire Blvd", "Los Angeles, CA 90036", "United States"],
+  email: "support@kjautos.online",
+  location: "California",
+  address: ["Wilshire Blvd", "Los Angeles, California"],
   hours: [
     "Monday – Friday: 8:00 AM – 7:00 PM (PST)",
     "Saturday: 9:00 AM – 6:00 PM (PST)",

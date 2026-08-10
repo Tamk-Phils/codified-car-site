@@ -106,8 +106,7 @@ function Checkout() {
                 address: String(form.get("address") ?? ""),
                 city: String(form.get("city") ?? ""),
                 state: String(form.get("state") ?? ""),
-                postcode: String(form.get("postcode") ?? ""),
-                country: String(form.get("country") ?? "United States"),
+                country: String(form.get("country") ?? "California"),
                 payment_method: payment,
                 notes: String(form.get("notes") ?? ""),
                 items: lines.map((l) => ({
@@ -144,8 +143,8 @@ function Checkout() {
               <Input id="phone" name="phone" required className="mt-1" />
             </div>
             <div>
-              <Label htmlFor="country">Country</Label>
-              <Input id="country" name="country" defaultValue="United States" className="mt-1" />
+              <Label htmlFor="state">State</Label>
+              <Input id="state" name="state" defaultValue="California" className="mt-1" />
             </div>
           </div>
           <div>
