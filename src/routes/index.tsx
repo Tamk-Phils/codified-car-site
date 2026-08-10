@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useSuspenseQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { useState, useEffect } from "react";
 import { ChevronDown, ChevronLeft, ChevronRight } from "lucide-react";
 import { SiteLayout } from "@/components/SiteLayout";
@@ -89,7 +89,7 @@ function SectionTitle({ title }: { title: string }) {
 }
 
 function Home() {
-  const { data: vehicles } = useSuspenseQuery(vehiclesQuery);
+  const { data: vehicles = [] } = useQuery(vehiclesQuery);
   const [activeSlide, setActiveSlide] = useState(0);
 
   // Auto-play hero slider

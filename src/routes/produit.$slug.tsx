@@ -1,5 +1,5 @@
-import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { useSuspenseQuery } from "@tanstack/react-query";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { toast } from "sonner";
 import { SiteLayout } from "@/components/SiteLayout";
@@ -12,10 +12,14 @@ import { vehicleQuery, vehiclesQuery } from "@/lib/queries";
 
 export const Route = createFileRoute("/produit/$slug")({
   loader: async ({ context, params }) => {
-    const vehicle = await context.queryClient.ensureQueryData(vehicleQuery(params.slug));
-    if (!vehicle) throw notFound();
-    await context.queryClient.ensureQueryData(vehiclesQuery);
-    return { vehicle };
+    try {
+      const vehicle = await context.queryClient.ensureQueryData(vehicleQuery(params.slug));
+      await context.queryClient.ensureQueryData(vehiclesQuery);
+      return { vehicle };
+    } catch (e) {
+      console.warn("Product loader warning:", e);
+      return { vehicle: null };
+    }
   },
   head: ({ loaderData, params }) => {
     const vehicle = loaderData?.vehicle;
@@ -75,8 +79,8 @@ export const Route = createFileRoute("/produit/$slug")({
 
 function Product() {
   const { slug } = Route.useParams();
-  const { data: vehicle } = useSuspenseQuery(vehicleQuery(slug));
-  const { data: vehicles } = useSuspenseQuery(vehiclesQuery);
+  const { data: vehicle } = useQuery(vehicleQuery(slug));
+  const { data: vehicles = [] } = useQuery(vehiclesQuery);
   const { add } = useCart();
   const [active, setActive] = useState(0);
   const [qty, setQty] = useState(1);

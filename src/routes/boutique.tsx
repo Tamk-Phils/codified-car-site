@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useSuspenseQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { useMemo, useState } from "react";
 import { SiteLayout, PageHero } from "@/components/SiteLayout";
 import { VehicleCard } from "@/components/VehicleCard";
@@ -29,7 +29,13 @@ export const Route = createFileRoute("/boutique")({
     sort: typeof search["sort"] === "string" ? (search["sort"] as string) : undefined,
     page: Number(search["page"]) > 0 ? Number(search["page"]) : undefined,
   }),
-  loader: ({ context }) => context.queryClient.ensureQueryData(vehiclesQuery),
+  loader: async ({ context }) => {
+    try {
+      await context.queryClient.ensureQueryData(vehiclesQuery);
+    } catch (e) {
+      console.warn("Boutique loader warning:", e);
+    }
+  },
   head: () => ({
     meta: [
       { title: "Bank Repossessed Car Inventory | Certified Auction Listings" },
@@ -55,7 +61,7 @@ export const Route = createFileRoute("/boutique")({
 const PER_PAGE = 12;
 
 function Boutique() {
-  const { data: vehicles } = useSuspenseQuery(vehiclesQuery);
+  const { data: vehicles = [] } = useQuery(vehiclesQuery);
   const search = Route.useSearch();
   const navigate = Route.useNavigate();
   const [query, setQuery] = useState(search.q ?? "");

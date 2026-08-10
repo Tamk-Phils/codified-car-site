@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useSuspenseQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { SiteLayout, PageHero } from "@/components/SiteLayout";
 import { Button } from "@/components/ui/button";
@@ -7,7 +7,13 @@ import { postsQuery } from "@/lib/queries";
 import { formatDate } from "@/lib/site";
 
 export const Route = createFileRoute("/blog/")({
-  loader: ({ context }) => context.queryClient.ensureQueryData(postsQuery),
+  loader: async ({ context }) => {
+    try {
+      await context.queryClient.ensureQueryData(postsQuery);
+    } catch (e) {
+      console.warn("Posts loader warning:", e);
+    }
+  },
   head: () => ({
     meta: [
       { title: "Repo Car Blog | Buying Guides & Auction Advice" },
@@ -31,7 +37,7 @@ export const Route = createFileRoute("/blog/")({
 });
 
 function BlogIndex() {
-  const { data: posts } = useSuspenseQuery(postsQuery);
+  const { data: posts = [] } = useQuery(postsQuery);
   const [category, setCategory] = useState<string | null>(null);
   const categories = [...new Set(posts.map((p) => p.category))].sort();
   const visible = category ? posts.filter((p) => p.category === category) : posts;

@@ -1,5 +1,5 @@
-import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { useSuspenseQuery } from "@tanstack/react-query";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { useQuery } from "@tanstack/react-query";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { SiteLayout } from "@/components/SiteLayout";
@@ -8,10 +8,14 @@ import { formatDate } from "@/lib/site";
 
 export const Route = createFileRoute("/blog/$slug")({
   loader: async ({ context, params }) => {
-    const post = await context.queryClient.ensureQueryData(postQuery(params.slug));
-    if (!post || !post.is_published) throw notFound();
-    await context.queryClient.ensureQueryData(postsQuery);
-    return { post };
+    try {
+      const post = await context.queryClient.ensureQueryData(postQuery(params.slug));
+      await context.queryClient.ensureQueryData(postsQuery);
+      return { post };
+    } catch (e) {
+      console.warn("Blog post loader warning:", e);
+      return { post: null };
+    }
   },
   head: ({ loaderData, params }) => {
     const post = loaderData?.post;
@@ -61,8 +65,8 @@ export const Route = createFileRoute("/blog/$slug")({
 
 function BlogPost() {
   const { slug } = Route.useParams();
-  const { data: post } = useSuspenseQuery(postQuery(slug));
-  const { data: posts } = useSuspenseQuery(postsQuery);
+  const { data: post } = useQuery(postQuery(slug));
+  const { data: posts = [] } = useQuery(postsQuery);
   if (!post) return null;
 
   const related = posts

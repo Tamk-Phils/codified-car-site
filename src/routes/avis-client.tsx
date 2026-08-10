@@ -1,11 +1,17 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useSuspenseQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { SiteLayout, PageHero } from "@/components/SiteLayout";
 import { reviewsQuery } from "@/lib/queries";
 import { Star, CheckCircle2, ThumbsUp } from "lucide-react";
 
 export const Route = createFileRoute("/avis-client")({
-  loader: ({ context }) => context.queryClient.ensureQueryData(reviewsQuery),
+  loader: async ({ context }) => {
+    try {
+      await context.queryClient.ensureQueryData(reviewsQuery);
+    } catch (e) {
+      console.warn("Reviews loader warning:", e);
+    }
+  },
   head: () => ({
     meta: [
       { title: "Verified Customer Reviews | KJ Autos" },
@@ -26,7 +32,7 @@ export const Route = createFileRoute("/avis-client")({
 });
 
 function Reviews() {
-  const { data: reviews } = useSuspenseQuery(reviewsQuery);
+  const { data: reviews = [] } = useQuery(reviewsQuery);
   const average =
     reviews.length > 0
       ? (reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length).toFixed(1)
