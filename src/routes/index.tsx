@@ -8,7 +8,7 @@ import { vehiclesQuery, reviewsQuery } from "@/lib/queries";
 
 export const Route = createFileRoute("/")({
   loader: async ({ context }) => {
-    await Promise.all([
+    await Promise.allSettled([
       context.queryClient.ensureQueryData(vehiclesQuery),
       context.queryClient.ensureQueryData(reviewsQuery),
     ]);
