@@ -168,6 +168,12 @@ export const adminSaveVehicle = async ({ data }: { data: any }) => {
 
 export const adminSavePost = async ({ data }: { data: any }) => {
   const { id, created_at, ...values } = data;
+  if (!values.published_at) {
+    values.published_at = new Date().toISOString();
+  }
+  if (values.is_published === undefined) {
+    values.is_published = true;
+  }
   if (id) {
     const { error } = await supabase.from("posts").update(values).eq("id", id);
     if (error) throw new Error(error.message);

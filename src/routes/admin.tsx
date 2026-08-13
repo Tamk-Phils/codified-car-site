@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useQueryClient } from "@tanstack/react-query";
 import { useState, useEffect } from "react";
 import { toast } from "sonner";
 import {
@@ -54,6 +55,7 @@ export const Route = createFileRoute("/admin")({
 });
 
 function AdminPage() {
+  const queryClient = useQueryClient();
   const [admin, setAdmin] = useState<{ id: string; username: string } | null>(null);
   const [loadingAuth, setLoadingAuth] = useState(true);
   const [loginForm, setLoginForm] = useState({ username: "", password: "" });
@@ -120,6 +122,9 @@ function AdminPage() {
     if (!admin) return;
     setLoadingData(true);
     try {
+      queryClient.invalidateQueries({ queryKey: ["vehicles"] });
+      queryClient.invalidateQueries({ queryKey: ["posts"] });
+      queryClient.invalidateQueries({ queryKey: ["reviews"] });
       if (activeTab === "overview") {
         const s = await adminStats();
         setStats(s);

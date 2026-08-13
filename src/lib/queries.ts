@@ -14,7 +14,7 @@ async function fetchWithTimeout<T>(fn: () => Promise<T>, fallback: T, ms = 6000)
 
 export const vehiclesQuery = queryOptions({
   queryKey: ["vehicles"],
-  staleTime: 1000 * 60 * 10,
+  staleTime: 1000 * 30,
   gcTime: 1000 * 60 * 60,
   queryFn: async (): Promise<Vehicle[]> => {
     return fetchWithTimeout(async () => {
@@ -31,7 +31,7 @@ export const vehiclesQuery = queryOptions({
 export const vehicleQuery = (slug: string) =>
   queryOptions({
     queryKey: ["vehicle", slug],
-    staleTime: 1000 * 60 * 10,
+    staleTime: 1000 * 30,
     gcTime: 1000 * 60 * 60,
     queryFn: async (): Promise<Vehicle | null> => {
       return fetchWithTimeout(async () => {
@@ -48,7 +48,7 @@ export const vehicleQuery = (slug: string) =>
 
 export const postsQuery = queryOptions({
   queryKey: ["posts"],
-  staleTime: 1000 * 60 * 10,
+  staleTime: 1000 * 30,
   gcTime: 1000 * 60 * 60,
   queryFn: async (): Promise<Post[]> => {
     return fetchWithTimeout(async () => {
@@ -66,7 +66,7 @@ export const postsQuery = queryOptions({
 export const postQuery = (slug: string) =>
   queryOptions({
     queryKey: ["post", slug],
-    staleTime: 1000 * 60 * 10,
+    staleTime: 1000 * 30,
     gcTime: 1000 * 60 * 60,
     queryFn: async (): Promise<Post | null> => {
       return fetchWithTimeout(async () => {
@@ -83,7 +83,7 @@ export const postQuery = (slug: string) =>
 
 export const reviewsQuery = queryOptions({
   queryKey: ["reviews"],
-  staleTime: 1000 * 60 * 10,
+  staleTime: 1000 * 30,
   gcTime: 1000 * 60 * 60,
   queryFn: async (): Promise<Review[]> => {
     return fetchWithTimeout(async () => {

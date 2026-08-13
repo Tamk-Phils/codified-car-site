@@ -31,14 +31,8 @@ async function run() {
 
     console.log(`Successfully fetched exactly ${products.length} products.`);
     
-    // Wipe out existing vehicles
-    console.log("Clearing out old incorrect vehicles from Supabase...");
-    const { error: deleteError } = await supabase.from('vehicles').delete().neq('slug', 'something_impossible');
-    if (deleteError) {
-      console.error("Failed to clear existing vehicles:", deleteError);
-      return;
-    }
-    console.log("Database cleared.");
+    // Upsert products without deleting manually added items
+    console.log("Upserting vehicles into Supabase...");
 
     // Format the 40 products perfectly
     const vehiclesToInsert = products.map(p => {
@@ -117,7 +111,7 @@ async function run() {
     // Insert in chunks of 20 just to be safe with Supabase limits
     for (let i = 0; i < vehiclesToInsert.length; i += 20) {
       const chunk = vehiclesToInsert.slice(i, i + 20);
-      const { error: insertError } = await supabase.from('vehicles').insert(chunk);
+      const { error: insertError } = await supabase.from('vehicles').upsert(chunk, { onConflict: 'slug' });
       if (insertError) {
         console.error("Failed to insert chunk:", insertError);
         return;
