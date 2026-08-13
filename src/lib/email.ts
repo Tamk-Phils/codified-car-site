@@ -20,13 +20,23 @@ export interface OrderEmailPayload {
 
 export async function sendOrderNotificationEmails(payload: OrderEmailPayload) {
   try {
-    const res = await fetch("/.netlify/functions/send-order-email", {
+    let res = await fetch("/api/send-order-email", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(payload),
     });
+
+    if (!res.ok) {
+      res = await fetch("/.netlify/functions/send-order-email", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+    }
 
     if (!res.ok) {
       console.warn("Server email endpoint status:", res.status);
