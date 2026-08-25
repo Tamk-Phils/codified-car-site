@@ -9,8 +9,8 @@ import { formatDate } from "@/lib/site";
 export const Route = createFileRoute("/blog/$slug")({
   loader: async ({ context, params }) => {
     try {
+      context.queryClient.prefetchQuery(postsQuery);
       const post = await context.queryClient.ensureQueryData(postQuery(params.slug));
-      await context.queryClient.ensureQueryData(postsQuery);
       return { post };
     } catch (e) {
       console.warn("Blog post loader warning:", e);

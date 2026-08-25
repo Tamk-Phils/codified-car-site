@@ -20,7 +20,7 @@ async function fetchWithTimeout<T>(fn: () => Promise<T>, fallback: T, ms = 15000
 
 export const vehiclesQuery = queryOptions({
   queryKey: ["vehicles"],
-  staleTime: 1000 * 30,
+  staleTime: 1000 * 60 * 5,
   gcTime: 1000 * 60 * 60,
   queryFn: async (): Promise<Vehicle[]> => {
     const { data, error } = await supabase
@@ -38,7 +38,7 @@ export const vehiclesQuery = queryOptions({
 export const vehicleQuery = (slug: string) =>
   queryOptions({
     queryKey: ["vehicle", slug],
-    staleTime: 1000 * 30,
+    staleTime: 1000 * 60 * 5,
     gcTime: 1000 * 60 * 60,
     queryFn: async (): Promise<Vehicle | null> => {
       const { data, error } = await supabase
@@ -56,12 +56,12 @@ export const vehicleQuery = (slug: string) =>
 
 export const postsQuery = queryOptions({
   queryKey: ["posts"],
-  staleTime: 1000 * 30,
+  staleTime: 1000 * 60 * 5,
   gcTime: 1000 * 60 * 60,
   queryFn: async (): Promise<Post[]> => {
     const { data, error } = await supabase
       .from("posts")
-      .select("*")
+      .select("id, slug, title, excerpt, cover_image, category, keywords, meta_title, meta_description, author, read_minutes, is_published, published_at")
       .order("published_at", { ascending: false });
     if (error) {
       console.error("Error fetching posts:", error);
@@ -74,7 +74,7 @@ export const postsQuery = queryOptions({
 export const postQuery = (slug: string) =>
   queryOptions({
     queryKey: ["post", slug],
-    staleTime: 1000 * 30,
+    staleTime: 1000 * 60 * 5,
     gcTime: 1000 * 60 * 60,
     queryFn: async (): Promise<Post | null> => {
       const { data, error } = await supabase
@@ -92,7 +92,7 @@ export const postQuery = (slug: string) =>
 
 export const reviewsQuery = queryOptions({
   queryKey: ["reviews"],
-  staleTime: 1000 * 30,
+  staleTime: 1000 * 60 * 5,
   gcTime: 1000 * 60 * 60,
   queryFn: async (): Promise<Review[]> => {
     const { data, error } = await supabase
