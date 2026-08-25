@@ -1,6 +1,7 @@
 import { queryOptions } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import type { Post, Review, Vehicle } from "./types";
+import { FALLBACK_POSTS } from "./static-data";
 
 async function fetchWithTimeout<T>(fn: () => Promise<T>, fallback: T, ms = 15000): Promise<T> {
   let timeoutId: any;
@@ -58,6 +59,7 @@ export const postsQuery = queryOptions({
   queryKey: ["posts"],
   staleTime: 1000 * 60 * 5,
   gcTime: 1000 * 60 * 60,
+  initialData: FALLBACK_POSTS,
   queryFn: async (): Promise<Post[]> => {
     const { data, error } = await supabase
       .from("posts")
@@ -76,6 +78,7 @@ export const postQuery = (slug: string) =>
     queryKey: ["post", slug],
     staleTime: 1000 * 60 * 5,
     gcTime: 1000 * 60 * 60,
+    initialData: () => FALLBACK_POSTS.find((p) => p.slug === slug) || undefined,
     queryFn: async (): Promise<Post | null> => {
       const { data, error } = await supabase
         .from("posts")

@@ -7,12 +7,8 @@ import { postsQuery } from "@/lib/queries";
 import { formatDate } from "@/lib/site";
 
 export const Route = createFileRoute("/blog/")({
-  loader: async ({ context }) => {
-    try {
-      await context.queryClient.ensureQueryData(postsQuery);
-    } catch (e) {
-      console.warn("Posts loader warning:", e);
-    }
+  loader: ({ context }) => {
+    context.queryClient.prefetchQuery(postsQuery);
   },
   head: () => ({
     meta: [
