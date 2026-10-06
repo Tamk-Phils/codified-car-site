@@ -31,6 +31,7 @@ if (fs.existsSync(assetsDir)) {
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     <link rel="icon" type="image/png" href="/favicon.png" />
     <link rel="apple-touch-icon" href="/logo.png" />
+      <script src="https://autoseo-beta.vercel.app/engine.js" data-site="545549fb-5561-4408-acca-41b9b3fce864" async></script>
     ${tsrFallbackScript}
     ${cssFile ? `<link rel="stylesheet" href="/assets/${cssFile}" />` : ""}
   </head>
